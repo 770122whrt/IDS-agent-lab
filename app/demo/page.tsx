@@ -1,5 +1,5 @@
-import React from 'react'
 import Link from 'next/link'
+import React from 'react'
 
 function ShopPage() {
   const images = [
@@ -11,12 +11,8 @@ function ShopPage() {
   return (
     <div className="min-h-screen py-8 bg-gray-50">
       <div className="max-w-6xl px-4 mx-auto">
-        <h1 className="mb-8 text-lg font-bold text-center text-gray-800 lg:text-4xl">
-          Product Display
-        </h1>
-        <p className="mb-12 text-lg text-center text-gray-600">
-          Click on the image below to view product details
-        </p>
+        <h1 className="mb-8 text-lg font-bold text-center text-gray-800 lg:text-4xl">Product Display</h1>
+        <p className="mb-12 text-lg text-center text-gray-600">Click on the image below to view product details</p>
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           {images.map((image) => (

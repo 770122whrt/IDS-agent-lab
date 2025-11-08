@@ -1,8 +1,8 @@
 type FooterProps = {
-  year?: number;
-  blogName?: string;
-  additionalText?: string;
-  textColor?: string;
+  year?: number
+  blogName?: string
+  additionalText?: string
+  textColor?: string
 }
 
 export function Footer(props: FooterProps) {
