@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
     // read json from request body
     const body = await req.json()
     const { name, email, password } = body
-
+    const existingUser = await User.findOne({ email })
     const newUser = await User.create({ name, email, password })
     // return the created user with 201 status code
     return NextResponse.json(newUser, { status: 201 })
