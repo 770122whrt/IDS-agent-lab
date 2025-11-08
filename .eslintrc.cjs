@@ -27,10 +27,10 @@ module.exports = {
       }
     }
   },
-  ignorePatterns: ['node_modules/', 'dist/', '**/components/ui/**', '**/components/motion/**', 'tailwind.config.ts'],
+  ignorePatterns: ['node_modules/', 'dist/', '**/components/ui/**', '**/components/motion/**', 'tailwind.config.ts', 'tsconfig.json'],
   rules: {
     'no-console': 'off',
-    'no-unused-vars': 'off',
+    'no-unused-vars': 'warn',
     'import/no-default-export': 'off',
     'import/order': 'off',
     'react/no-array-index-key': 'off',
