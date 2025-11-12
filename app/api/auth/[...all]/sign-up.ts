@@ -1,10 +1,10 @@
 import { authClient } from "../../../lib/auth-client"; //import the auth client
 
 const { data, error } = await authClient.signUp.email({
-        email,// user email address
-        password, // user password -> min 8 characters by default
-        name, // user display name
-        image, // User image URL (optional)
+        email: "john.doe@example.com",// user email address get from front
+        password:"password1234", // user password -> min 8 characters by default get from front
+        name: "John Doe", // user display name get from front
+        //image:"https://example.com/image.png", // User image URL (optional)
         callbackURL: "/dashboard" // A URL to redirect to after the user verifies their email (optional)
     }, {
         onRequest: (ctx) => {
