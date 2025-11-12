@@ -2,34 +2,40 @@ import { betterAuth, BetterAuthAdvancedOptions, BetterAuthClientOptions } from "
 import { MongoClient } from "mongodb";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 
-if (!process.env.MONGODB_URI) {
-    throw new Error("MONGODB_URI environment variable is required");
-}
-const client = new MongoClient(process.env.MONGODB_URI);
+const {
+  MONGODB_URI,
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET,
+  GITHUB_CLIENT_ID,
+  GITHUB_CLIENT_SECRET,
+} = process.env;
+
+if (!MONGODB_URI) throw new Error("❌ Missing MONGODB_URI");
+if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) throw new Error("❌ Missing Google OAuth credentials");
+if (!GITHUB_CLIENT_ID || !GITHUB_CLIENT_SECRET) throw new Error("❌ Missing GitHub OAuth credentials");
+
+const client = new MongoClient(MONGODB_URI);
 await client.connect();
 const db = client.db();
 
 export const auth = betterAuth({
-    database: mongodbAdapter(db, {client}),
-    emailAndPassword: {
-        enabled: true,
-        autoSignIn: false,
-        async sendResetPassword(data, request) {
-            // Send an email to the user with a link to reset their password
-        },
+  database: mongodbAdapter(db, { client }),
+  emailAndPassword: {
+    enabled: true,
+    autoSignIn: true, // ✅ 注册后自动登录
+    async sendResetPassword(data, request) {
+      console.log("Password reset requested for:", data.email);
+      // TODO: implement sending reset password email
     },
-    socialProviders: {
-        google: {
-            clientId: process.env.GOOGLE_CLIENT_ID!,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET!
-        },
-        github: {
-            clientId: process.env.GITHUB_CLIENT_ID!,
-            clientSecret: process.env.GITHUB_CLIENT_SECRET!
-        }
+  },
+  socialProviders: {
+    google: {
+      clientId: GOOGLE_CLIENT_ID,
+      clientSecret: GOOGLE_CLIENT_SECRET,
     },
-
-    /** if no database is provided, the user data will be stored in memory.
-     * Make sure to provide a database to persist user data **/
+    github: {
+      clientId: GITHUB_CLIENT_ID,
+      clientSecret: GITHUB_CLIENT_SECRET,
+    },
+  },
 });
-
