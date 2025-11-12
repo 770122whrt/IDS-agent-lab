@@ -10,11 +10,11 @@ import { useSession } from "@/app/lib/auth-client";
 
 export default function Home() {
   const router = useRouter();
-  const { data: session, isPending } = useSession(); //使用 Hook
+  const { data: session, isPending } = useSession(); // Use Hook
 
   useEffect(() => {
     if (!isPending && session?.user) {
-      // 已登录用户自动跳转
+      // Already logged-in user will be redirected
       router.push("/dashboard");
     }
   }, [session, isPending, router]);

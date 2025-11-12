@@ -19,7 +19,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner"; // ✅ 提示库（可选）
+import { toast } from "sonner"; 
 
 export default function SignIn() {
   const router = useRouter();
@@ -103,7 +103,7 @@ export default function SignIn() {
                 {
                   email,
                   password,
-                  callbackURL: "/dashboard", // ✅ 登录成功后跳转
+                  callbackURL: "/dashboard", //  登录成功后跳转
                 },
                 {
                   onRequest: () => setLoading(true),
@@ -113,9 +113,9 @@ export default function SignIn() {
                     toast.error(ctx.error.message || "Login failed");
                   },
                   onSuccess: (ctx) => {
-                    console.log("✅ Logged in as:", ctx.data?.user?.email);
+                    console.log(" Logged in as:", ctx.data?.user?.email);
                     toast.success("Welcome back!");
-                    router.push("/dashboard"); // ✅ 确保跳转
+                    router.push("/dashboard"); //  确保跳转
                   },
                 }
               );

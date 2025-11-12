@@ -10,9 +10,9 @@ const { data, error } = await authClient.signIn.email({
   rememberMe: false,
 }, {});
 
-// 使用返回结果
+// use data and error as needed
 if (error) {
-  console.error("登录失败:", error);
+  console.error("fail to sign in:", error);
 } else {
-  console.log("登录成功:", data);
+  console.log("Sign in successful:", data);
 }
