@@ -2,23 +2,17 @@ import { betterAuth } from "better-auth";
 import { MongoClient } from "mongodb";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 
-const { 
-  MONGODB_URI, 
-  GOOGLE_CLIENT_ID, 
-  GOOGLE_CLIENT_SECRET, 
-  GITHUB_CLIENT_ID, 
-  GITHUB_CLIENT_SECRET 
+const {
+  MONGODB_URI,
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET,
+  GITHUB_CLIENT_ID,
+  GITHUB_CLIENT_SECRET,
 } = process.env;
 
-if (!MONGODB_URI) {
-  throw new Error("❌ MONGODB_URI environment variable is required");
-}
-if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) {
-  throw new Error("❌ Google OAuth credentials are missing");
-}
-if (!GITHUB_CLIENT_ID || !GITHUB_CLIENT_SECRET) {
-  throw new Error("❌ GitHub OAuth credentials are missing");
-}
+if (!MONGODB_URI) throw new Error("❌ Missing MONGODB_URI");
+if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) throw new Error("❌ Missing Google OAuth credentials");
+if (!GITHUB_CLIENT_ID || !GITHUB_CLIENT_SECRET) throw new Error("❌ Missing GitHub OAuth credentials");
 
 const client = new MongoClient(MONGODB_URI);
 await client.connect();
@@ -28,9 +22,10 @@ export const auth = betterAuth({
   database: mongodbAdapter(db, { client }),
   emailAndPassword: {
     enabled: true,
-    autoSignIn: false,
+    autoSignIn: true, // ✅ 注册后自动登录
     async sendResetPassword(data, request) {
-      // TODO: implement sending password reset email
+      console.log("Password reset requested for:", data.email);
+      // TODO: implement sending reset password email
     },
   },
   socialProviders: {

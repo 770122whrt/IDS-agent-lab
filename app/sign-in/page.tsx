@@ -18,8 +18,12 @@ import { signIn } from "@/app/lib/auth-client";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { FaGithub, FaGoogle } from "react-icons/fa";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner"; // ✅ 提示库（可选）
 
 export default function SignIn() {
+  const router = useRouter();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -90,11 +94,29 @@ export default function SignIn() {
             className="w-full mt-2"
             disabled={loading}
             onClick={async () => {
+              if (!email || !password) {
+                toast.error("Please enter email and password");
+                return;
+              }
+
               await signIn.email(
-                { email, password },
+                {
+                  email,
+                  password,
+                  callbackURL: "/dashboard", // ✅ 登录成功后跳转
+                },
                 {
                   onRequest: () => setLoading(true),
                   onResponse: () => setLoading(false),
+                  onError: (ctx) => {
+                    console.error("❌ Login failed:", ctx.error.message);
+                    toast.error(ctx.error.message || "Login failed");
+                  },
+                  onSuccess: (ctx) => {
+                    console.log("✅ Logged in as:", ctx.data?.user?.email);
+                    toast.success("Welcome back!");
+                    router.push("/dashboard"); // ✅ 确保跳转
+                  },
                 }
               );
             }}
@@ -111,7 +133,11 @@ export default function SignIn() {
               onClick={async () => {
                 await signIn.social(
                   { provider: "github", callbackURL: "/dashboard" },
-                  { onRequest: () => setLoading(true), onResponse: () => setLoading(false) }
+                  {
+                    onRequest: () => setLoading(true),
+                    onResponse: () => setLoading(false),
+                    onError: (ctx) => toast.error(ctx.error.message),
+                  }
                 );
               }}
             >
@@ -126,7 +152,11 @@ export default function SignIn() {
               onClick={async () => {
                 await signIn.social(
                   { provider: "google", callbackURL: "/dashboard" },
-                  { onRequest: () => setLoading(true), onResponse: () => setLoading(false) }
+                  {
+                    onRequest: () => setLoading(true),
+                    onResponse: () => setLoading(false),
+                    onError: (ctx) => toast.error(ctx.error.message),
+                  }
                 );
               }}
             >
