@@ -45,6 +45,7 @@ export default function Dashboard() {
       <p className="text-gray-600 dark:text-gray-400 mb-8">
         You are logged in as <strong>{session.user.email}</strong>
       </p>
+      <Button className="w-40 mb-4" onClick={() => router.push("/ids_use")}>try 🚀IDS_agent🤖</Button>
       <Button onClick={handleSignOut} className="w-40">
         Sign Out
       </Button>
