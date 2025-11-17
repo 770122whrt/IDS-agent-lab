@@ -49,8 +49,8 @@ export default function Home() {
         className="max-w-md mx-auto space-y-6"
       >
         <h1 className="text-3xl md:text-5xl font-bold text-gray-800 dark:text-gray-100">
-          Welcome to{" "}
-          <span className="text-blue-600 dark:text-blue-400">My App</span>
+          Welcome to use{" "}
+          <span className="text-blue-600 dark:text-blue-400">🚀IDS_agent🤖</span>
         </h1>
 
         <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base leading-relaxed">
@@ -79,7 +79,7 @@ export default function Home() {
       </motion.div>
 
       <footer className="absolute bottom-6 text-xs text-neutral-500">
-        built with{" "}
+        learn more about{" "}
         <Link
           href="https://better-auth.com"
           target="_blank"

@@ -10,7 +10,7 @@ try {
   const { data, error } = await authClient.signUp.email(
     {
       email,        // 
-      password,     // at least 6 characters
+      password,     // at least 8 characters
       name,         // 
       image,        // 
       callbackURL: "/dashboard", // redirect after sign-up

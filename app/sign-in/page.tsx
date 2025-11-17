@@ -28,6 +28,7 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [error, setError] = useState("");
 
   return (
     <div
@@ -50,6 +51,11 @@ export default function SignIn() {
         </CardHeader>
 
         <CardContent className="space-y-4">
+          {error && (
+            <div className="text-red-600 text-sm font-medium mb-2 text-center">
+              {error === "Invalid password" ? "密码输入错误，请重试!" : error}
+            </div>
+          )}
           {/* Email */}
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
@@ -94,8 +100,10 @@ export default function SignIn() {
             className="w-full mt-2"
             disabled={loading}
             onClick={async () => {
+              setError(""); // 每次点击先清空错误 
               if (!email || !password) {
                 toast.error("Please enter email and password");
+                setError("Please enter email and password");
                 return;
               }
 
@@ -111,6 +119,7 @@ export default function SignIn() {
                   onError: (ctx) => {
                     console.error("❌ Login failed:", ctx.error.message);
                     toast.error(ctx.error.message || "Login failed");
+                    setError(ctx.error.message || "Login failed");
                   },
                   onSuccess: (ctx) => {
                     console.log(" Logged in as:", ctx.data?.user?.email);
