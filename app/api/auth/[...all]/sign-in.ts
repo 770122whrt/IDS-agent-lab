@@ -25,6 +25,7 @@ const { data, error } = await authClient.signIn.email({
     //callbacks
 })
 
+<<<<<<< HEAD
 
 
 await authClient.signIn.social({
@@ -52,3 +53,11 @@ await authClient.signIn.social({
      */
     disableRedirect: true,
 });
+=======
+// use data and error as needed
+if (error) {
+  console.error("fail to sign in:", error);
+} else {
+  console.log("Sign in successful:", data);
+}
+>>>>>>> c1de285f9d20cb790eb6f20d1109fbc45675668b

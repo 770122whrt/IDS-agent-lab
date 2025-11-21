@@ -22,7 +22,8 @@ export const auth = betterAuth({
   database: mongodbAdapter(db, { client }),
   emailAndPassword: {
     enabled: true,
-    autoSignIn: true, // ✅ 注册后自动登录
+    autoSignIn: true, //auto sign in users after they sign up
+
     async sendResetPassword(data, request) {
       console.log("Password reset requested for:", data.email);
       // TODO: implement sending reset password email
