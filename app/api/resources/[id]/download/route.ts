@@ -1,0 +1,79 @@
+// app/api/resources/[id]/download/route.ts
+import { NextRequest, NextResponse } from "next/server";
+import { dbConnect } from "../../../../../backend/mongodb";
+import { Resource } from "../../../../../backend/resource";
+import mongoose from "mongoose";
+import { Readable } from "stream";
+// ---------------------------------------------------------
+// GET 方法：通过 Resource 的 ID 下载对应的 GridFS 文件
+// ---------------------------------------------------------
+// ContextType 是 Next.js 提供的类型，用于获取路径参数 (params)
+type ContextType = {
+  params: {
+    id: string; // [id] 路径参数，对应 Resource 文档的 _id
+  };
+};
+
+export async function GET(request: NextRequest, context: ContextType) {
+  try {
+    // 0.连接database
+    await dbConnect();
+
+    // 1. 获取路径中的 Resource ID
+    const resourceId = context.params.id;
+    if (!resourceId) {
+      return new NextResponse("Resource ID is required", { status: 400 });
+    }
+
+    // 2. 查找 Resource 记录，获取 GridFS 文件 ID
+    // 为什么要查 Resource 表？因为 Resource 表记录了谁上传了哪个 GridFS 文件。
+    const resource = await Resource.findById(resourceId);
+
+    if (!resource) {
+      return new NextResponse("Resource not found", { status: 404 });
+    }
+
+    // 3. 准备 GridFS Bucket
+    const db = mongoose.connection.db;
+    // 必须使用相同的 bucketName，否则找不到文件
+    const bucket = new mongoose.mongo.GridFSBucket(db!, {
+      bucketName: "uploads", 
+    });
+
+    // 4. 创建 GridFS 下载流
+    // 为什么要用 fileId？因为这是文件在 GridFS 系统中被切片的唯一标识。
+    const downloadStream = bucket.openDownloadStream(resource.fileId);
+
+    // 5. 关键：将 Node.js Stream 转换为 Web Stream
+    // Next.js (Edge/App Router) 倾向于使用 Web 标准的 ReadableStream。
+    // Node.js Stream 需要适配。Readable.fromWeb(downloadStream) 可以实现这一转换。
+    // 但是，直接将 Node Stream 传入 NextResponse 构造函数，Next.js 会自动处理转换。
+    // Convert to Web Stream
+    const webStream = Readable.toWeb(downloadStream);
+
+    // 6. 设置响应头 (Response Headers)
+    // 这是下载/预览的关键，告诉浏览器如何处理这个二进制流。
+    const headers = new Headers();
+    // Content-Type: 告诉浏览器文件类型 (如 image/jpeg, application/pdf)
+    headers.set("Content-Type", resource.mimetype);
+    // Content-Disposition: 决定浏览器行为
+    // 'attachment' 会强制浏览器弹出下载对话框，或直接保存到默认下载目录。
+    // 这解决了预览失败的问题，保证了文件的交付性。
+    const dispositionType = 'attachment';
+    // filename* 允许使用 UTF-8 编码的文件名
+    headers.set(
+      "Content-Disposition",
+      `${dispositionType}; filename*=UTF-8''${encodeURIComponent(resource.originalname)}`
+    );
+
+    // 7. 返回流式响应
+    // 为什么要用 NextResponse(body, ...)？
+    // 这样做能够以流的方式发送数据。文件下载是边读边传，不会等整个文件加载到内存中再发送，
+    // 极大地降低了服务器的内存占用，对于大文件至关重要。
+    return new NextResponse(webStream as any, { headers });
+
+  } catch (error) {
+    console.error("文件下载失败:", error);
+    return new NextResponse("File download failed", { status: 500 });
+  }
+}
