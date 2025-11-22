@@ -86,10 +86,10 @@ export default function IdsUse() {
         ) : (
           <ul className="space-y-2">
             {resources.map((r) => (
-              <li key={r.id} className="border rounded p-2 flex flex-col">
+              <li key={r._id} className="border rounded p-2 flex flex-col">
                 <span>文件名: {r.originalname}</span>
                 <span>上传时间: {new Date(r.uploadTime).toLocaleString()}</span>
-                <span>资源ID: {r.id}</span>
+                <span>资源ID: {r._id}</span>
               </li>
             ))}
           </ul>
