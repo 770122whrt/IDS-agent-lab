@@ -18,9 +18,9 @@ export async function GET(request: NextRequest, context: ContextType) {
   try {
     // 0.连接database
     await dbConnect();
-
+    const { params } = await context; 
     // 1. 获取路径中的 Resource ID
-    const resourceId = context.params.id;
+    const resourceId = params.id;
     if (!resourceId) {
       return new NextResponse("Resource ID is required", { status: 400 });
     }
