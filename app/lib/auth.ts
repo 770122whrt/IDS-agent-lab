@@ -25,7 +25,7 @@ export const auth = betterAuth({
     autoSignIn: true, //auto sign in users after they sign up
 
     async sendResetPassword(data, request) {
-      console.log("Password reset requested for:", data.email);
+      console.log("Password reset requested for:", data);
       // TODO: implement sending reset password email
     },
   },
