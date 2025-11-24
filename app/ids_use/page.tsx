@@ -59,6 +59,15 @@ export default function IdsUse() {
     setResources(data.resources || []);
   };
 
+  // 👇 新增：处理下载/预览
+  const handleDownload = (resourceId: string) => {
+    // 为什么要用 window.open 或直接 href，而不是 fetch？
+    // fetch 适合获取 JSON 数据。下载文件需要浏览器直接接收二进制流，
+    // 浏览器会根据后端返回的 Content-Type 和 Content-Disposition 头来决定是下载还是预览（例如直接打开图片）。
+    // window.open(URL) 是触发这个过程最简单的方式。
+    window.open(`/api/resources/${resourceId}/download`, '_blank');
+  };
+
   return (
     <div className="max-w-xl mx-auto py-10">
       <h2 className="text-3xl md:text-4xl font-extrabold mb-6 flex items-center gap-2 text-blue-700 dark:text-blue-300">
@@ -84,14 +93,25 @@ export default function IdsUse() {
         {resources.length === 0 ? (
           <p className="text-gray-500">暂无资源</p>
         ) : (
-          <ul className="space-y-2">
-            {resources.map((r) => (
-              <li key={r._id} className="border rounded p-2 flex flex-col">
+            <ul className="space-y-2">
+           {resources.map((r) => (
+               <li key={r._id} className="border rounded p-2 flex flex-col">
                 <span>文件名: {r.originalname}</span>
                 <span>上传时间: {new Date(r.uploadTime).toLocaleString()}</span>
-                <span>资源ID: {r._id}</span>
+                <span className="text-xs text-gray-400">资源ID: {r._id}</span>
+                
+                {/* 👇 新增：下载按钮 */}
+                <Button 
+                    size="sm" 
+                    variant="default"
+                    className="mt-2 w-1/3 self-end" // 按钮靠右，样式优化
+                    // 触发 handleDownload，传入 MongoDB 的主键 _id
+                    onClick={() => handleDownload(r._id)}
+                >
+                    ⬇️ 下载 / 预览
+                </Button>
               </li>
-            ))}
+             ))}
           </ul>
         )}
       </div>
