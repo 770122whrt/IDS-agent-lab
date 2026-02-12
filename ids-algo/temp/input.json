@@ -1,0 +1,12 @@
+[
+  {
+    "id": "1",
+    "text": "All walls should have the property FireRating in the set Pset_WallCommon with a value being one of REI30, REI60, REI90.",
+    "language": "en"
+  },
+  {
+    "id": "2",
+    "text": "IFC versions: IFC4X3_ADD2 IFC4 IFC2X3\n\nThe model MUST contain entities that have\n- IFC class IFCBUILDINGSTOREY\n\nthat MEET the following requirements\n- MUST HAVE attribute Name matching the pattern 00 ground floor|01 first floor|02 second floor\n\nInstructions\nAdd a list of names in the Requirements by use of regular expression",
+    "language": "en"
+  }
+]

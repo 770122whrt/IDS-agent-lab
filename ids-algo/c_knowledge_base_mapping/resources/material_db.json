@@ -1,0 +1,174 @@
+{
+  "metadata": {
+    "name": "IFC Material Knowledge Base",
+    "description": "IFC材料知识库，用于存储和检索IFC材料定义",
+    "version": "1.0.0",
+    "ifc_versions": ["IFC2X3", "IFC4", "IFC4X3"],
+    "item_types": ["material"],
+    "vector_dim": 768,
+    "model_name": "BAAI/bge-m3",
+    "created_at": "2025-08-20T12:00:00.000000",
+    "updated_at": "2025-08-20T12:00:00.000000",
+    "item_counts": {
+      "material": 12
+    }
+  },
+  "items": [
+    {
+      "name": "Concrete",
+      "definition": "A composite material composed of cement, aggregates, and water.",
+      "ifc_version": "IFC4",
+      "item_type": "material",
+      "category": "Structural",
+      "properties": {
+        "density": "2400 kg/m³",
+        "compressive_strength": "25-50 MPa",
+        "thermal_conductivity": "1.7 W/mK"
+      },
+      "applicable_entities": ["IfcWall", "IfcSlab", "IfcColumn", "IfcBeam"]
+    },
+    {
+      "name": "Reinforced Concrete",
+      "definition": "Concrete composite material reinforced with steel bars or mesh.",
+      "ifc_version": "IFC4",
+      "item_type": "material", 
+      "category": "Structural",
+      "properties": {
+        "density": "2500 kg/m³",
+        "compressive_strength": "30-80 MPa",
+        "thermal_conductivity": "2.0 W/mK"
+      },
+      "applicable_entities": ["IfcWall", "IfcSlab", "IfcColumn", "IfcBeam"]
+    },
+    {
+      "name": "Steel",
+      "definition": "An alloy of iron and carbon with other elements.",
+      "ifc_version": "IFC4",
+      "item_type": "material",
+      "category": "Structural",
+      "properties": {
+        "density": "7850 kg/m³",
+        "yield_strength": "235-355 MPa",
+        "thermal_conductivity": "50 W/mK"
+      },
+      "applicable_entities": ["IfcBeam", "IfcColumn", "IfcMember"]
+    },
+    {
+      "name": "Timber",
+      "definition": "Wood prepared for use in building or carpentry.",
+      "ifc_version": "IFC4",
+      "item_type": "material",
+      "category": "Structural",
+      "properties": {
+        "density": "400-800 kg/m³",
+        "compressive_strength": "20-50 MPa",
+        "thermal_conductivity": "0.1-0.2 W/mK"
+      },
+      "applicable_entities": ["IfcBeam", "IfcColumn", "IfcWall"]
+    },
+    {
+      "name": "Brick",
+      "definition": "A block made of clay fired in a kiln.",
+      "ifc_version": "IFC4",
+      "item_type": "material",
+      "category": "Masonry",
+      "properties": {
+        "density": "1800-2000 kg/m³",
+        "compressive_strength": "10-100 MPa",
+        "thermal_conductivity": "0.6-1.0 W/mK"
+      },
+      "applicable_entities": ["IfcWall"]
+    },
+    {
+      "name": "Glass",
+      "definition": "A transparent, brittle material made by fusing sand with soda and lime.",
+      "ifc_version": "IFC4",
+      "item_type": "material",
+      "category": "Glazing",
+      "properties": {
+        "density": "2500 kg/m³",
+        "thermal_conductivity": "1.0 W/mK",
+        "light_transmittance": "0.8-0.9"
+      },
+      "applicable_entities": ["IfcWindow", "IfcCurtainWall"]
+    },
+    {
+      "name": "Aluminum",
+      "definition": "A lightweight, corrosion-resistant metal.",
+      "ifc_version": "IFC4", 
+      "item_type": "material",
+      "category": "Metal",
+      "properties": {
+        "density": "2700 kg/m³",
+        "yield_strength": "70-500 MPa",
+        "thermal_conductivity": "237 W/mK"
+      },
+      "applicable_entities": ["IfcWindow", "IfcDoor", "IfcCurtainWall"]
+    },
+    {
+      "name": "Gypsum Board",
+      "definition": "A panel made of gypsum plaster pressed between two thick sheets of paper.",
+      "ifc_version": "IFC4",
+      "item_type": "material",
+      "category": "Finishing",
+      "properties": {
+        "density": "700-900 kg/m³",
+        "fire_resistance": "30-120 minutes",
+        "thermal_conductivity": "0.2 W/mK"
+      },
+      "applicable_entities": ["IfcWall", "IfcCovering"]
+    },
+    {
+      "name": "Insulation",
+      "definition": "Material used to reduce heat transfer.",
+      "ifc_version": "IFC4",
+      "item_type": "material",
+      "category": "Thermal",
+      "properties": {
+        "density": "20-200 kg/m³",
+        "thermal_conductivity": "0.02-0.05 W/mK",
+        "fire_rating": "Class A-E"
+      },
+      "applicable_entities": ["IfcWall", "IfcRoof", "IfcSlab"]
+    },
+    {
+      "name": "Ceramic Tile",
+      "definition": "A thin object made from clay and hardened by heat.",
+      "ifc_version": "IFC4",
+      "item_type": "material",
+      "category": "Finishing",
+      "properties": {
+        "density": "2000-2300 kg/m³",
+        "water_absorption": "0.5-20%",
+        "thermal_conductivity": "1.0-1.5 W/mK"
+      },
+      "applicable_entities": ["IfcCovering", "IfcSlab"]
+    },
+    {
+      "name": "Asphalt",
+      "definition": "A sticky, black, highly viscous liquid or semi-solid form of petroleum.",
+      "ifc_version": "IFC4",
+      "item_type": "material",
+      "category": "Waterproofing",
+      "properties": {
+        "density": "1000-1500 kg/m³",
+        "softening_point": "40-70°C",
+        "thermal_conductivity": "0.7 W/mK"
+      },
+      "applicable_entities": ["IfcRoof", "IfcSlab"]
+    },
+    {
+      "name": "Membrane",
+      "definition": "A thin, flexible sheet of material used for waterproofing.",
+      "ifc_version": "IFC4",
+      "item_type": "material",
+      "category": "Waterproofing",
+      "properties": {
+        "thickness": "1-5 mm",
+        "tensile_strength": "5-30 MPa",
+        "elongation": "100-500%"
+      },
+      "applicable_entities": ["IfcRoof", "IfcWall"]
+    }
+  ]
+}

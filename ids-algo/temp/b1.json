@@ -1,0 +1,23 @@
+{
+  "entity_candidates": [
+    {
+      "source_text": "All walls",
+      "facet_type": "entity",
+      "confidence": 0.95,
+      "reasoning": "Concrete building element (wall) mentioned"
+    }
+  ],
+  "property_candidates": [
+    {
+      "source_text": "should have the property FireRating in the set Pset_WallCommon with a value being one of REI30, REI60, REI90",
+      "facet_type": "property",
+      "confidence": 0.95,
+      "reasoning": "Property from PropertySet with specific value constraints"
+    }
+  ],
+  "attribute_candidates": [],
+  "material_candidates": [],
+  "classification_candidates": [],
+  "partof_candidates": [],
+  "llm_analysis": "Prompt: You are an IDS specification expert. Classify structured components into the 6 IDS Facet types.\n\nIDS Facet type definitions:\n- Entity: Concrete building elements (IfcWall, IfcDoor, IfcWindow, etc.)\n- Property: Quantifiable properties from PropertySets (thickness, strength, thermal transmittance)\n- Attribute: Descriptive properties (name, identifier, code)\n- Material: Material types and specifications (reinforced concrete, brick, steel)\n- Classification: Classification requirements and codes (Uniclass, OmniClass, ETIM, compliance statements)\n- PartOf: Spatial containment relationships (located in, contained in, part of)\n\nInput components: [{\"text\": \"All walls\", \"type\": \"building_object\", \"details\": {\"object_type\": \"wall\", \"modifiers\": [\"all\"]}, \"confidence\": 0.95}, {\"text\": \"should have the property FireRating in the set Pset_WallCommon with a value being one of REI30, REI60, REI90\", \"type\": \"property_description\", \"details\": {\"property_name\": \"FireRating\", \"constraint_text\": \"value in [REI30, REI60, REI90]\"}, \"confidence\": 0.95}]\n\nClassification rules:\n1. Properties with numerical constraints → Property\n2. Concrete building elements → Entity\n3. Material names and requirements → Material\n4. Location and spatial relationships → PartOf\n5. Classification codes, standards, and compliance requirements → Classification\n6. Descriptive information → Attribute\n\n**Enhanced Classification Detection:**\n- Text mentioning classification systems (Uniclass, OmniClass, ETIM, etc.) → Classification\n- Compliance statements (\"must comply with\", \"according to\", \"classified as\") → Classification\n- Standard codes and references → Classification\n\n**Enhanced PartOf Detection:**\n- Spatial relationships (\"located in\", \"contained in\", \"part of\", \"within\") → PartOf\n- Room/space references (\"in mechanical rooms\", \"within building\") → PartOf\n\nOutput JSON format:\n{\n    \"entity_candidates\": [\n        {\n            \"source_text\": \"source text\",\n            \"facet_type\": \"entity\",\n            \"confidence\": 0.9,\n            \"reasoning\": \"classification reason\"\n        }\n    ],\n    \"property_candidates\": [...],\n    \"attribute_candidates\": [...],\n    \"material_candidates\": [...],\n    \"classification_candidates\": [...],\n    \"partof_candidates\": [...]\n}\n\nOutput JSON only, no other text....\nResponse: {'content': '{\\n    \"entity_candidates\": [\\n        {\\n            \"source_text\": \"All walls\",\\n            \"facet_type\": \"entity\",\\n            \"confidence\": 0.95,\\n            \"reasoning\": \"Concrete building element (wall) mentioned\"\\n        }\\n    ],\\n    \"property_candidates\": [\\n        {\\n            \"source_text\": \"should have the property FireRating in the set Pset_WallCommon with a value being one of REI30, REI60, REI90\",\\n            \"facet_type\": \"property\",\\n            \"confidence\": 0.95,\\n            \"reasoning\": \"Property from PropertySet with specific value constraints\"\\n        }\\n    ],\\n    \"attribute_candidates\": [],\\n    \"material_candidates\": [],\\n    \"classification_candidates\": [],\\n    \"partof_candidates\": []\\n}'}..."
+}

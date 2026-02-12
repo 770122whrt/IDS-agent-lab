@@ -1,0 +1,14 @@
+[
+  {
+    "restriction_type": "enumeration",
+    "restriction": {
+      "values": [
+        "REI30",
+        "REI60",
+        "REI90"
+      ]
+    },
+    "confidence": 0.8,
+    "original_text": "one of REI30, REI60, REI90"
+  }
+]

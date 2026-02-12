@@ -1,0 +1,53 @@
+{
+  "specifications": [
+    {
+      "name": "Building Story Level Naming Convention",
+      "ifcVersion": [
+        "IFC4X3_ADD2",
+        "IFC4",
+        "IFC2X3"
+      ],
+      "description": "Validates that building stories follow the specified naming pattern for ground floor, first floor, and second floor",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcBuildingStorey",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": [
+          {
+            "name": "Name",
+            "value": {
+              "simpleValue": "00 ground floor|01 first floor|02 second floor",
+              "restriction": {
+                "base": "string",
+                "enumeration": [
+                  "00 ground floor",
+                  "01 first floor",
+                  "02 second floor"
+                ]
+              }
+            },
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "property": null,
+        "material": null
+      }
+    }
+  ]
+}

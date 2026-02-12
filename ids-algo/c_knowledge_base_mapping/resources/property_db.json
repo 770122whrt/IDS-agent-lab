@@ -1,0 +1,138 @@
+{
+  "metadata": {
+    "name": "IFC Property Knowledge Base",
+    "description": "IFC属性知识库，用于存储和检索IFC属性定义",
+    "version": "1.0.0",
+    "ifc_versions": ["IFC2X3", "IFC4", "IFC4X3"],
+    "item_types": ["property"],
+    "vector_dim": 768,
+    "model_name": "BAAI/bge-m3",
+    "created_at": "2025-08-20T12:00:00.000000",
+    "updated_at": "2025-08-20T12:00:00.000000",
+    "item_counts": {
+      "property": 15
+    }
+  },
+  "items": [
+    {
+      "name": "FireRating",
+      "definition": "Fire rating for the element. It is given according to the national fire safety classification.",
+      "ifc_version": "IFC4",
+      "item_type": "property",
+      "property_set": "Pset_WallCommon",
+      "data_type": "IfcLabel"
+    },
+    {
+      "name": "Thickness",
+      "definition": "The thickness of the wall. It is provided for information only.",
+      "ifc_version": "IFC4", 
+      "item_type": "property",
+      "property_set": "Pset_WallCommon",
+      "data_type": "IfcPositiveLengthMeasure"
+    },
+    {
+      "name": "LoadBearing",
+      "definition": "Indicates whether the object is intended to carry loads (TRUE) or not (FALSE).",
+      "ifc_version": "IFC4",
+      "item_type": "property", 
+      "property_set": "Pset_WallCommon",
+      "data_type": "IfcBoolean"
+    },
+    {
+      "name": "ThermalTransmittance",
+      "definition": "Thermal transmittance coefficient (U-Value) of the element.",
+      "ifc_version": "IFC4",
+      "item_type": "property",
+      "property_set": "Pset_WallCommon", 
+      "data_type": "IfcThermalTransmittanceMeasure"
+    },
+    {
+      "name": "Height",
+      "definition": "Height of the door opening.",
+      "ifc_version": "IFC4",
+      "item_type": "property",
+      "property_set": "Pset_DoorCommon",
+      "data_type": "IfcPositiveLengthMeasure"
+    },
+    {
+      "name": "Width",
+      "definition": "Width of the door opening.",
+      "ifc_version": "IFC4",
+      "item_type": "property", 
+      "property_set": "Pset_DoorCommon",
+      "data_type": "IfcPositiveLengthMeasure"
+    },
+    {
+      "name": "SecurityRating",
+      "definition": "Security rating for the door according to local standards.",
+      "ifc_version": "IFC4",
+      "item_type": "property",
+      "property_set": "Pset_DoorCommon",
+      "data_type": "IfcLabel"
+    },
+    {
+      "name": "AcousticRating",
+      "definition": "Acoustic rating for the door according to local standards.",
+      "ifc_version": "IFC4", 
+      "item_type": "property",
+      "property_set": "Pset_DoorCommon",
+      "data_type": "IfcLabel"
+    },
+    {
+      "name": "Area",
+      "definition": "Area of the space.",
+      "ifc_version": "IFC4",
+      "item_type": "property",
+      "property_set": "Pset_SpaceCommon",
+      "data_type": "IfcAreaMeasure"
+    },
+    {
+      "name": "Volume",
+      "definition": "Volume of the space.",
+      "ifc_version": "IFC4",
+      "item_type": "property",
+      "property_set": "Pset_SpaceCommon", 
+      "data_type": "IfcVolumeMeasure"
+    },
+    {
+      "name": "OccupancyType",
+      "definition": "Occupancy type for the space.",
+      "ifc_version": "IFC4",
+      "item_type": "property",
+      "property_set": "Pset_SpaceCommon",
+      "data_type": "IfcLabel"
+    },
+    {
+      "name": "CompressiveStrength",
+      "definition": "Compressive strength of the concrete.",
+      "ifc_version": "IFC4",
+      "item_type": "property",
+      "property_set": "Pset_ConcreteElementGeneral",
+      "data_type": "IfcPressureMeasure"
+    },
+    {
+      "name": "ConstructionToleranceClass",
+      "definition": "Construction tolerance class designation.",
+      "ifc_version": "IFC4",
+      "item_type": "property",
+      "property_set": "Pset_ConcreteElementGeneral",
+      "data_type": "IfcLabel"
+    },
+    {
+      "name": "SurfaceFinish",
+      "definition": "Surface finish designation.",
+      "ifc_version": "IFC4",
+      "item_type": "property",
+      "property_set": "Pset_ConcreteElementGeneral",
+      "data_type": "IfcLabel"
+    },
+    {
+      "name": "ReinforcementVolumeRatio",
+      "definition": "Reinforcement volume ratio of the concrete element.",
+      "ifc_version": "IFC4",
+      "item_type": "property",
+      "property_set": "Pset_ConcreteElementGeneral",
+      "data_type": "IfcNormalisedRatioMeasure"
+    }
+  ]
+}

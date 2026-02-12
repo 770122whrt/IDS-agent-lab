@@ -1,0 +1,11 @@
+[
+  {
+    "restriction_type": "pattern",
+    "restriction": {
+      "pattern": "00 ground floor|01 first floor|02 second floor",
+      "description": "Must match pattern: 00 ground floor|01 first floor|02 second floor"
+    },
+    "confidence": 0.85,
+    "original_text": "matching the pattern 00 ground floor|01 first floor|02 second floor"
+  }
+]

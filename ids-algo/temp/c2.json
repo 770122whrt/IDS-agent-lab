@@ -1,0 +1,33 @@
+[
+  {
+    "facet_type": "entity",
+    "original_text": "IFCBUILDINGSTOREY",
+    "mapped_name": "IfcBuildingStorey",
+    "confidence": 0.652269922202155,
+    "ifc_item": {
+      "name": "IfcBuildingStorey",
+      "definition": "The building storey has an elevation and typically represents a (nearly) horizontal aggregation of spaces that are vertically bound.",
+      "ifc_version": "IFC4",
+      "item_type": "entity",
+      "predefined_types": []
+    },
+    "property_set": null,
+    "entity_name": null,
+    "constraints": [],
+    "additional_data": null
+  },
+  {
+    "facet_type": "attribute",
+    "original_text": "Name matching the pattern 00 ground floor|01 first floor|02 second floor",
+    "mapped_name": "Name",
+    "confidence": 0.8,
+    "ifc_item": {
+      "name": "Name",
+      "type": "IFC_ATTRIBUTE"
+    },
+    "property_set": null,
+    "entity_name": null,
+    "constraints": [],
+    "additional_data": null
+  }
+]
