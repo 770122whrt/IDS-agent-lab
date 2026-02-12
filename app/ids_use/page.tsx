@@ -4,6 +4,8 @@ import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useSession } from "@/app/lib/auth-client";
+import { UploadButton } from "@/components/uploading";
+
 
 export default function IdsUse() {
   //通过你们的 auth-client 自动拿到了当前登录的用户 ID
