@@ -1,21 +1,35 @@
 // backend/Resource.ts
-import { Schema, model, models } from 'mongoose';
+import mongoose,{ Schema, model, models, Document } from 'mongoose';
 
-const ResourceSchema = new Schema(
-  {
-    userId: { type: String, required: true },
-    originalname: { type: String, required: true },
-    mimetype: { type: String, required: true },
-    
-    // ✅ 新增 fileId 字段 删除buffer字段
-    // 为什么要这么写？
-    // 这个 ID 指向 GridFS 系统表(fs.files)里的那个文件。
-    // 它是我们在应用层(Resource)和存储层(GridFS)之间的桥梁。
-    fileId: { type: Schema.Types.ObjectId, required: true },
-    
-    uploadTime: { type: Date, default: Date.now },
+export interface IResource extends Document {
+  userId: string;
+  originalname: string;
+  mimetype: string;
+  fileId: mongoose.Types.ObjectId; // 原始文件 ID
+  uploadTime: Date;
+  
+  // 👇 新增字段
+  status: 'pending' | 'processing' | 'completed' | 'failed'; // 任务状态
+  resultFileId?: mongoose.Types.ObjectId; // 结果文件 ID (存放在 GridFS)
+  errorMessage?: string; // 如果失败，记录错误信息
+}
+
+const ResourceSchema = new Schema<IResource>({
+  userId: { type: String, required: true },
+  originalname: { type: String, required: true },
+  mimetype: { type: String, required: true },
+  fileId: { type: Schema.Types.ObjectId, required: true },
+  uploadTime: { type: Date, default: Date.now },
+  
+  // 👇 新增字段定义
+  status: { 
+    type: String, 
+    enum: ['pending', 'processing', 'completed', 'failed'], 
+    default: 'pending' 
   },
-  { timestamps: true }
-);
+  resultFileId: { type: Schema.Types.ObjectId },
+  errorMessage: { type: String }
+});
 
-export const Resource = models?.Resource || model('Resource', ResourceSchema);
+// 防止重复定义模型
+export const Resource = mongoose.models.Resource || mongoose.model<IResource>("Resource", ResourceSchema);
