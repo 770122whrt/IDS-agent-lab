@@ -12,3 +12,8 @@ Local:http://localhost:3000
 Ctrl + C to exit
 
 ids-algo the folder to generate answer
+
+
+python -m venv venv
+venv\Scripts\Activate.ps1
+pip install -r requirements.txt
