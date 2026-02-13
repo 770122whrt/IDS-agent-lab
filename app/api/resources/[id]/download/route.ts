@@ -4,14 +4,19 @@ import { dbConnect } from "../../../../../backend/mongodb";
 import { Resource } from "../../../../../backend/resource";
 import mongoose from "mongoose";
 import { Readable } from "stream";
+
+
+// 👇 修复问题1的潜在原因：强制动态渲染，告诉 Next.js 绝对不要缓存这个 GET 请求！
+export const dynamic = 'force-dynamic';
+
 // ---------------------------------------------------------
 // GET 方法：通过 Resource 的 ID 下载对应的 GridFS 文件
 // ---------------------------------------------------------
 // ContextType 是 Next.js 提供的类型，用于获取路径参数 (params)
+
+// 👇 修复问题2：Next.js 15 要求 params 必须是一个 Promise 类型
 type ContextType = {
-  params: {
-    id: string; // [id] 路径参数，对应 Resource 文档的 _id
-  };
+  params: Promise<{ id: string }>; 
 };
 
 export async function GET(request: NextRequest, context: ContextType) {
@@ -19,19 +24,50 @@ export async function GET(request: NextRequest, context: ContextType) {
     // 0.连接database
     await dbConnect();
     const { params } = await context; 
-    // 1. 获取路径中的 Resource ID
-    const resourceId = params.id;
+
+// 👇 修复问题2：必须使用 await 来解析 params
+    const resolvedParams = await context.params; 
+    const resourceId = resolvedParams.id;
     if (!resourceId) {
       return new NextResponse("Resource ID is required", { status: 400 });
     }
 
+    // 👇 修改点 1：解析 URL 上的查询参数 (e.g., ?type=result)
+    const { searchParams } = new URL(request.url);
+    const type = searchParams.get("type");
+
     // 2. 查找 Resource 记录，获取 GridFS 文件 ID
     // 为什么要查 Resource 表？因为 Resource 表记录了谁上传了哪个 GridFS 文件。
     const resource = await Resource.findById(resourceId);
-
     if (!resource) {
       return new NextResponse("Resource not found", { status: 404 });
     }
+
+
+  // 👇 修改点 2：动态判断要下载的目标文件ID、文件名和 MIME 类型
+    let targetFileId: mongoose.Types.ObjectId;
+    let filename: string;
+    let mimeType: string; 
+
+    if (type === "result") {
+      // 当请求要求下载“结果”时
+      if (!resource.resultFileId) {
+        return new NextResponse("Analysis result not ready yet", { status: 404 });
+      }
+      targetFileId = resource.resultFileId; // 使用 Python 处理后存入的 resultFileId
+      
+      // 构造结果文件名，例如："原文件名(去后缀)_ids_result.json"
+      const baseName = resource.originalname.replace(/\.[^/.]+$/, "");
+      filename = `${baseName}_ids_result.json`;
+      mimeType = "application/json"; // 结果是 JSON 格式
+    } else {
+      // 默认情况：下载用户最初上传的“原文件”
+      targetFileId = resource.fileId;
+      filename = resource.originalname;
+      mimeType = resource.mimetype || "application/octet-stream";
+    }
+
+
 
     // 3. 准备 GridFS Bucket
     const db = mongoose.connection.db;

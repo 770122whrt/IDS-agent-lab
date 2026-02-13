@@ -1,118 +1,121 @@
+import os
+import json
+import logging
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI, BackgroundTasks, HTTPException
 from pydantic import BaseModel
 from pymongo import MongoClient
 import gridfs
 from bson.objectid import ObjectId
-import os
-import json
-import logging
-from typing import Optional
 
-# 引入刚才写好的 pipeline
+from dotenv import load_dotenv
+# 明确指定你要读取的环境变量文件名
+load_dotenv(".env-pipeline")
+
+# 引入你验证过的 pipeline
 from pipeline import run_ids_pipeline
 
-# 配置日志
-logging.basicConfig(level=logging.INFO)
+# --- 配置日志 ---
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("ids_server")
 
-app = FastAPI()
+# --- 数据库连接 ---
+# 必须与 Next.js 使用相同的 MONGODB_URI
+MONGO_URI = os.getenv("MONGODB_URI", "mongodb://localhost:27017/ids_db")
 
-# 数据库连接
-MONGO_URI = os.getenv("MONGODB_URI")
-if not MONGO_URI:
-    logger.warning("MONGODB_URI not set, using default localhost")
-    MONGO_URI = "mongodb://localhost:27017/ids_db" # 默认值，根据实际情况修改
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # 启动时连接
+    app.mongodb_client = MongoClient(MONGO_URI)
+    app.db = app.mongodb_client.get_database() # 获取默认库
+    logger.info(f"✅ Connected to MongoDB at {MONGO_URI}")
+    yield
+    # 关闭时断开
+    app.mongodb_client.close()
+    logger.info("🛑 MongoDB connection closed")
 
-client = MongoClient(MONGO_URI)
-# 注意：你需要确认你的 Next.js 连接的是哪个库名，通常在 URI 里或者默认是 test
-# 这里假设库名是 'sample_mflix' (根据你之前的 .env) 或者你项目特定的库
-db_name = MONGO_URI.split("/")[-1].split("?")[0] or "test"
-db = client[db_name] 
-
-fs = gridfs.GridFS(db, collection="uploads")
-resources_col = db["resources"] # 对应 Next.js 中的 Resource Model
+app = FastAPI(lifespan=lifespan)
 
 class AnalysisRequest(BaseModel):
     resourceId: str
 
-async def process_file_task(resource_id: str):
-    """后台异步任务"""
-    logger.info(f"Starting task for Resource ID: {resource_id}")
+# --- 核心后台任务 ---
+async def process_file_task(resource_id: str, db):
+    """
+    1. 读状态 -> 2. 读文件 -> 3. 跑算法 -> 4. 存结果 -> 5. 写状态
+    """
+    fs = gridfs.GridFS(db, collection="uploads")
+    resources_col = db["resources"]
+    
+    logger.info(f"🚀 Starting task for Resource: {resource_id}")
+    
     try:
-        # 1. 更新状态 -> Processing
+        # 1. 更新状态为 Processing
         resources_col.update_one(
             {"_id": ObjectId(resource_id)},
             {"$set": {"status": "processing"}}
         )
 
-        # 2. 从数据库获取文件信息
+        # 2. 获取元数据 & 读取文件
         resource = resources_col.find_one({"_id": ObjectId(resource_id)})
         if not resource:
-            raise Exception("Resource not found in DB")
+            raise Exception("Resource doc not found")
         
-        file_id = resource.get("fileId") # 这是一个 ObjectId
-
-        # 3. 读取 GridFS 文件内容
+        file_id = resource.get("fileId")
         if not fs.exists(file_id):
-             raise Exception(f"File {file_id} not found in GridFS")
-             
+            raise Exception("GridFS file not found")
+            
         grid_out = fs.get(file_id)
-        # 假设文件是文本格式 (txt, md, json等)，进行 UTF-8 解码
+        # 假设上传的是文本文件 (txt/md/json)
         text_content = grid_out.read().decode("utf-8")
+        logger.info(f"📖 Read {len(text_content)} chars from file.")
 
-        # 4. 🔥 调用核心 Pipeline 🔥
+        # 3. 🔥 调用 Pipeline (A->E) 🔥
         result_json = await run_ids_pipeline(text_content)
 
-        # 5. 将结果存回 GridFS
-        # 结果文件名：原文件名_result.json
+        # 4. 存回结果 (存为新的 GridFS 文件)
         original_name = resource.get("originalname", "unknown")
-        result_filename = f"{original_name}_ids_result.json"
+        result_filename = f"{original_name}_result.json"
         
-        # 序列化 JSON
         result_bytes = json.dumps(result_json, ensure_ascii=False, indent=2).encode("utf-8")
-        
-        # 存入 GridFS
         result_file_id = fs.put(result_bytes, filename=result_filename, contentType="application/json")
 
-        # 6. 更新状态 -> Completed
+        # 5. 更新状态为 Completed
         resources_col.update_one(
             {"_id": ObjectId(resource_id)},
             {"$set": {
                 "status": "completed",
                 "resultFileId": result_file_id,
-                "errorMessage": None # 清除之前的错误
+                "errorMessage": None
             }}
         )
-        logger.info(f"Task {resource_id} completed. Result saved as {result_filename}")
+        logger.info(f"✅ Task {resource_id} completed. Result ID: {result_file_id}")
 
     except Exception as e:
-        logger.error(f"Task {resource_id} failed: {e}")
-        # 记录错误信息到数据库
+        logger.error(f"❌ Task {resource_id} failed: {e}")
+        import traceback
+        traceback.print_exc()
+        # 记录失败状态
         resources_col.update_one(
             {"_id": ObjectId(resource_id)},
-            {"$set": {
-                "status": "failed", 
-                "errorMessage": str(e)
-            }}
+            {"$set": {"status": "failed", "errorMessage": str(e)}}
         )
 
+# --- API 接口 ---
 @app.post("/analyze")
 async def start_analysis(req: AnalysisRequest, background_tasks: BackgroundTasks):
-    """前端调用的触发接口"""
-    # 简单的 ID 校验
-    try:
-        obj_id = ObjectId(req.resourceId)
-    except:
-        raise HTTPException(status_code=400, detail="Invalid Resource ID format")
+    """
+    Next.js 调用的入口。
+    不等待分析完成，直接返回 "OK"，后台慢慢跑。
+    """
+    logger.info(f"📥 Received analysis request for {req.resourceId}")
+    background_tasks.add_task(process_file_task, req.resourceId, app.db)
+    return {"message": "Analysis started", "id": req.resourceId}
 
-    resource = resources_col.find_one({"_id": obj_id})
-    if not resource:
-        raise HTTPException(status_code=404, detail="Resource not found")
-    
-    # 将任务丢给后台运行，立即返回响应给前端
-    background_tasks.add_task(process_file_task, req.resourceId)
-    
-    return {"message": "Analysis started", "resourceId": req.resourceId}
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
 
 if __name__ == "__main__":
     import uvicorn
