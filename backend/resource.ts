@@ -5,12 +5,15 @@ export interface IResource extends Document {
   userId: string;
   originalname: string;
   mimetype: string;
-  fileId: mongoose.Types.ObjectId; // 原始文件 ID
+  fileId?: mongoose.Types.ObjectId; // 原始文件 ID (文本输入时可选)
   uploadTime: Date;
-  
-  // 👇 新增字段
-  status: 'pending' | 'processing' | 'completed' | 'failed'; // 任务状态
-  resultFileId?: mongoose.Types.ObjectId; // 结果文件 ID (存放在 GridFS)
+
+  // 新增字段
+  input_type: 'text' | 'ifc_file'; // 输入类型
+  inputText?: string; // 原始文本内容（input_type为text时）
+  status: 'pending' | 'processing' | 'pending_conversion' | 'completed' | 'failed'; // 任务状态
+  resultJson?: object; // 结果JSON (直接存储，无需GridFS)
+  idsFilePath?: string; // 生成的 .ids 文件物理路径
   errorMessage?: string; // 如果失败，记录错误信息
 }
 
@@ -18,16 +21,23 @@ const ResourceSchema = new Schema<IResource>({
   userId: { type: String, required: true },
   originalname: { type: String, required: true },
   mimetype: { type: String, required: true },
-  fileId: { type: Schema.Types.ObjectId, required: true },
+  fileId: { type: Schema.Types.ObjectId }, // 文本输入时可选
   uploadTime: { type: Date, default: Date.now },
-  
-  // 👇 新增字段定义
-  status: { 
-    type: String, 
-    enum: ['pending', 'processing', 'completed', 'failed'], 
-    default: 'pending' 
+
+  // 新增字段定义
+  input_type: {
+    type: String,
+    enum: ['text', 'ifc_file'],
+    required: true
   },
-  resultFileId: { type: Schema.Types.ObjectId },
+  inputText: { type: String }, // 存储用户输入的文本
+  status: {
+    type: String,
+    enum: ['pending', 'processing', 'pending_conversion', 'completed', 'failed'],
+    default: 'pending'
+  },
+  resultJson: { type: Schema.Types.Mixed }, // 存储结果JSON对象
+  idsFilePath: { type: String }, // 生成的 .ids 文件物理路径
   errorMessage: { type: String }
 });
 
