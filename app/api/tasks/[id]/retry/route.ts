@@ -35,15 +35,36 @@ export async function POST(
       );
     }
 
-    // 检查任务状态
-    if (task.status !== "failed") {
+    // 检查任务状态 - 支持 failed 和 check_failed
+    if (task.status !== "failed" && task.status !== "check_failed") {
       return NextResponse.json(
         { error: "只有失败的任务才能重试" },
         { status: 400 }
       );
     }
 
-    // 检查输入类型和内容
+    // 审查失败 (check_failed) 的重试逻辑 - 重置为 completed 状态，让用户重新上传 IFC
+    if (task.status === "check_failed") {
+      await Resource.findByIdAndUpdate(taskId, {
+        $set: {
+          status: "completed",
+          errorMessage: null,
+          ifcFileId: null,
+          ifcFileName: null,
+          reportData: null,
+          reportSummary: null,
+        }
+      });
+
+      return NextResponse.json({
+        success: true,
+        message: "任务已重置为完成状态，请重新上传 IFC 文件进行审查",
+        taskId: taskId,
+        retryType: "check_retry"
+      });
+    }
+
+    // IDS 生成失败 (failed) 的重试逻辑 - 检查输入类型和内容
     if (task.input_type !== "text" || !task.inputText) {
       return NextResponse.json(
         { error: "任务类型不支持重试，请重新创建" },
@@ -56,7 +77,8 @@ export async function POST(
       $set: {
         status: "pending",
         errorMessage: null,
-        idsFilePath: null,
+        idsFileId: null,
+        idsFileName: null,
       }
     });
 
@@ -94,7 +116,8 @@ export async function POST(
       return NextResponse.json({
         success: true,
         message: "任务已重新提交处理",
-        taskId: taskId
+        taskId: taskId,
+        retryType: "ids_retry"
       });
 
     } catch (fetchError) {

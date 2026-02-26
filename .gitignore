@@ -8,7 +8,7 @@
 /markdown
 /.idea/*
 !/.idea/runConfigurations
-
+/.claude
 # testing
 /coverage
 

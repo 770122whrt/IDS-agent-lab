@@ -15,26 +15,12 @@ IFC Checker Service
 import os
 import sys
 import json
+import tempfile
 import ifcopenshell
 from ifctester import ids, reporter
 from pathlib import Path
-from typing import Dict, Any, Optional, Tuple
+from typing import Dict, Any, Optional
 from datetime import datetime
-
-
-def ifc_json_serializer(obj):
-    """
-    自定义 JSON 序列化函数
-    处理 ifcopenshell 的实体对象，避免序列化错误
-    """
-    if hasattr(obj, "get_info"):
-        try:
-            return str(obj)
-        except:
-            return f"ID: {getattr(obj, 'id', 'Unknown')}"
-    if isinstance(obj, datetime):
-        return obj.isoformat()
-    return str(obj)
 
 
 def check_ifc_against_ids(
@@ -48,15 +34,16 @@ def check_ifc_against_ids(
     Args:
         ids_file_path: IDS 规范文件的绝对路径
         ifc_file_path: IFC 模型文件的绝对路径
-        output_dir: 可选的输出目录，用于保存 HTML/BCF 报告
+        output_dir: 可选的输出目录，用于保存报告文件（如果为 None，使用临时目录）
 
     Returns:
         包含检查结果的字典：
         {
             "success": True/False,
             "message": "状态消息",
-            "report_data": {...},  # JSON 格式的报告数据
-            "html_report_path": "...",  # HTML 报告路径（如果生成）
+            "report_data": {...},  # JSON 格式的报告数据（已清洗）
+            "html_report_path": "...",  # HTML 报告路径（如果指定 output_dir）
+            "json_report_path": "...",  # JSON 报告路径（如果指定 output_dir）
             "summary": {
                 "total_specs": 10,
                 "passed_specs": 8,
@@ -88,11 +75,21 @@ def check_ifc_against_ids(
         result["message"] = f"IFC 文件不存在: {ifc_file_path}"
         return result
 
+    # 决定是否使用临时目录
+    use_temp_dir = output_dir is None
+    if use_temp_dir:
+        output_dir = tempfile.mkdtemp(prefix="ifc_check_")
+        print(f"[Checker] Using temp directory: {output_dir}")
+    else:
+        os.makedirs(output_dir, exist_ok=True)
+
     try:
         # 1. 加载 IFC 模型
+        print(f"[Checker] Loading IFC file: {ifc_file_path}")
         model = ifcopenshell.open(ifc_file_path)
 
         # 2. 加载 IDS 规范
+        print(f"[Checker] Loading IDS file: {ids_file_path}")
         my_ids = ids.open(ids_file_path)
 
         # 验证 IDS 是否有效
@@ -100,19 +97,58 @@ def check_ifc_against_ids(
             result["message"] = "IDS 文件无效或不包含任何规格说明"
             return result
 
+        print(f"[Checker] Found {len(my_ids.specifications)} specifications")
+
         # 3. 执行校验
+        print(f"[Checker] Running validation...")
         my_ids.validate(model)
 
-        # 4. 生成 JSON 报告数据
+        # 4. 生成报告文件（让 ifctester 自己处理序列化）
+        # JSON 报告
+        json_file = os.path.join(output_dir, "report.json")
+        print(f"[Checker] Generating JSON report: {json_file}")
         json_reporter = reporter.Json(my_ids)
-        report_data = json_reporter.report()
+        json_reporter.report()
+        json_reporter.to_file(json_file)
 
-        # 尝试序列化报告数据以验证
-        json.dumps(report_data, default=ifc_json_serializer)
+        # HTML 报告
+        html_file = os.path.join(output_dir, "report.html")
+        print(f"[Checker] Generating HTML report: {html_file}")
+        try:
+            html_reporter = reporter.Html(my_ids)
+            html_reporter.report()
+            html_reporter.to_file(html_file)
+            if not use_temp_dir:
+                result["html_report_path"] = html_file
+        except Exception as e:
+            print(f"[Warning] HTML report generation failed: {e}")
+
+        # BCF 报告（可选）
+        bcf_file = os.path.join(output_dir, "report.bcf")
+        try:
+            bcf_reporter = reporter.Bcf(my_ids)
+            bcf_reporter.report()
+            bcf_reporter.to_file(bcf_file)
+        except Exception as e:
+            print(f"[Warning] BCF report generation failed: {e}")
+
+        # 5. 读取 JSON 报告内容（已经是纯 JSON 格式，完全可序列化）
+        print(f"[Checker] Reading JSON report...")
+        with open(json_file, 'r', encoding='utf-8') as f:
+            report_data = json.load(f)
+
+        # 验证 JSON 数据
+        print(f"[Checker] JSON report loaded, validating...")
+        json.dumps(report_data)  # 确保可以序列化
+        print(f"[Checker] JSON validation passed")
 
         result["report_data"] = report_data
 
-        # 5. 计算摘要统计
+        # 如果指定了输出目录，保留 JSON 文件路径
+        if not use_temp_dir:
+            result["json_report_path"] = json_file
+
+        # 6. 计算摘要统计
         total_specs = len(my_ids.specifications)
         passed_specs = 0
         failed_specs = 0
@@ -132,38 +168,6 @@ def check_ifc_against_ids(
             "total_failed_entities": total_failed_entities
         }
 
-        # 6. 生成报告文件（如果指定了输出目录）
-        if output_dir:
-            os.makedirs(output_dir, exist_ok=True)
-
-            # HTML 报告
-            html_file = os.path.join(output_dir, "report.html")
-            try:
-                html_reporter = reporter.Html(my_ids)
-                html_reporter.report()
-                html_reporter.to_file(html_file)
-                result["html_report_path"] = html_file
-            except Exception as e:
-                print(f"[Warning] HTML 报告生成失败: {e}")
-
-            # JSON 报告文件
-            json_file = os.path.join(output_dir, "report.json")
-            try:
-                with open(json_file, 'w', encoding='utf-8') as f:
-                    json.dump(report_data, f, indent=4, ensure_ascii=False, default=ifc_json_serializer)
-                result["json_report_path"] = json_file
-            except Exception as e:
-                print(f"[Warning] JSON 报告文件保存失败: {e}")
-
-            # BCF 报告（可选）
-            bcf_file = os.path.join(output_dir, "report.bcf")
-            try:
-                bcf_reporter = reporter.Bcf(my_ids)
-                bcf_reporter.report()
-                bcf_reporter.to_file(bcf_file)
-            except Exception as e:
-                print(f"[Warning] BCF 报告生成失败: {e}")
-
         result["success"] = True
         result["message"] = "检查完成"
 
@@ -172,10 +176,22 @@ def check_ifc_against_ids(
         else:
             result["message"] = "所有构件均符合 IDS 要求"
 
+        print(f"[Checker] Validation complete: {result['message']}")
+
     except Exception as e:
         result["message"] = f"检查过程中发生错误: {str(e)}"
         import traceback
         traceback.print_exc()
+
+    finally:
+        # 7. 清理临时目录（如果使用了临时目录）
+        if use_temp_dir:
+            try:
+                import shutil
+                shutil.rmtree(output_dir)
+                print(f"[Checker] Cleaned up temp directory: {output_dir}")
+            except Exception as e:
+                print(f"[Warning] Failed to clean up temp directory: {e}")
 
     return result
 

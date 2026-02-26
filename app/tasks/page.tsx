@@ -26,6 +26,7 @@ interface Task {
   ifcFileName?: string;
   reportSummary?: ReportSummary;
   errorMessage?: string;
+  resultJson?: object; // 用于 XSD 验证失败时显示 JSON
 }
 
 export default function TasksPage() {
@@ -39,6 +40,7 @@ export default function TasksPage() {
   const [deleting, setDeleting] = useState<string | null>(null);
   const [checking, setChecking] = useState<string | null>(null);
   const [ifcFiles, setIfcFiles] = useState<Record<string, File>>({});
+  const [expandedJsonTasks, setExpandedJsonTasks] = useState<Set<string>>(new Set()); // 展开JSON的任务ID集合
   const ifcInputRefs = useRef<Record<string, HTMLInputElement | null>>({});
 
   const userId = session?.user?.id || session?.user?.email || "";
@@ -99,6 +101,24 @@ export default function TasksPage() {
 
   const getTypeLabel = (type: string) => {
     return type === "text" ? "文本输入" : "IFC文件";
+  };
+
+  // 检查是否是 XSD 验证失败
+  const isXsdValidationError = (errorMsg: string): boolean => {
+    return errorMsg.includes("XSD Validation") || errorMsg.includes("XSD验证");
+  };
+
+  // 切换 JSON 展开/折叠
+  const toggleJsonExpand = (taskId: string) => {
+    setExpandedJsonTasks((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(taskId)) {
+        newSet.delete(taskId);
+      } else {
+        newSet.add(taskId);
+      }
+      return newSet;
+    });
   };
 
   // 下载 JSON
@@ -173,7 +193,12 @@ export default function TasksPage() {
 
   // 重试任务
   const retryTask = async (task: Task) => {
-    if (!confirm(`确定要重试任务 "${task.originalname}" 吗？`)) {
+    const isCheckFailed = task.status === "check_failed";
+    const confirmMessage = isCheckFailed
+      ? `确定要重置任务 "${task.originalname}" 吗？\n\n重置后任务将回到"已完成"状态，您可以重新上传 IFC 文件进行审查。`
+      : `确定要重试任务 "${task.originalname}" 吗？`;
+
+    if (!confirm(confirmMessage)) {
       return;
     }
 
@@ -184,7 +209,12 @@ export default function TasksPage() {
       });
 
       if (response.ok) {
-        alert("任务已重新提交，请稍候...");
+        const result = await response.json();
+        if (result.retryType === "check_retry") {
+          alert("任务已重置为完成状态，请重新上传 IFC 文件进行审查。");
+        } else {
+          alert("任务已重新提交，请稍候...");
+        }
         fetchTasks();
       } else {
         const error = await response.json();
@@ -422,10 +452,38 @@ export default function TasksPage() {
 
                 {/* Error message */}
                 {(task.status === "failed" || task.status === "check_failed") && task.errorMessage && (
-                  <div className="mb-3 p-3 bg-red-50 dark:bg-red-900/20 rounded border border-red-200 dark:border-red-800">
-                    <p className="text-sm text-red-600 dark:text-red-400">
-                      错误: {task.errorMessage.length > 100 ? task.errorMessage.slice(0, 100) + "..." : task.errorMessage}
-                    </p>
+                  <div className="mb-3">
+                    <div className="p-3 bg-red-50 dark:bg-red-900/20 rounded border border-red-200 dark:border-red-800">
+                      <p className="text-sm text-red-600 dark:text-red-400">
+                        错误: {task.errorMessage.length > 200 ? task.errorMessage.slice(0, 200) + "..." : task.errorMessage}
+                      </p>
+                    </div>
+                    {/* XSD 验证失败时显示 JSON 查看按钮 */}
+                    {task.resultJson && isXsdValidationError(task.errorMessage) && (
+                      <div className="mt-2">
+                        <button
+                          onClick={() => toggleJsonExpand(task._id)}
+                          className="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 flex items-center gap-1"
+                        >
+                          <svg
+                            className={`w-4 h-4 transition-transform ${expandedJsonTasks.has(task._id) ? "rotate-90" : ""}`}
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                          {expandedJsonTasks.has(task._id) ? "隐藏 JSON 数据" : "查看生成的 JSON (用于调试)"}
+                        </button>
+                        {expandedJsonTasks.has(task._id) && (
+                          <div className="mt-2 p-3 bg-gray-900 rounded border border-gray-700 overflow-auto max-h-64">
+                            <pre className="text-xs text-green-400 font-mono whitespace-pre-wrap">
+                              {JSON.stringify(task.resultJson, null, 2)}
+                            </pre>
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 )}
 
@@ -538,16 +596,28 @@ export default function TasksPage() {
                     </Button>
                   )}
 
-                  {/* Failed or Check Failed: Retry */}
+                  {/* Failed or Check Failed: Retry + Download JSON (if XSD error) */}
                   {(task.status === "failed" || task.status === "check_failed") && (
-                    <Button
-                      size="sm"
-                      variant="default"
-                      onClick={() => retryTask(task)}
-                      disabled={retrying === task._id}
-                    >
-                      {retrying === task._id ? "重试中..." : "重试"}
-                    </Button>
+                    <>
+                      <Button
+                        size="sm"
+                        variant="default"
+                        onClick={() => retryTask(task)}
+                        disabled={retrying === task._id}
+                      >
+                        {retrying === task._id ? "重试中..." : "重试"}
+                      </Button>
+                      {task.resultJson && task.errorMessage && isXsdValidationError(task.errorMessage) && (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => downloadJson(task)}
+                          disabled={downloadingJson === task._id}
+                        >
+                          {downloadingJson === task._id ? "下载中..." : "下载 JSON"}
+                        </Button>
+                      )}
+                    </>
                   )}
 
                   {/* Delete Button - Always visible but on the right */}

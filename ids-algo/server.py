@@ -18,6 +18,7 @@ import tempfile
 from contextlib import asynccontextmanager
 from pathlib import Path
 from datetime import datetime
+from typing import Any
 
 from fastapi import FastAPI, BackgroundTasks, HTTPException
 from pydantic import BaseModel
@@ -44,6 +45,63 @@ from checker_service import check_ifc_against_ids
 # --- 配置日志 ---
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("ids_server")
+
+
+# =============================================================================
+# BSON 序列化清洗函数
+# =============================================================================
+
+def sanitize_for_bson(obj: Any) -> Any:
+    """
+    递归清洗数据，确保所有值都能被 BSON 序列化
+
+    ifctester 返回的报告数据中可能包含自定义 Python 对象（如 Restriction 类实例），
+    这些对象无法直接存入 MongoDB。此函数将：
+    1. 将字典递归清洗
+    2. 将列表递归清洗
+    3. 将无法序列化的对象转换为字符串表示
+    """
+    if obj is None:
+        return None
+
+    if isinstance(obj, (str, int, float, bool)):
+        return obj
+
+    if isinstance(obj, dict):
+        return {key: sanitize_for_bson(value) for key, value in obj.items()}
+
+    if isinstance(obj, (list, tuple)):
+        return [sanitize_for_bson(item) for item in obj]
+
+    # 对于 datetime 等基本类型，保持原样
+    if isinstance(obj, datetime):
+        return obj
+
+    # 对于其他类型（自定义对象等），尝试转换为字符串
+    try:
+        # 尝试 JSON 序列化测试
+        json.dumps(obj)
+        return obj
+    except (TypeError, ValueError):
+        # 无法序列化，转换为字符串
+        logger.warning(f"Converting non-serializable object to string: {type(obj)}")
+        return str(obj)
+
+
+def deep_json_sanitize(obj: Any) -> Any:
+    """
+    使用 JSON 序列化/反序列化进行深度清洗
+
+    这是一种"黑科技"方法：通过 JSON 的 default=str 处理所有无法直接序列化的对象，
+    然后再解析回来，确保结果只包含基本 JSON 类型。
+    """
+    try:
+        json_str = json.dumps(obj, default=str, ensure_ascii=False)
+        return json.loads(json_str)
+    except Exception as e:
+        logger.error(f"Failed to sanitize object: {e}")
+        # 降级处理：返回字符串表示
+        return str(obj)
 
 # --- XSD Schema 路径 ---
 XSD_PATH = Path(__file__).parent.parent / "ids_converter" / "ids.xsd"
@@ -307,12 +365,17 @@ async def process_ifc_check_task(task_id: str, ids_file_id: str, ifc_file_id: st
             logger.info(f"✅ IFC check completed: {result['message']}")
             logger.info(f"   Summary: {result['summary']}")
 
+            # 报告数据已在 checker_service 中清洗，直接使用
+            report_data = result.get("report_data")
+            if report_data:
+                logger.info(f"📊 Report data ready, specs count: {len(report_data.get('specifications', []))}")
+
             # 更新任务状态为 checked
             resources_col.update_one(
                 {"_id": ObjectId(task_id)},
                 {"$set": {
                     "status": "checked",
-                    "reportData": result.get("report_data"),
+                    "reportData": report_data,
                     "reportSummary": result.get("summary"),
                     "checkedAt": datetime.now(),
                     "errorMessage": None
