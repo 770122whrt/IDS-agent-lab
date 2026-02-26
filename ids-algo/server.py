@@ -1,8 +1,23 @@
+"""
+IDS Agent Python Backend Server
+
+纯数据库存储架构：
+- IDS 文件存储到 GridFS
+- IFC 文件存储到 GridFS
+- 审查报告存储为 JSON
+- 使用临时文件对接 ifctester，审查完成后立即删除
+
+作者: IDS-Agent
+版本: 2.0.0
+"""
+
 import os
 import json
 import logging
+import tempfile
 from contextlib import asynccontextmanager
 from pathlib import Path
+from datetime import datetime
 
 from fastapi import FastAPI, BackgroundTasks, HTTPException
 from pydantic import BaseModel
@@ -22,14 +37,13 @@ import sys
 sys.path.insert(0, str(Path(__file__).parent.parent / "ids_converter"))
 from converter import convert_json_to_ids_xml, XSDValidationError, IDSConversionError
 
+# 引入 IFC 检查器
+sys.path.insert(0, str(Path(__file__).parent.parent / "ifc_checker"))
+from checker_service import check_ifc_against_ids
+
 # --- 配置日志 ---
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("ids_server")
-
-# --- IDS 文件存储目录 ---
-IDS_FILES_DIR = Path(__file__).parent.parent / "uploads" / "ids_files"
-IDS_FILES_DIR.mkdir(parents=True, exist_ok=True)
-logger.info(f"📁 IDS files will be saved to: {IDS_FILES_DIR}")
 
 # --- XSD Schema 路径 ---
 XSD_PATH = Path(__file__).parent.parent / "ids_converter" / "ids.xsd"
@@ -38,18 +52,25 @@ XSD_PATH = Path(__file__).parent.parent / "ids_converter" / "ids.xsd"
 # 必须与 Next.js 使用相同的 MONGODB_URI
 MONGO_URI = os.getenv("MONGODB_URI", "mongodb://localhost:27017/ids_db")
 
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # 启动时连接
     app.mongodb_client = MongoClient(MONGO_URI)
-    app.db = app.mongodb_client.get_database() # 获取默认库
+    app.db = app.mongodb_client.get_database()
     logger.info(f"✅ Connected to MongoDB at {MONGO_URI}")
     yield
     # 关闭时断开
     app.mongodb_client.close()
     logger.info("🛑 MongoDB connection closed")
 
+
 app = FastAPI(lifespan=lifespan)
+
+
+# =============================================================================
+# 请求模型
+# =============================================================================
 
 class AnalysisRequest(BaseModel):
     resourceId: str
@@ -58,15 +79,24 @@ class TextAnalysisRequest(BaseModel):
     resourceId: str
     text: str
 
-# --- 核心后台任务 (文件处理) ---
+class IFCCheckRequest(BaseModel):
+    taskId: str
+    idsFileId: str  # GridFS 中的 IDS 文件 ID
+    ifcFileId: str  # GridFS 中的 IFC 文件 ID
+
+
+# =============================================================================
+# 核心后台任务
+# =============================================================================
+
 async def process_file_task(resource_id: str, db):
     """
-    1. 读状态 -> 2. 读文件 -> 3. 跑算法 -> 4. 存结果 -> 5. 写状态
+    处理文件上传分析的后台任务（保留原有逻辑）
     """
     fs = gridfs.GridFS(db, collection="uploads")
     resources_col = db["resources"]
 
-    logger.info(f"🚀 Starting task for Resource: {resource_id}")
+    logger.info(f"🚀 Starting file task for Resource: {resource_id}")
 
     try:
         # 1. 更新状态为 Processing
@@ -85,21 +115,19 @@ async def process_file_task(resource_id: str, db):
             raise Exception("GridFS file not found")
 
         grid_out = fs.get(file_id)
-        # 假设上传的是文本文件 (txt/md/json)
         text_content = grid_out.read().decode("utf-8")
         logger.info(f"📖 Read {len(text_content)} chars from file.")
 
-        # 3. 🔥 调用 Pipeline (A->E) 🔥
+        # 3. 调用 Pipeline
         result_json = await run_ids_pipeline(text_content)
 
-        # 4. 存回结果 (存为新的 GridFS 文件)
+        # 4. 存储结果到 GridFS
         original_name = resource.get("originalname", "unknown")
         result_filename = f"{original_name}_result.json"
-
         result_bytes = json.dumps(result_json, ensure_ascii=False, indent=2).encode("utf-8")
         result_file_id = fs.put(result_bytes, filename=result_filename, contentType="application/json")
 
-        # 5. 更新状态为 Completed
+        # 5. 更新状态
         resources_col.update_one(
             {"_id": ObjectId(resource_id)},
             {"$set": {
@@ -108,24 +136,24 @@ async def process_file_task(resource_id: str, db):
                 "errorMessage": None
             }}
         )
-        logger.info(f"✅ Task {resource_id} completed. Result ID: {result_file_id}")
+        logger.info(f"✅ File task {resource_id} completed. Result ID: {result_file_id}")
 
     except Exception as e:
-        logger.error(f"❌ Task {resource_id} failed: {e}")
+        logger.error(f"❌ File task {resource_id} failed: {e}")
         import traceback
         traceback.print_exc()
-        # 记录失败状态
         resources_col.update_one(
             {"_id": ObjectId(resource_id)},
             {"$set": {"status": "failed", "errorMessage": str(e)}}
         )
 
-# --- 核心后台任务 (文本处理) ---
+
 async def process_text_task(resource_id: str, text_content: str, db):
     """
     处理文本输入的后台任务
-    1. 更新状态 -> 2. 运行Pipeline -> 3. 转换为IDS XML -> 4. 存储文件 -> 5. 更新状态
+    IDS 文件存储到 GridFS（纯数据库存储架构）
     """
+    fs = gridfs.GridFS(db, collection="uploads")
     resources_col = db["resources"]
 
     logger.info(f"🚀 Starting text processing task for Resource: {resource_id}")
@@ -137,17 +165,17 @@ async def process_text_task(resource_id: str, text_content: str, db):
             {"$set": {"status": "processing"}}
         )
 
-        # 2. 🔥 调用 Pipeline (A->E) 🔥
+        # 2. 调用 Pipeline
         logger.info(f"📖 Processing {len(text_content)} chars of text.")
         result_json = await run_ids_pipeline(text_content)
 
-        # 3. 🔥 转换 JSON 为 IDS XML 🔥
+        # 3. 转换 JSON 为 IDS XML
         logger.info(f"🔄 Converting JSON to IDS XML...")
         try:
             ids_xml_content = convert_json_to_ids_xml(
                 result_json,
                 xsd_path=str(XSD_PATH),
-                title=None,  # 使用第一个 specification 的 name
+                title=None,
                 copyright="Generated by IDS-Agent",
                 version="1.0",
             )
@@ -177,22 +205,24 @@ async def process_text_task(resource_id: str, text_content: str, db):
             )
             return
 
-        # 4. 💾 保存 IDS 文件到物理存储
+        # 4. 存储 IDS 文件到 GridFS
         ids_filename = f"{resource_id}.ids"
-        ids_file_path = IDS_FILES_DIR / ids_filename
+        ids_bytes = ids_xml_content.encode('utf-8')
+        ids_file_id = fs.put(
+            ids_bytes,
+            filename=ids_filename,
+            contentType="application/xml"
+        )
+        logger.info(f"💾 IDS file saved to GridFS with ID: {ids_file_id}")
 
-        with open(ids_file_path, 'w', encoding='utf-8') as f:
-            f.write(ids_xml_content)
-
-        logger.info(f"💾 IDS file saved to: {ids_file_path}")
-
-        # 5. 更新状态为 Completed，存储文件路径
+        # 5. 更新状态为 Completed
         resources_col.update_one(
             {"_id": ObjectId(resource_id)},
             {"$set": {
                 "status": "completed",
                 "resultJson": result_json,
-                "idsFilePath": str(ids_file_path),
+                "idsFileId": ids_file_id,
+                "idsFileName": ids_filename,
                 "errorMessage": None
             }}
         )
@@ -202,38 +232,196 @@ async def process_text_task(resource_id: str, text_content: str, db):
         logger.error(f"❌ Text task {resource_id} failed: {e}")
         import traceback
         traceback.print_exc()
-        # 记录失败状态
         resources_col.update_one(
             {"_id": ObjectId(resource_id)},
             {"$set": {"status": "failed", "errorMessage": str(e)}}
         )
 
-# --- API 接口 ---
+
+async def process_ifc_check_task(task_id: str, ids_file_id: str, ifc_file_id: str, db):
+    """
+    处理 IFC 审查的后台任务
+    使用临时文件对接 ifctester，审查完成后立即删除临时文件
+    """
+    fs = gridfs.GridFS(db, collection="uploads")
+    resources_col = db["resources"]
+
+    logger.info(f"🔍 Starting IFC check task: {task_id}")
+
+    ids_temp_file = None
+    ifc_temp_file = None
+
+    try:
+        # 1. 更新状态为 checking
+        resources_col.update_one(
+            {"_id": ObjectId(task_id)},
+            {"$set": {"status": "checking"}}
+        )
+
+        # 2. 从 GridFS 读取 IDS 文件，写入临时文件
+        if not fs.exists(ObjectId(ids_file_id)):
+            raise Exception(f"IDS file not found in GridFS: {ids_file_id}")
+
+        ids_grid_out = fs.get(ObjectId(ids_file_id))
+        ids_content = ids_grid_out.read()
+
+        # 创建临时 IDS 文件
+        ids_temp_file = tempfile.NamedTemporaryFile(
+            mode='wb',
+            suffix='.ids',
+            delete=False
+        )
+        ids_temp_file.write(ids_content)
+        ids_temp_file.close()
+        ids_temp_path = ids_temp_file.name
+        logger.info(f"📁 IDS temp file created: {ids_temp_path}")
+
+        # 3. 从 GridFS 读取 IFC 文件，写入临时文件
+        if not fs.exists(ObjectId(ifc_file_id)):
+            raise Exception(f"IFC file not found in GridFS: {ifc_file_id}")
+
+        ifc_grid_out = fs.get(ObjectId(ifc_file_id))
+        ifc_content = ifc_grid_out.read()
+
+        # 创建临时 IFC 文件
+        ifc_temp_file = tempfile.NamedTemporaryFile(
+            mode='wb',
+            suffix='.ifc',
+            delete=False
+        )
+        ifc_temp_file.write(ifc_content)
+        ifc_temp_file.close()
+        ifc_temp_path = ifc_temp_file.name
+        logger.info(f"📁 IFC temp file created: {ifc_temp_path}")
+
+        # 4. 调用审查函数
+        logger.info(f"🔍 Running IDS validation against IFC model...")
+        result = check_ifc_against_ids(
+            ids_file_path=ids_temp_path,
+            ifc_file_path=ifc_temp_path,
+            output_dir=None  # 不生成物理报告文件，只返回数据
+        )
+
+        # 5. 处理结果
+        if result["success"]:
+            logger.info(f"✅ IFC check completed: {result['message']}")
+            logger.info(f"   Summary: {result['summary']}")
+
+            # 更新任务状态为 checked
+            resources_col.update_one(
+                {"_id": ObjectId(task_id)},
+                {"$set": {
+                    "status": "checked",
+                    "reportData": result.get("report_data"),
+                    "reportSummary": result.get("summary"),
+                    "checkedAt": datetime.now(),
+                    "errorMessage": None
+                }}
+            )
+        else:
+            logger.error(f"❌ IFC check failed: {result['message']}")
+
+            # 更新任务状态为 check_failed
+            resources_col.update_one(
+                {"_id": ObjectId(task_id)},
+                {"$set": {
+                    "status": "check_failed",
+                    "errorMessage": result["message"]
+                }}
+            )
+
+    except Exception as e:
+        logger.error(f"❌ IFC check task {task_id} failed: {e}")
+        import traceback
+        traceback.print_exc()
+
+        resources_col.update_one(
+            {"_id": ObjectId(task_id)},
+            {"$set": {
+                "status": "check_failed",
+                "errorMessage": str(e)
+            }}
+        )
+
+    finally:
+        # 6. 清理临时文件（重要！）
+        if ids_temp_file and os.path.exists(ids_temp_file.name):
+            try:
+                os.unlink(ids_temp_file.name)
+                logger.info(f"🧹 Cleaned up IDS temp file: {ids_temp_file.name}")
+            except Exception as e:
+                logger.warning(f"⚠️ Failed to clean up IDS temp file: {e}")
+
+        if ifc_temp_file and os.path.exists(ifc_temp_file.name):
+            try:
+                os.unlink(ifc_temp_file.name)
+                logger.info(f"🧹 Cleaned up IFC temp file: {ifc_temp_file.name}")
+            except Exception as e:
+                logger.warning(f"⚠️ Failed to clean up IFC temp file: {e}")
+
+
+# 需要导入 datetime
+from datetime import datetime
+
+
+# =============================================================================
+# API 接口
+# =============================================================================
+
 @app.post("/analyze")
 async def start_analysis(req: AnalysisRequest, background_tasks: BackgroundTasks):
     """
-    Next.js 调用的入口（文件分析）。
-    不等待分析完成，直接返回 "OK"，后台慢慢跑。
+    文件分析入口（保留原有功能）
     """
     logger.info(f"📥 Received analysis request for {req.resourceId}")
     background_tasks.add_task(process_file_task, req.resourceId, app.db)
     return {"message": "Analysis started", "id": req.resourceId}
 
+
 @app.post("/analyze-text")
 async def start_text_analysis(req: TextAnalysisRequest, background_tasks: BackgroundTasks):
     """
-    Next.js 调用的入口（文本分析）。
-    不等待分析完成，直接返回 "OK"，后台慢慢跑。
+    文本分析入口
+    IDS 文件存储到 GridFS
     """
     logger.info(f"📥 Received text analysis request for {req.resourceId}")
     background_tasks.add_task(process_text_task, req.resourceId, req.text, app.db)
     return {"message": "Text analysis started", "id": req.resourceId}
 
+
+@app.post("/check-ifc")
+async def check_ifc(req: IFCCheckRequest, background_tasks: BackgroundTasks):
+    """
+    IFC 审查入口
+    使用后台任务执行审查，支持大文件和长时间处理
+    """
+    logger.info(f"📥 Received IFC check request for task: {req.taskId}")
+    logger.info(f"   IDS File ID: {req.idsFileId}")
+    logger.info(f"   IFC File ID: {req.ifcFileId}")
+
+    # 验证任务存在
+    resources_col = app.db["resources"]
+    task = resources_col.find_one({"_id": ObjectId(req.taskId)})
+    if not task:
+        raise HTTPException(status_code=404, detail="Task not found")
+
+    # 添加后台任务
+    background_tasks.add_task(
+        process_ifc_check_task,
+        req.taskId,
+        req.idsFileId,
+        req.ifcFileId,
+        app.db
+    )
+
+    return {"message": "IFC check started", "taskId": req.taskId}
+
+
 @app.get("/health")
 def health_check():
     return {"status": "ok"}
 
+
 if __name__ == "__main__":
     import uvicorn
-    # 启动服务，端口 8000
     uvicorn.run(app, host="0.0.0.0", port=8000)

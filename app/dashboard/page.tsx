@@ -3,7 +3,6 @@
 import { useSession, signOut } from "@/app/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -13,7 +12,6 @@ export default function Dashboard() {
   const router = useRouter();
 
   const [inputText, setInputText] = useState("");
-  const [ifcFile, setIfcFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
@@ -85,75 +83,50 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-black">
-      <div className="max-w-4xl mx-auto px-4 py-8">
+      <div className="max-w-3xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100">
-              欢迎, <span className="text-blue-600 dark:text-blue-400">{session.user.name || "用户"}</span>
+            <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">
+              IDS Generator
             </h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">
-              {session.user.email}
+            <p className="text-gray-600 dark:text-gray-400 mt-1">
+              从自然语言生成 IDS 规范文件
             </p>
           </div>
           <div className="flex gap-2">
             <Button variant="outline" onClick={() => router.push("/tasks")}>
-              查看任务
+              任务列表
             </Button>
-            <Button variant="outline" onClick={() => router.push("/ids_use")}>
-              文件管理
-            </Button>
-            <Button variant="outline" onClick={handleSignOut}>
-              退出登录
+            <Button variant="ghost" onClick={handleSignOut}>
+              退出
             </Button>
           </div>
         </div>
 
         {/* Main Form */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
-          <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-100">
-            创建 IDS 规范
-          </h2>
-
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Text Input */}
             <div className="space-y-2">
               <Label htmlFor="ids-text" className="text-base font-semibold">
-                输入 IDS 需求描述 <span className="text-red-500">*</span>
+                输入 IDS 需求描述
               </Label>
               <Textarea
                 id="ids-text"
-                placeholder="请输入您的IDS需求，例如：&#10;- 所有IfcWall的防火等级必须为A级&#10;- 门的宽度必须大于900mm&#10;- 楼板的承重必须大于500kg/m²"
+                placeholder="请用自然语言描述您的 IDS 规范要求，例如：&#10;&#10;• 所有 IfcWall 的防火等级必须为 A 级&#10;• 门的宽度必须大于 900mm&#10;• 楼板的承重必须大于 500kg/m²&#10;• 所有空间必须包含面积属性"
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
-                className="min-h-[200px] text-base"
+                className="min-h-[280px] text-base leading-relaxed"
                 disabled={isSubmitting}
               />
               <p className="text-sm text-gray-500">
-                请用自然语言描述您的IDS规范要求
-              </p>
-            </div>
-
-            {/* IFC File Upload (Disabled - Phase 3) */}
-            <div className="space-y-2">
-              <Label htmlFor="ifc-file" className="text-base font-semibold text-gray-400">
-                上传 IFC 文件 (第三阶段启用)
-              </Label>
-              <Input
-                id="ifc-file"
-                type="file"
-                accept=".ifc"
-                disabled={true}
-                onChange={(e) => setIfcFile(e.target.files?.[0] || null)}
-                className="cursor-not-allowed opacity-50"
-              />
-              <p className="text-sm text-gray-400">
-                此功能将在第三阶段开放，用于审核生成的IDS文件
+                支持中英文输入，系统将自动解析并生成符合 IDS 标准的 XML 文件
               </p>
             </div>
 
             {/* Submit Button */}
-            <div className="flex justify-end gap-4">
+            <div className="flex justify-end gap-3">
               <Button
                 type="button"
                 variant="outline"
@@ -165,7 +138,7 @@ export default function Dashboard() {
               <Button
                 type="submit"
                 disabled={isSubmitting || !inputText.trim()}
-                className="min-w-[120px]"
+                className="min-w-[140px]"
               >
                 {isSubmitting ? (
                   <span className="flex items-center gap-2">
@@ -173,37 +146,20 @@ export default function Dashboard() {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
                     </svg>
-                    提交中...
+                    生成中...
                   </span>
                 ) : (
-                  "生成 IDS"
+                  "生成 IDS 文件"
                 )}
               </Button>
             </div>
           </form>
         </div>
 
-        {/* Quick Links */}
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <h3 className="font-bold text-lg mb-2">📝 阶段一</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-              输入需求文本，生成规范JSON
-            </p>
-          </div>
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 opacity-50">
-            <h3 className="font-bold text-lg mb-2">🔄 阶段二</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-              将JSON转换为IDS文件
-            </p>
-          </div>
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 opacity-50">
-            <h3 className="font-bold text-lg mb-2">✅ 阶段三</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-              上传IFC文件进行审核
-            </p>
-          </div>
-        </div>
+        {/* Footer hint */}
+        <p className="text-center text-sm text-gray-400 dark:text-gray-500 mt-6">
+          登录用户: {session.user.name || session.user.email}
+        </p>
       </div>
     </div>
   );
