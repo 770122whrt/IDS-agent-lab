@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { dbConnect } from "../../../../backend/mongodb";
 import { Resource } from "../../../../backend/resource";
-import { unlink, access } from "fs/promises";
-import { constants } from "fs";
+import mongoose from "mongoose";
 
 // Next.js 15 要求 params 必须是一个 Promise 类型
 type ContextType = {
@@ -47,7 +46,7 @@ export async function GET(
   }
 }
 
-// DELETE: 删除任务（包括物理文件）
+// DELETE: 删除任务（包括 GridFS 中的文件）
 export async function DELETE(
   request: NextRequest,
   context: ContextType
@@ -75,15 +74,37 @@ export async function DELETE(
       );
     }
 
-    // 删除物理 IDS 文件（如果存在）
-    if (task.idsFilePath) {
+    // 删除 GridFS 中的文件
+    const db = mongoose.connection.db;
+    const bucket = new mongoose.mongo.GridFSBucket(db, { bucketName: 'uploads' });
+
+    // 删除 IDS 文件
+    if (task.idsFileId) {
       try {
-        await access(task.idsFilePath, constants.F_OK);
-        await unlink(task.idsFilePath);
-        console.log(`Deleted IDS file: ${task.idsFilePath}`);
-      } catch (fileError) {
-        // 文件不存在或删除失败，只记录日志，不阻止删除
-        console.log(`IDS file not found or already deleted: ${task.idsFilePath}`);
+        await bucket.delete(new mongoose.Types.ObjectId(task.idsFileId));
+        console.log(`Deleted IDS file from GridFS: ${task.idsFileId}`);
+      } catch (err) {
+        console.log(`IDS file not found or already deleted: ${task.idsFileId}`);
+      }
+    }
+
+    // 删除 IFC 文件
+    if (task.ifcFileId) {
+      try {
+        await bucket.delete(new mongoose.Types.ObjectId(task.ifcFileId));
+        console.log(`Deleted IFC file from GridFS: ${task.ifcFileId}`);
+      } catch (err) {
+        console.log(`IFC file not found or already deleted: ${task.ifcFileId}`);
+      }
+    }
+
+    // 删除原始上传文件（如果有）
+    if (task.fileId) {
+      try {
+        await bucket.delete(new mongoose.Types.ObjectId(task.fileId));
+        console.log(`Deleted original file from GridFS: ${task.fileId}`);
+      } catch (err) {
+        console.log(`Original file not found or already deleted: ${task.fileId}`);
       }
     }
 

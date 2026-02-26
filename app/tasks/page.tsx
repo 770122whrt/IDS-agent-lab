@@ -20,8 +20,10 @@ interface Task {
   inputText?: string;
   status: "pending" | "processing" | "pending_conversion" | "completed" | "checking" | "checked" | "check_failed" | "failed";
   uploadTime: string;
-  idsFilePath?: string;
-  ifcFilePath?: string;
+  idsFileId?: string;
+  idsFileName?: string;
+  ifcFileId?: string;
+  ifcFileName?: string;
   reportSummary?: ReportSummary;
   errorMessage?: string;
 }
@@ -430,7 +432,7 @@ export default function TasksPage() {
                 {/* Action Buttons */}
                 <div className="flex flex-wrap gap-2 items-center pt-2 border-t border-gray-100 dark:border-gray-700">
                   {/* Completed: Download JSON, Download IDS, Upload IFC, View Report */}
-                  {task.status === "completed" && task.idsFilePath && (
+                  {task.status === "completed" && (task as any).idsFileId && (
                     <>
                       <Button
                         size="sm"
@@ -486,15 +488,15 @@ export default function TasksPage() {
                     </>
                   )}
 
-                  {/* Checked: View Report, Download IDS */}
+                  {/* Checked: View Details, Download IDS, View Report */}
                   {task.status === "checked" && (
                     <>
                       <Button
                         size="sm"
-                        variant="default"
-                        onClick={() => viewReport(task)}
+                        variant="outline"
+                        onClick={() => router.push(`/tasks/${task._id}`)}
                       >
-                        查看报告
+                        查看任务详情
                       </Button>
                       <Button
                         size="sm"
@@ -503,6 +505,13 @@ export default function TasksPage() {
                         disabled={downloadingIds === task._id}
                       >
                         {downloadingIds === task._id ? "下载中..." : "下载 .ids"}
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="default"
+                        onClick={() => router.push(`/tasks/${task._id}/report`)}
+                      >
+                        查看审查报告
                       </Button>
                     </>
                   )}
