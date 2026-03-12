@@ -1,0 +1,129 @@
+# =============================================================================
+# 中文模板 - IDS 自然语言描述
+# =============================================================================
+
+# 基本信息
+info:
+  header: "【基本信息】"
+  fields:
+    title: "标题"
+    copyright: "版权"
+    version: "版本"
+    date: "日期"
+    author: "作者"
+    description: "描述"
+
+# 规范
+specification:
+  header: "【规范 {index}】{name}"
+  ifc_version: "适用IFC版本"
+  description: "描述"
+  instructions: "说明"
+  identifier: "标识符"
+
+# 适用范围
+applicability:
+  header: "适用范围 (Applicability)"
+  minOccurs: "最少出现次数"
+  maxOccurs: "最多出现次数"
+
+# 要求
+requirements:
+  header: "要求 (Requirements)"
+  description: "说明"
+
+# Facet 类型
+facet_types:
+  entity: "实体"
+  property: "属性"
+  attribute: "属性"
+  classification: "分类"
+  material: "材料"
+  partOf: "组成部分"
+
+# 实体 Facet
+entity:
+  title: "实体要求 (Entity)"
+  name: "实体类型"
+  predefined_type: "预定义类型"
+
+# 属性 Facet
+property:
+  title: "属性要求 (Property)"
+  property_set: "属性集"
+  property_name: "属性名"
+  data_type: "数据类型"
+  value: "属性值"
+  uri: "URI引用"
+  cardinality: "基数约束"
+  cardinality_values:
+    required: "必须存在"
+    prohibited: "禁止存在"
+    optional: "可选"
+
+# Attribute Facet
+attribute:
+  title: "属性要求 (Attribute)"
+  name: "属性名"
+  value: "属性值"
+  cardinality: "基数约束"
+
+# Classification Facet
+classification:
+  title: "分类要求 (Classification)"
+  system: "分类系统"
+  value: "分类值"
+  uri: "URI引用"
+  cardinality: "基数约束"
+
+# Material Facet
+material:
+  title: "材料要求 (Material)"
+  value: "材料名称"
+  uri: "URI引用"
+  cardinality: "基数约束"
+
+# PartOf Facet
+partOf:
+  title: "组成要求 (PartOf)"
+  relation: "关系类型"
+  entity: "关联实体"
+  cardinality: "基数约束"
+
+# 约束条件
+constraints:
+  enumeration: "枚举值"
+  pattern: "正则模式"
+  min_inclusive: "最小值(含)"
+  max_inclusive: "最大值(含)"
+  min_exclusive: "最小值(不含)"
+  max_exclusive: "最大值(不含)"
+  min_length: "最小长度"
+  max_length: "最大长度"
+  length: "精确长度"
+  total_digits: "总位数"
+  fraction_digits: "小数位数"
+
+# 约束描述模板
+constraint_templates:
+  enumeration: "必须是以下值之一: {values}"
+  pattern: "必须匹配模式: {value}"
+  min_inclusive: "必须大于或等于 {value}"
+  max_inclusive: "必须小于或等于 {value}"
+  min_exclusive: "必须大于 {value}"
+  max_exclusive: "必须小于 {value}"
+  min_length: "长度至少为 {value}"
+  max_length: "长度最多为 {value}"
+  length: "长度必须为 {value}"
+  total_digits: "总位数必须为 {value}"
+  fraction_digits: "小数位数必须为 {value}"
+  range: "必须在 {min} 到 {max} 范围内"
+
+# 通用
+general:
+  required: "必须存在"
+  prohibited: "禁止存在"
+  optional: "可选"
+  and: "且"
+  or: "或"
+  separator: "、"

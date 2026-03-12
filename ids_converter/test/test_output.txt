@@ -1,0 +1,69 @@
+=== IDS 审查规范说明 ===
+
+【基本信息】
+标题: Example of property
+版权: Claudio Benghi
+日期: 2023-04-12
+
+【规范 1】Wall with common property
+适用IFC版本: IFC2X3
+
+适用范围 (Applicability):
+  基数: 1..unbounded
+  • 适用于 IFCWALL 类型的所有构件
+
+要求 (Requirements):
+  1. 属性要求 (Property)
+     - 属性集: Pset_WallCommon
+     - 属性名: AcousticRating
+     - 数据类型: IFCLABEL
+
+【规范 2】IFCACTUATORTYPE with measure property
+适用IFC版本: IFC2X3
+
+适用范围 (Applicability):
+  基数: 1..unbounded
+  • 适用于 IFCACTUATORTYPE 类型的所有构件
+
+要求 (Requirements):
+  1. 属性要求 (Property)
+     - 属性集: Pset_ActuatorTypeElectricActuator
+     - 属性名: ActuatorInputPower
+     - 数据类型: IFCPOWERMEASURE
+
+============================================================
+
+=== English Version ===
+
+=== IDS Specification Description ===
+
+【Basic Information】
+Title: Example of property
+Copyright: Claudio Benghi
+Date: 2023-04-12
+
+【Specification 1】Wall with common property
+IFC Version: IFC2X3
+
+Applicability:
+  Cardinality: 1..unbounded
+  • Applies to all IFCWALL type entities
+
+Requirements:
+  1. Property Requirement
+     - Property Set: Pset_WallCommon
+     - Property Name: AcousticRating
+     - Data Type: IFCLABEL
+
+【Specification 2】IFCACTUATORTYPE with measure property
+IFC Version: IFC2X3
+
+Applicability:
+  Cardinality: 1..unbounded
+  • Applies to all IFCACTUATORTYPE type entities
+
+Requirements:
+  1. Property Requirement
+     - Property Set: Pset_ActuatorTypeElectricActuator
+     - Property Name: ActuatorInputPower
+     - Data Type: IFCPOWERMEASURE
