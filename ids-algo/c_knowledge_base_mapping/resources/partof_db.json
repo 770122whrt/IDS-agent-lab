@@ -1,0 +1,90 @@
+{
+  "metadata": {
+    "name": "IFC PartOf Relationship Knowledge Base",
+    "description": "IFC空间关系知识库，用于存储和检索IFC实体间的包含关系",
+    "version": "1.0.0", 
+    "ifc_versions": ["IFC2X3", "IFC4", "IFC4X3"],
+    "item_types": ["partOf"],
+    "vector_dim": 768,
+    "model_name": "BAAI/bge-m3",
+    "created_at": "2025-08-20T12:00:00.000000",
+    "updated_at": "2025-08-20T12:00:00.000000",
+    "item_counts": {
+      "partOf": 8
+    }
+  },
+  "items": [
+    {
+      "name": "Building contains Storey",
+      "definition": "A building contains one or more storeys as spatial decomposition.",
+      "ifc_version": "IFC4",
+      "item_type": "partOf",
+      "parent_entity": "IfcBuilding",
+      "child_entity": "IfcBuildingStorey", 
+      "relationship_type": "IfcRelAggregates"
+    },
+    {
+      "name": "Storey contains Space",
+      "definition": "A building storey contains spaces as spatial decomposition.",
+      "ifc_version": "IFC4",
+      "item_type": "partOf",
+      "parent_entity": "IfcBuildingStorey",
+      "child_entity": "IfcSpace",
+      "relationship_type": "IfcRelAggregates"
+    },
+    {
+      "name": "Site contains Building",
+      "definition": "A site contains buildings as spatial decomposition.",
+      "ifc_version": "IFC4",
+      "item_type": "partOf",
+      "parent_entity": "IfcSite",
+      "child_entity": "IfcBuilding",
+      "relationship_type": "IfcRelAggregates"
+    },
+    {
+      "name": "Project contains Site",
+      "definition": "A project contains sites as spatial decomposition.",
+      "ifc_version": "IFC4",
+      "item_type": "partOf",
+      "parent_entity": "IfcProject",
+      "child_entity": "IfcSite",
+      "relationship_type": "IfcRelAggregates"
+    },
+    {
+      "name": "Space contains Element",
+      "definition": "A space can contain building elements within its boundaries.",
+      "ifc_version": "IFC4",
+      "item_type": "partOf",
+      "parent_entity": "IfcSpace",
+      "child_entity": "IfcElement",
+      "relationship_type": "IfcRelContainedInSpatialStructure"
+    },
+    {
+      "name": "Storey contains Element", 
+      "definition": "A building storey can contain building elements within its boundaries.",
+      "ifc_version": "IFC4",
+      "item_type": "partOf",
+      "parent_entity": "IfcBuildingStorey",
+      "child_entity": "IfcElement",
+      "relationship_type": "IfcRelContainedInSpatialStructure"
+    },
+    {
+      "name": "Building contains Element",
+      "definition": "A building can contain building elements within its boundaries.",
+      "ifc_version": "IFC4",
+      "item_type": "partOf",
+      "parent_entity": "IfcBuilding",
+      "child_entity": "IfcElement",
+      "relationship_type": "IfcRelContainedInSpatialStructure"
+    },
+    {
+      "name": "External Spatial Element contains Element",
+      "definition": "An external spatial element can contain building elements within its boundaries.",
+      "ifc_version": "IFC4",
+      "item_type": "partOf",
+      "parent_entity": "IfcExternalSpatialElement",
+      "child_entity": "IfcElement",
+      "relationship_type": "IfcRelContainedInSpatialStructure"
+    }
+  ]
+}

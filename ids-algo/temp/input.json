@@ -1,0 +1,190 @@
+[
+  {
+    "id": "1",
+    "text": "【Specification 1】Project
+IFC Version: IFC4X3_ADD2
+Description: All data sets shall consist of a single IfcProject instance, which identifies the overall project, provides defaults for units, and holds a graph of references to all data within scope.
+
+Can't see any possibilities to have unit requirements in IDS.
+The RAR spoecifies:
+- Length Unit: Default unit for length. For imperial, inches are recommended. SI Meters are thedefault if not provided.
+- Angle Unit: Default unit for angles. Degrees are recommended, and are the default if not provided.
+- Mass Unit: Default unit for mass. For imperial, pounds are recommended. SI Kilograms are the default if not provided.
+Temperature Unit: Default unit for temperature. For imperial, fahrenheit is recommended. SI Celcius is the default if not provided.
+
+Applicability:
+  Cardinality: 1..unbounded
+  • Applies to all IFCPROJECT type entities
+
+Requirements:
+
+
+【Specification 2】Site
+IFC Version: IFC4X3_ADD2
+Description: Data sets shall include at least one site. The site may define existing and proposed terrain within vicinity of the bridge project and contain alignment(s), bridge(s) and potentially other structures such as the road/rail supported by the bridge. Boring points may be included as objects contained within the site.
+
+Comment: The RAR specifies a mandatory Site. However here it is made optional. Also the reference elevation is required in the RAR. However, the reference elevation should be present in the CRS reference.
+
+Applicability:
+  Cardinality: 0..unbounded
+  • Applies to all IFCSITE type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Relation Type: IFCRELAGGREGATES
+     - Related Entity: IFCPROJECT
+     - Cardinality: Required
+  2. Attribute Requirement
+     - Attribute Name: Name
+     - Cardinality: Required
+     - Instructions: Name of the site for referencing purposes.
+
+
+【Specification 3】Bridge
+IFC Version: IFC4X3_ADD2
+Description: Each bridge structure is captured within a definition describing the span location of a bridge relative to an alignment. The extents of the bridge are defined using an Axis curve, where IfcOffsetCurveByDistances would fit most scenarios – referencing an IfcAlignmentCurve with starting and ending distances along the curve, and typically no laterial or vertical offsets.
+
+Applicability:
+  Cardinality: 1..unbounded
+  • Applies to all IFCBRIDGE type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Relation Type: IFCRELAGGREGATES
+     - Related Entity: Must be one of: IFCBRIDGE, IFCPROJECT
+     - Cardinality: Required
+  2. Attribute Requirement
+     - Attribute Name: Name
+     - Cardinality: Required
+
+
+【Specification 4】Alignment
+IFC Version: IFC4X3_ADD2
+Description: Horizontal and vertical alignment curves provide the underlying placement for all
+components in a bridge plan.
+
+Missing: Axis, Placement (not possible in IDS)
+
+Applicability:
+  Cardinality: 0..unbounded
+  • Applies to all IFCALIGNMENT type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Relation Type: IFCRELAGGREGATES
+     - Related Entity: IFCPROJECT
+     - Cardinality: Required
+  2. Attribute Requirement
+     - Attribute Name: Name
+     - Cardinality: Required
+
+
+【Specification 5】Substructure
+IFC Version: IFC4X3_ADD2
+Description: The substructure of a bridge refers to elements that transfer loads into the ground.
+
+Applicability:
+  Cardinality: 1..unbounded
+  • Applies to all IFCBRIDGEPART type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Relation Type: IFCRELAGGREGATES
+     - Related Entity: IFCBRIDGE
+     - Cardinality: Required
+  ",
+    "language": "en"
+  },
+  {
+    "id": "2",
+    "text": "【Specification 6】Superstructure
+IFC Version: IFC4X3_ADD2
+Description: The superstructure of a bridge refers to those elements than span horizontally to carry loads onto substructures.
+
+Missing: Alignments
+
+Applicability:
+  Cardinality: 1..unbounded
+  • Applies to all IFCBRIDGEPART type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Relation Type: IFCRELAGGREGATES
+     - Related Entity: IFCBRIDGE
+     - Cardinality: Required
+  2. Attribute Requirement
+     - Attribute Name: Name
+     - Cardinality: Required
+
+
+【Specification 7】Girders
+IFC Version: IFC4X3_ADD2
+
+Applicability:
+  Cardinality: 0..unbounded
+  • Applies to all IFCELEMENTASSEMBLY type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Relation Type: IFCRELCONTAINEDINSPATIALSTRUCTURE
+     - Related Entity: IFCBRIDGEPART
+     - Predefined Type: SUPERSTRUCTURE
+     - Cardinality: Required
+  2. Attribute Requirement
+     - Attribute Name: Name
+     - Cardinality: Required
+  3. Material Requirement
+     - Cardinality: Required
+
+
+【Specification 8】Deck
+IFC Version: IFC4X3_ADD2
+Description: A bridge deck is comprised of those elements used for conveying traffic but do not perform structural functions of the superstructure.
+
+Applicability:
+  Cardinality: 1..unbounded
+  • Applies to all IFCBRIDGEPART type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Relation Type: IFCRELAGGREGATES
+     - Related Entity: IFCBRIDGE
+     - Cardinality: Required
+  2. Attribute Requirement
+     - Attribute Name: Name
+     - Cardinality: Required
+
+
+【Specification 9】Deck segments
+IFC Version: IFC4X3_ADD2
+
+Applicability:
+  Cardinality: 0..unbounded
+  • Applies to all IFCBRIDGEPART type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Relation Type: IFCRELAGGREGATES
+     - Related Entity: IFCBRIDGEPART
+     - Predefined Type: DECK
+     - Cardinality: Required
+  2. Attribute Requirement
+     - Attribute Name: Name
+     - Cardinality: Required
+
+
+【Specification 10】Abutments
+IFC Version: IFC4X3_ADD2
+Description: Abutments refer to substructures at the ends of a bridge. They may be composed of wing walls (on each side), head wall, stem wall, and cone.
+
+Applicability:
+  Cardinality: 0..unbounded
+  • Applies to all IFCELEMENTASSEMBLY type entities
+  • Part of IFCBRIDGEPART (IFCRELCONTAINEDINSPATIALSTRUCTURE)
+
+Requirements:
+",
+    "language": "en"
+  }
+  
+]

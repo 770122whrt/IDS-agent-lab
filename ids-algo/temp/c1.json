@@ -1,0 +1,37 @@
+[
+  {
+    "facet_type": "entity",
+    "original_text": "All walls",
+    "mapped_name": "IfcWall",
+    "confidence": 0.6691128034205235,
+    "ifc_item": {
+      "name": "IfcWall",
+      "definition": "The wall represents a vertical construction that bounds or subdivides spaces. Wall are usually vertical, or nearly vertical, planar elements, often designed to bear structural loads. A wall is however not required to be load bearing.",
+      "ifc_version": "IFC4",
+      "item_type": "entity",
+      "predefined_types": []
+    },
+    "property_set": null,
+    "entity_name": null,
+    "constraints": [],
+    "additional_data": null
+  },
+  {
+    "facet_type": "property",
+    "original_text": "should have the property FireRating in the set Pset_WallCommon with a value being one of REI30, REI60, REI90",
+    "mapped_name": "FireRating",
+    "confidence": 0.6419402147351716,
+    "ifc_item": {
+      "name": "FireRating",
+      "definition": "Fire rating for the element. It is given according to the national fire safety classification.",
+      "ifc_version": "IFC4",
+      "item_type": "property",
+      "property_set": "Pset_WallCommon",
+      "data_type": "IfcLabel"
+    },
+    "property_set": null,
+    "entity_name": "IfcWall",
+    "constraints": [],
+    "additional_data": null
+  }
+]

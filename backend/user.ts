@@ -8,9 +8,12 @@ const UserSchema = new Schema(
     // define the structure of the User document
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true }
+    password: { type: String, required: true },
+    image: { type: String, default: '' },
   },
   { timestamps: true }
 )
 
-export const User = model('Users', UserSchema)
+// 核心修改：先检查 models 里有没有叫 'Users' 的，如果有就复用，没有才新建。
+export const User = models?.Users || model('Users', UserSchema)
+

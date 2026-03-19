@@ -1,0 +1,124 @@
+=== IDS Metadata ===
+Title: TI Bridge IDS file
+Version: 1.0
+Date: 2025-02-17
+Author: lars.wikstrom@triona.se
+
+【Specification 16】Material
+IFC Version: IFC4X3_ADD2
+Description: Materials are defined on elements to be constructed (e.g. concrete), fabricated (e.g. steel girders), and that exist on site (e.g. soil borings), indicating material category, classification, and structural properties.
+
+Applicability:
+  Cardinality: 1..unbounded
+  • Applies to all IFCMATERIAL type entities
+
+Requirements:
+  1. Attribute Requirement
+     - Attribute Name: Name
+     - Cardinality: Required
+     - Instructions: Material classification according to the respective authority (e.g. ASTM)
+  2. Attribute Requirement
+     - Attribute Name: Category
+     - Value: Must be one of: Concrete, Steel, Wood, Plastic, Glass, Earth
+     - Cardinality: Required
+     - Instructions: Category of material, where if provided must be one of "Steel", "Concrete", "Wood", "Plastic", "Glass", "Earth".
+  3. Property Requirement
+     - Property Set: Pset_MaterialCommon
+     - Property Name: MassDensity
+     - Data Type: IFCMASSDENSITYMEASURE
+     - Cardinality: Optional
+     - Instructions: Material mass density.
+  4. Property Requirement
+     - Property Set: Pset_MaterialMechanical
+     - Property Name: YoungModulus
+     - Data Type: IFCMODULUSOFELASTICITYMEASURE
+     - Cardinality: Optional
+     - Instructions: A measure of the Young's modulus of elasticity of the material.
+  5. Property Requirement
+     - Property Set: Pset_MaterialMechanical
+     - Property Name: ShearModulus
+     - Data Type: IFCMODULUSOFELASTICITYMEASURE
+     - Cardinality: Optional
+     - Instructions: A measure of the shear modulus of elasticity of the material.
+  6. Property Requirement
+     - Property Set: Pset_MaterialMechanical
+     - Property Name: ThermalExpansionCoefficient
+     - Data Type: IFCTHERMALEXPANSIONCOEFFICIENTMEASURE
+     - Cardinality: Optional
+     - Instructions: A measure of the expansion coefficient for warming up the material about one Kelvin.
+  7. Property Requirement
+     - Property Set: Pset_MaterialConcrete
+     - Property Name: CompressiveStrength
+     - Data Type: IFCPRESSUREMEASURE
+     - Cardinality: Optional
+     - Instructions: [If Category=”Concrete”] The compressive strength of the concrete.
+  8. Property Requirement
+     - Property Set: Pset_MaterialSteel
+     - Property Name: YieldStress
+     - Data Type: IFCPRESSUREMEASURE
+     - Cardinality: Optional
+     - Instructions: [If Category=”Steel”] A measure of the yield stress (or characteristic 0.2 percent proof stress) of the material.
+
+
+【Specification 17】Pier Stems
+IFC Version: IFC4X3_ADD2
+Description: Each pier may have one or more stems, separated laterally.
+
+Applicability:
+  Cardinality: 0..unbounded
+  • Applies to all IFCCOLUMN type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Relation Type: IFCRELAGGREGATES
+     - Related Entity: IFCELEMENTASSEMBLY
+     - Predefined Type: PIER
+     - Cardinality: Required
+
+
+【Specification 18】Pier Segments
+IFC Version: IFC4X3_ADD2
+Description: Each pier stem may have one or more segments, separated by construction joint.
+
+Applicability:
+  Cardinality: 0..unbounded
+  • Applies to all IFCCOLUMN type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Relation Type: IFCRELAGGREGATES
+     - Related Entity: IFCCOLUMN
+     - Predefined Type: PIERSTEM
+     - Cardinality: Required
+
+
+【Specification 19】Pier Caps
+IFC Version: IFC4X3_ADD2
+Description: Each pier may have a top that spans stem(s). If such cap is above a bearing, then it is modelled as part of the superstructure.
+
+Applicability:
+  Cardinality: 0..unbounded
+  • Applies to all IFCBEAM type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Relation Type: IFCRELCONTAINEDINSPATIALSTRUCTURE
+     - Related Entity: IFCBRIDGEPART
+     - Predefined Type: Must be one of: SUBSTRUCTURE, SUPERSTRUCTURE
+     - Cardinality: Required
+
+
+【Specification 20】Retaining Walls
+IFC Version: IFC4X3_ADD2
+Description: Retaining walls refer to wall structures for retaining soil.
+
+Applicability:
+  Cardinality: 0..unbounded
+  • Applies to all IFCWALL type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Relation Type: IFCRELCONTAINEDINSPATIALSTRUCTURE
+     - Related Entity: IFCBRIDGEPART
+     - Predefined Type: SUBSTRUCTURE
+     - Cardinality: Required

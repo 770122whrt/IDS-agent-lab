@@ -1,0 +1,54 @@
+{
+  "specifications": [
+    {
+      "name": "Wall Fire Rating Validation",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "Validates that walls have the correct fire rating property with allowed values",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcWall",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": [
+          {
+            "propertySet": "Pset_WallCommon",
+            "baseName": "FireRating",
+            "value": {
+              "simpleValue": "REI30, REI60, REI90",
+              "restriction": {
+                "base": "string",
+                "enumeration": [
+                  "REI30",
+                  "REI60",
+                  "REI90"
+                ]
+              }
+            },
+            "dataType": "IfcLabel",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "material": null
+      }
+    }
+  ]
+}

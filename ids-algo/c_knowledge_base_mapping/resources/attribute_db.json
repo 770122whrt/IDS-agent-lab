@@ -1,0 +1,98 @@
+{
+  "metadata": {
+    "name": "IFC Attribute Knowledge Base", 
+    "description": "IFC属性知识库，用于存储和检索IFC实体属性定义",
+    "version": "1.0.0",
+    "ifc_versions": ["IFC2X3", "IFC4", "IFC4X3"],
+    "item_types": ["attribute"],
+    "vector_dim": 768,
+    "model_name": "BAAI/bge-m3",
+    "created_at": "2025-08-20T12:00:00.000000",
+    "updated_at": "2025-08-20T12:00:00.000000",
+    "item_counts": {
+      "attribute": 10
+    }
+  },
+  "items": [
+    {
+      "name": "Name",
+      "definition": "Optional name for the object, provided by the user.",
+      "ifc_version": "IFC4",
+      "item_type": "attribute",
+      "entity": "IfcRoot",
+      "data_type": "IfcLabel"
+    },
+    {
+      "name": "Description",
+      "definition": "Optional description for the object, provided by the user.",
+      "ifc_version": "IFC4",
+      "item_type": "attribute", 
+      "entity": "IfcRoot",
+      "data_type": "IfcText"
+    },
+    {
+      "name": "GlobalId",
+      "definition": "Assignment of a globally unique identifier within the entire software world.",
+      "ifc_version": "IFC4",
+      "item_type": "attribute",
+      "entity": "IfcRoot",
+      "data_type": "IfcGloballyUniqueId"
+    },
+    {
+      "name": "Tag",
+      "definition": "The tag (or label) identifier at the particular view.",
+      "ifc_version": "IFC4",
+      "item_type": "attribute",
+      "entity": "IfcElement",
+      "data_type": "IfcIdentifier"
+    },
+    {
+      "name": "ObjectType",
+      "definition": "The type denotes a particular type that indicates the object further.",
+      "ifc_version": "IFC4",
+      "item_type": "attribute",
+      "entity": "IfcObject",
+      "data_type": "IfcLabel"
+    },
+    {
+      "name": "PredefinedType",
+      "definition": "Predefined generic type for the wall that is specified in an enumeration.",
+      "ifc_version": "IFC4",
+      "item_type": "attribute",
+      "entity": "IfcWall",
+      "data_type": "IfcWallTypeEnum"
+    },
+    {
+      "name": "OverallHeight",
+      "definition": "Overall measure of the height along the z axis of the local coordinate system of the door.",
+      "ifc_version": "IFC4",
+      "item_type": "attribute",
+      "entity": "IfcDoor",
+      "data_type": "IfcPositiveLengthMeasure"
+    },
+    {
+      "name": "OverallWidth",
+      "definition": "Overall measure of the width along the x axis of the local coordinate system of the door.",
+      "ifc_version": "IFC4",
+      "item_type": "attribute",
+      "entity": "IfcDoor", 
+      "data_type": "IfcPositiveLengthMeasure"
+    },
+    {
+      "name": "ElevationOfRefHeight",
+      "definition": "Elevation above sea level of the reference height used for the building.",
+      "ifc_version": "IFC4",
+      "item_type": "attribute",
+      "entity": "IfcBuilding",
+      "data_type": "IfcLengthMeasure"
+    },
+    {
+      "name": "Elevation",
+      "definition": "Elevation of the spatial structure element above a datum.",
+      "ifc_version": "IFC4",
+      "item_type": "attribute",
+      "entity": "IfcBuildingStorey",
+      "data_type": "IfcLengthMeasure"
+    }
+  ]
+}

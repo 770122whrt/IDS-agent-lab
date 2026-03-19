@@ -1,0 +1,129 @@
+# =============================================================================
+# English Templates - IDS Natural Language Description
+# =============================================================================
+
+# Basic Information
+info:
+  header: "【Basic Information】"
+  fields:
+    title: "Title"
+    copyright: "Copyright"
+    version: "Version"
+    date: "Date"
+    author: "Author"
+    description: "Description"
+
+# Specification
+specification:
+  header: "【Specification {index}】{name}"
+  ifc_version: "IFC Version"
+  description: "Description"
+  instructions: "Instructions"
+  identifier: "Identifier"
+
+# Applicability
+applicability:
+  header: "Applicability"
+  minOccurs: "Min Occurs"
+  maxOccurs: "Max Occurs"
+
+# Requirements
+requirements:
+  header: "Requirements"
+  description: "Description"
+
+# Facet Types
+facet_types:
+  entity: "Entity"
+  property: "Property"
+  attribute: "Attribute"
+  classification: "Classification"
+  material: "Material"
+  partOf: "Part Of"
+
+# Entity Facet
+entity:
+  title: "Entity Requirement"
+  name: "Entity Type"
+  predefined_type: "Predefined Type"
+
+# Property Facet
+property:
+  title: "Property Requirement"
+  property_set: "Property Set"
+  property_name: "Property Name"
+  data_type: "Data Type"
+  value: "Value"
+  uri: "URI Reference"
+  cardinality: "Cardinality"
+  cardinality_values:
+    required: "Required"
+    prohibited: "Prohibited"
+    optional: "Optional"
+
+# Attribute Facet
+attribute:
+  title: "Attribute Requirement"
+  name: "Attribute Name"
+  value: "Value"
+  cardinality: "Cardinality"
+
+# Classification Facet
+classification:
+  title: "Classification Requirement"
+  system: "Classification System"
+  value: "Classification Value"
+  uri: "URI Reference"
+  cardinality: "Cardinality"
+
+# Material Facet
+material:
+  title: "Material Requirement"
+  value: "Material Name"
+  uri: "URI Reference"
+  cardinality: "Cardinality"
+
+# PartOf Facet
+partOf:
+  title: "Part Of Requirement"
+  relation: "Relation Type"
+  entity: "Related Entity"
+  cardinality: "Cardinality"
+
+# Constraints
+constraints:
+  enumeration: "Enumeration"
+  pattern: "Pattern"
+  min_inclusive: "Min Inclusive"
+  max_inclusive: "Max Inclusive"
+  min_exclusive: "Min Exclusive"
+  max_exclusive: "Max Exclusive"
+  min_length: "Min Length"
+  max_length: "Max Length"
+  length: "Exact Length"
+  total_digits: "Total Digits"
+  fraction_digits: "Fraction Digits"
+
+# Constraint Templates
+constraint_templates:
+  enumeration: "Must be one of: {values}"
+  pattern: "Must match pattern: {value}"
+  min_inclusive: "Must be greater than or equal to {value}"
+  max_inclusive: "Must be less than or equal to {value}"
+  min_exclusive: "Must be greater than {value}"
+  max_exclusive: "Must be less than {value}"
+  min_length: "Length must be at least {value}"
+  max_length: "Length must be at most {value}"
+  length: "Length must be exactly {value}"
+  total_digits: "Total digits must be {value}"
+  fraction_digits: "Fraction digits must be {value}"
+  range: "Must be between {min} and {max}"
+
+# General
+general:
+  required: "Required"
+  prohibited: "Prohibited"
+  optional: "Optional"
+  and: "and"
+  or: "or"
+  separator: ", "

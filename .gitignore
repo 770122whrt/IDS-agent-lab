@@ -5,10 +5,10 @@
 /.pnp
 .pnp.js
 .yarn/install-state.gz
-
+/markdown
 /.idea/*
 !/.idea/runConfigurations
-
+/.claude
 # testing
 /coverage
 

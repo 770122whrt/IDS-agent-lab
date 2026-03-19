@@ -1,0 +1,35 @@
+{
+  "specifications": [
+    {
+      "name": "Wall Requirements",
+      "description": "Requirements for wall elements",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "applicability": {
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IFCWALL"
+        }
+      },
+      "requirements": {
+        "attribute": [
+          {
+            "name": "Name"
+          }
+        ],
+        "property": [
+          {
+            "propertySet": "Pset_WallCommon",
+            "baseName": "FireRating",
+            "value": {
+              "base": "xs:string",
+              "pattern": "F[0-9]{2,3}"
+            },
+            "cardinality": "required"
+          }
+        ]
+      }
+    }
+  ]
+}

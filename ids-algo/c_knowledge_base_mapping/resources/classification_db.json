@@ -1,0 +1,108 @@
+{
+  "metadata": {
+    "name": "IFC Classification Knowledge Base",
+    "description": "IFC分类知识库，用于存储和检索IFC分类系统定义",
+    "version": "1.0.0",
+    "ifc_versions": ["IFC2X3", "IFC4", "IFC4X3"],
+    "item_types": ["classification"],
+    "vector_dim": 768,
+    "model_name": "BAAI/bge-m3",
+    "created_at": "2025-08-20T12:00:00.000000",
+    "updated_at": "2025-08-20T12:00:00.000000",
+    "item_counts": {
+      "classification": 10
+    }
+  },
+  "items": [
+    {
+      "name": "Uniclass 2015 Wall",
+      "definition": "Uniclass 2015 classification for wall elements.",
+      "ifc_version": "IFC4",
+      "item_type": "classification",
+      "classification_system": "Uniclass 2015",
+      "classification_code": "EF_25_10",
+      "applicable_entities": ["IfcWall"]
+    },
+    {
+      "name": "Uniclass 2015 Door",
+      "definition": "Uniclass 2015 classification for door elements.",
+      "ifc_version": "IFC4", 
+      "item_type": "classification",
+      "classification_system": "Uniclass 2015",
+      "classification_code": "EF_30_10",
+      "applicable_entities": ["IfcDoor"]
+    },
+    {
+      "name": "Uniclass 2015 Window",
+      "definition": "Uniclass 2015 classification for window elements.",
+      "ifc_version": "IFC4",
+      "item_type": "classification",
+      "classification_system": "Uniclass 2015", 
+      "classification_code": "EF_30_20",
+      "applicable_entities": ["IfcWindow"]
+    },
+    {
+      "name": "Uniclass 2015 Slab",
+      "definition": "Uniclass 2015 classification for slab elements.",
+      "ifc_version": "IFC4",
+      "item_type": "classification",
+      "classification_system": "Uniclass 2015",
+      "classification_code": "EF_20_10", 
+      "applicable_entities": ["IfcSlab"]
+    },
+    {
+      "name": "OmniClass Wall",
+      "definition": "OmniClass classification for wall elements.",
+      "ifc_version": "IFC4",
+      "item_type": "classification",
+      "classification_system": "OmniClass",
+      "classification_code": "23-15 11 00",
+      "applicable_entities": ["IfcWall"]
+    },
+    {
+      "name": "OmniClass Door",
+      "definition": "OmniClass classification for door elements.",
+      "ifc_version": "IFC4",
+      "item_type": "classification",
+      "classification_system": "OmniClass",
+      "classification_code": "23-17 13 00",
+      "applicable_entities": ["IfcDoor"]
+    },
+    {
+      "name": "OmniClass Window",
+      "definition": "OmniClass classification for window elements.",
+      "ifc_version": "IFC4",
+      "item_type": "classification",
+      "classification_system": "OmniClass",
+      "classification_code": "23-17 19 00",
+      "applicable_entities": ["IfcWindow"]
+    },
+    {
+      "name": "MasterFormat Concrete",
+      "definition": "MasterFormat classification for concrete work.",
+      "ifc_version": "IFC4",
+      "item_type": "classification",
+      "classification_system": "MasterFormat",
+      "classification_code": "03 30 00",
+      "applicable_entities": ["IfcWall", "IfcSlab", "IfcColumn", "IfcBeam"]
+    },
+    {
+      "name": "MasterFormat Masonry",
+      "definition": "MasterFormat classification for masonry work.",
+      "ifc_version": "IFC4",
+      "item_type": "classification",
+      "classification_system": "MasterFormat",
+      "classification_code": "04 20 00",
+      "applicable_entities": ["IfcWall"]
+    },
+    {
+      "name": "MasterFormat Metals",
+      "definition": "MasterFormat classification for structural metal work.",
+      "ifc_version": "IFC4",
+      "item_type": "classification", 
+      "classification_system": "MasterFormat",
+      "classification_code": "05 12 00",
+      "applicable_entities": ["IfcBeam", "IfcColumn", "IfcMember"]
+    }
+  ]
+}
