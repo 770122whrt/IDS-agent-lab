@@ -1,0 +1,103 @@
+=== IDS Metadata ===
+Title: TI Bridge IDS file
+Version: 1.0
+Date: 2025-02-17
+Author: lars.wikstrom@triona.se
+
+【Specification 21】Apron
+IFC Version: IFC4X3_ADD2
+Description: A bridge apron is a device to protect a river bank or river bed against scour; a shield (source: http://sdrc.lib.uiowa.edu/eng/bridges/WaddellGlossary/GlossA.htm).
+
+Applicability:
+  Cardinality: 0..unbounded
+  • Applies to all IFCBUILDINGELEMENTPART type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Relation Type: IFCRELCONTAINEDINSPATIALSTRUCTURE
+     - Related Entity: IFCBRIDGEPART
+     - Predefined Type: SUBSTRUCTURE
+     - Cardinality: Required
+
+
+【Specification 22】Arch
+IFC Version: IFC4X3_ADD2
+Description: An arch refers to a hyperbolic member that supports vertical loads at intervals along its span.
+
+Applicability:
+  Cardinality: 0..unbounded
+  • Applies to all IFCELEMENTASSEMBLY type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Relation Type: IFCRELCONTAINEDINSPATIALSTRUCTURE
+     - Related Entity: IFCBRIDGEPART
+     - Predefined Type: SUBSTRUCTURE
+     - Cardinality: Required
+
+
+【Specification 23】Footing
+IFC Version: IFC4X3_ADD2
+Description: Footings are typically described geometrically by enclosed polygonal areas extruded
+vertically according to footing depth. For stepped footings, multiple extruded solids may be used, however they must not intersect.
+
+Missing: Geometry, Connection to Piles, Reinforcing
+
+Piles supporting footings are linked according to a connection relationship.
+Reinforcing is typically modelled as aggregation of Footing - Footing/Reinforcement
+
+Applicability:
+  Cardinality: 0..unbounded
+  • Applies to all IFCFOOTING type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Relation Type: IFCRELCONTAINEDINSPATIALSTRUCTURE
+     - Related Entity: IFCBRIDGEPART
+     - Predefined Type: Must be one of: SUBSTRUCTURE, FOUNDATION
+     - Cardinality: Required
+  2. Attribute Requirement
+     - Attribute Name: Name
+     - Cardinality: Required
+     - Instructions: Name of the footing for referencing purposes, as would be found on construction plans.
+  3. Material Requirement
+     - Cardinality: Required
+     - Instructions: Material properties of the footing, indicating concrete strength.
+
+
+【Specification 24】Pile
+IFC Version: IFC4X3_ADD2
+Description: Piles are typically described geometrically by a circular profile extruded vertically according to pile depth. For multiple piles, mapped representation may be used to efficiently place piles of similar dimensions in multiple locations.
+
+Missing: Cross section, Batter
+
+Piles supporting footings are linked according to a connection relationship.
+
+Applicability:
+  Cardinality: 0..unbounded
+  • Applies to all IFCPILE type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Relation Type: IFCRELCONTAINEDINSPATIALSTRUCTURE
+     - Related Entity: IFCBRIDGEPART
+     - Predefined Type: SUBSTRUCTURE
+     - Cardinality: Required
+  2. Attribute Requirement
+     - Attribute Name: Name
+     - Cardinality: Required
+     - Instructions: Name of pile arrangement for referencing purposes, as found on construction plans.
+  3. Material Requirement
+     - Cardinality: Required
+     - Instructions: Material of piles.
+
+
+【Specification 25】Hat Stone
+IFC Version: IFC4X3_ADD2
+Description: Hat Stone refers to a top course on an abutment or culvert.
+
+Applicability:
+  Cardinality: 0..unbounded
+  • Applies to all IFCBEAM type entities
+
+Requirements:

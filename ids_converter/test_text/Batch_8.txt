@@ -1,0 +1,106 @@
+=== IDS Metadata ===
+Title: TI Bridge IDS file
+Version: 1.0
+Date: 2025-02-17
+Author: lars.wikstrom@triona.se
+
+【Specification 36】Parapet
+IFC Version: IFC4X3_ADD2
+Description: This entity may be used to model barriers of constant cross-section, or architectural railings.
+
+Barriers may be defined as a constant cross-section placed along the alignment at either edge of a bridge deck or anywhere in between.
+
+Comment: Geometry, Connections, Reinforcing, Conduit
+
+Applicability:
+  Cardinality: 0..unbounded
+  • Applies to all IFCWALL type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Relation Type: IFCRELCONTAINEDINSPATIALSTRUCTURE
+     - Related Entity: IFCBRIDGEPART
+     - Predefined Type: Must be one of: DECK, DECK_SEGMENT
+     - Cardinality: Required
+  2. Attribute Requirement
+     - Attribute Name: Name
+     - Cardinality: Required
+     - Instructions: Name of the parapet segment for referencing purposes as would be found on construction plans.
+  3. Material Requirement
+     - Cardinality: Required
+     - Instructions: Material of the parapet.
+
+
+【Specification 37】Railing
+IFC Version: IFC4X3_ADD2
+Description: This entity may be used to model barriers of constant cross-section, or architectural railings.
+
+Barriers may be defined as a constant cross-section placed along the alignment at either edge of a bridge deck or anywhere in between.
+
+Comment: Geometry, Connections, Reinforcing, Conduit
+
+Applicability:
+  Cardinality: 0..unbounded
+  • Applies to all IFCRAILING type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Relation Type: IFCRELCONTAINEDINSPATIALSTRUCTURE
+     - Related Entity: IFCBRIDGEPART
+     - Predefined Type: Must be one of: DECK, DECK_SEGMENT
+     - Cardinality: Required
+  2. Attribute Requirement
+     - Attribute Name: Name
+     - Cardinality: Required
+     - Instructions: Name of the railing segment for referencing purposes as would be found on construction plans.
+  3. Material Requirement
+     - Cardinality: Required
+     - Instructions: Material of the railing.
+
+
+【Specification 38】Approach slab
+IFC Version: IFC4X3_ADD2
+Description: An approach slab refers to a slab providing transition between a bridge and road pavement, where an expansion joint allows for differential settlement, temperature changes, and freeze/thaw effects.
+
+Applicability:
+  Cardinality: 0..unbounded
+  • Applies to all IFCSLAB type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Relation Type: IFCRELCONTAINEDINSPATIALSTRUCTURE
+     - Related Entity: IFCBRIDGEPART
+     - Predefined Type: Must be one of: DECK, DECK_SEGMENT
+     - Cardinality: Required
+
+
+【Specification 39】Cornice
+IFC Version: IFC4X3_ADD2
+Description: A cornice is construction eveloping the sides of a bridge protecting the deck.
+
+Applicability:
+  Cardinality: 0..unbounded
+  • Applies to all IFCBEAM type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Relation Type: IFCRELCONTAINEDINSPATIALSTRUCTURE
+     - Related Entity: IFCBRIDGEPART
+     - Predefined Type: Must be one of: DECK, DECK_SEGMENT
+     - Cardinality: Required
+
+
+【Specification 40】Waterproofing
+IFC Version: IFC4X3_ADD2
+Description: Waterproofing membranes are applied on top of deck segments.
+
+Applicability:
+  Cardinality: 0..unbounded
+  • Applies to all IFCCOVERING type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Relation Type: IFCRELCONTAINEDINSPATIALSTRUCTURE
+     - Related Entity: IFCBRIDGEPART
+     - Predefined Type: Must be one of: DECK, DECK_SEGMENT
+     - Cardinality: Required

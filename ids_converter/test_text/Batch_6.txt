@@ -1,0 +1,102 @@
+=== IDS Metadata ===
+Title: TI Bridge IDS file
+Version: 1.0
+Date: 2025-02-17
+Author: lars.wikstrom@triona.se
+
+【Specification 26】Girder
+IFC Version: IFC4X3_ADD2
+Description: Bridge girders refer to horizontal support beams that span along the alignment of a bridge.
+
+For steel girders, this refers to each girder line, decomposed into beam segments.
+For concrete box girders, this refers to the overall box girder, typically connected to the bridge deck via a keyed construction joint with adjoining reinforcing.
+
+Missing: Alignment, Axis, IfcRelDefinesByType
+
+Applicability:
+  Cardinality: 0..unbounded
+  • Applies to all IFCELEMENTASSEMBLY type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Relation Type: IFCRELCONTAINEDINSPATIALSTRUCTURE
+     - Related Entity: IFCBRIDGEPART
+     - Predefined Type: SUPERSTRUCTURE
+     - Cardinality: Required
+  2. Attribute Requirement
+     - Attribute Name: Name
+     - Cardinality: Required
+     - Instructions: Name of the girder line for referencing purposes as would be found on construction plans.
+  3. Material Requirement
+     - Cardinality: Required
+
+
+【Specification 27】Boring Points 2 (IfcBorehole)
+IFC Version: IFC4X3_ADD2
+Description: Boring points indicating soil layers and properties at discrete locations.
+Site grading is indicated using several geometric structures, for which contour lines or the elevation at any point may be derived. The IfcGeographicElement entity with
+PredefinedType set to SOILBORING (new) may be used to indicate soil borings at particular points.
+
+Applicability:
+  Cardinality: 0..unbounded
+  • Applies to all IFCBOREHOLE type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Relation Type: IFCRELCONTAINEDINSPATIALSTRUCTURE
+     - Related Entity: Must be one of: IFCSITE, IFCBRIDGE
+     - Cardinality: Required
+  2. Attribute Requirement
+     - Attribute Name: Name
+     - Cardinality: Required
+
+
+【Specification 28】Girder Type
+IFC Version: IFC4X3_ADD2
+Description: Template defining general construction that may be used across projects.
+
+Applicability:
+  Cardinality: 1..unbounded
+  • Applies to all IFCELEMENTASSEMBLYTYPE type entities
+
+Requirements:
+  1. Attribute Requirement
+     - Attribute Name: Name
+     - Cardinality: Required
+
+
+【Specification 29】Girder Segment
+IFC Version: IFC4X3_ADD2
+Description: Girder segments refer to discrete sections along a girder line. They may be modelled as one object that encapsulates the overall cross section (e.g. I-Shape steel, arbitrary precast profile), or as separate objects (e.g. steel flange plates, steel web plate). Each segment may have a constant cross section, a tapered cross section (linearly interpolated from start to end), a variable cross section (linearly interpolated at multiple points between start and end), or free-form geometry.
+
+Missing: Solid Geometry, Connection*, Reinforcing. Tendons, Camber, Stiffeners, Shear Studs
+
+Applicability:
+  Cardinality: 1..unbounded
+  • Applies to all IFCBEAM type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Relation Type: IFCRELAGGREGATES
+     - Related Entity: Must be one of: IFCELEMENTASSEMBLY, IFCELEMENTASSEMBLYTYPE
+     - Predefined Type: GIRDER
+     - Cardinality: Required
+  2. Attribute Requirement
+     - Attribute Name: Name
+     - Cardinality: Required
+     - Instructions: Name of the girder segment for referencing purposes as would be found on construction plans.
+  3. Material Requirement
+     - Cardinality: Required
+
+
+【Specification 30】Plates
+IFC Version: IFC4X3_ADD2
+Description: Built-up girders may be decomposed into plates (or members) for web, flanges, cover plates, longitudinal stiffeners, and vertical stiffeners.
+
+Comment: Not adding any partOf requirements since plates and members can occur in different assamblies (e.g. also railings).
+
+Applicability:
+  Cardinality: 0..unbounded
+  • Applies to all IFCPLATE type entities
+
+Requirements:

@@ -49,6 +49,9 @@ from .converter import convert_json_to_ids_xml, IDSToXMLConverter, XSDValidation
 # Parser import (for comparison)
 from .ids_parser import IDSParser
 
+# Merger import
+from .ids_merger import IDSMerger, IDSMergeError
+
 
 # Lazy import for pipeline (requires API key)
 _pipeline_module = None
@@ -92,6 +95,68 @@ def extract_english_text(text: str) -> str:
 
     # No separator found, return original
     return text.strip()
+
+
+def extract_metadata(text: str) -> Dict[str, str]:
+    """
+    Extract metadata from the text header.
+
+    Looks for patterns like:
+    【基本信息】
+    标题: TI Bridge IDS file
+    版本: 1.0
+    日期: 2025-02-17
+    作者: lars.wikstrom@triona.se
+
+    【Basic Information】
+    Title: TI Bridge IDS file
+    Version: 1.0
+    Date: 2025-02-17
+    Author: lars.wikstrom@triona.se
+
+    Note: This extracts IDS file metadata, NOT IFC version.
+    IFC version is per-specification and handled separately.
+
+    Returns:
+        Dict with metadata keys: title, version, date, author, purpose
+    """
+    metadata = {}
+    lines = text.split('\n')
+
+    # Keywords to look for (Chinese and English)
+    # Note: "版本/Version" here means IDS file version (e.g., "1.0"), not IFC version
+    keywords = {
+        'title': ['标题', 'Title'],
+        'version': ['版本', 'Version'],  # IDS file version
+        'date': ['日期', 'Date'],
+        'author': ['作者', 'Author'],
+        'purpose': ['目的', 'Purpose']
+    }
+
+    for line in lines:
+        line = line.strip()
+        if ':' in line or '：' in line:
+            # Handle both colon types
+            if '：' in line:
+                key_part, value = line.split('：', 1)
+            else:
+                key_part, value = line.split(':', 1)
+
+            key_part = key_part.strip()
+            value = value.strip()
+
+            # Skip IFC version lines (they belong to specifications, not IDS metadata)
+            if 'IFC' in key_part.upper() or '适用IFC版本' in key_part:
+                continue
+
+            # Check if this line matches any metadata keyword
+            for meta_key, keywords_list in keywords.items():
+                for kw in keywords_list:
+                    if kw in key_part:
+                        metadata[meta_key] = value
+                        break
+
+    return metadata
 
 
 def split_specifications(text: str) -> List[Tuple[str, str]]:
@@ -147,6 +212,82 @@ def split_specifications(text: str) -> List[Tuple[str, str]]:
         specs.append((current_name, '\n'.join(current_lines)))
 
     return specs
+
+
+def split_by_batch(
+    text: str,
+    batch_size: int = 5,
+    include_metadata: bool = True
+) -> Tuple[Dict[str, str], List[Tuple[str, str, List[str]]]]:
+    """
+    Split text into batches of specifications for pipeline processing.
+
+    Args:
+        text: Full natural language text containing specifications
+        batch_size: Number of specifications per batch (default: 5)
+        include_metadata: If True, extract metadata and include in each batch
+
+    Returns:
+        Tuple of (metadata_dict, batches_list):
+        - metadata_dict: Extracted metadata (title, version, date, author, purpose)
+        - batches_list: List of (batch_name, batch_text, spec_names) tuples
+
+    Example:
+        If text contains 12 specifications and batch_size=5:
+        - Batch_1: specs 1-5
+        - Batch_2: specs 6-10
+        - Batch_3: specs 11-12
+    """
+    # Extract metadata first
+    metadata = extract_metadata(text)
+    if metadata:
+        logger.info(f"Extracted metadata: {metadata}")
+
+    specs = split_specifications(text)
+
+    if not specs:
+        logger.warning("No specifications found in text")
+        return metadata, []
+
+    batches = []
+
+    for i in range(0, len(specs), batch_size):
+        batch_specs = specs[i:i + batch_size]
+        batch_num = i // batch_size + 1
+        batch_name = f"Batch_{batch_num}"
+
+        # Collect spec names for this batch
+        spec_names = [name for name, _ in batch_specs]
+
+        # Build batch text with optional metadata header
+        batch_text_parts = []
+
+        if include_metadata and metadata:
+            # Add metadata header to each batch
+            header_lines = ["=== IDS Metadata ==="]
+            if 'title' in metadata:
+                header_lines.append(f"Title: {metadata['title']}")
+            if 'version' in metadata:
+                header_lines.append(f"Version: {metadata['version']}")
+            if 'date' in metadata:
+                header_lines.append(f"Date: {metadata['date']}")
+            if 'author' in metadata:
+                header_lines.append(f"Author: {metadata['author']}")
+            if 'purpose' in metadata:
+                header_lines.append(f"Purpose: {metadata['purpose']}")
+            header_lines.append("")  # Empty line before specs
+            batch_text_parts.append('\n'.join(header_lines))
+
+        # Combine texts with double newline separator
+        batch_text_parts.append("\n\n".join([text for _, text in batch_specs]))
+        batch_text = "\n".join(batch_text_parts)
+
+        batches.append((batch_name, batch_text, spec_names))
+
+        logger.info(f"Created {batch_name}: {len(batch_specs)} specifications ({spec_names[0]} to {spec_names[-1]})")
+
+    logger.info(f"Split {len(specs)} specifications into {len(batches)} batches")
+    return metadata, batches
 
 
 # =============================================================================
@@ -376,6 +517,27 @@ async def main_async():
         help="Process each specification separately (for large inputs)"
     )
     parser.add_argument(
+        "--batch-size",
+        type=int,
+        default=5,
+        help="Number of specifications per batch when using batch mode (default: 5)"
+    )
+    parser.add_argument(
+        "--merge-output",
+        action="store_true",
+        help="Merge all batch outputs into a single IDS file"
+    )
+    parser.add_argument(
+        "--keep-temp",
+        action="store_true",
+        help="Keep temporary IDS files from each batch"
+    )
+    parser.add_argument(
+        "--temp-dir",
+        default=None,
+        help="Directory for temporary files (default: same as output directory)"
+    )
+    parser.add_argument(
         "--verbose", "-v",
         action="store_true",
         help="Enable verbose logging"
@@ -406,38 +568,145 @@ async def main_async():
 
     # Convert
     converter = TextToIDSConverter()
+    output_path = Path(args.output)
+    temp_dir = Path(args.temp_dir) if args.temp_dir else output_path.parent
 
     try:
-        result_json, xml_str = await converter.convert_text(
-            text,
-            title=args.title,
-            language=args.lang,
-            batch_mode=args.batch
-        )
+        # Determine processing mode
+        if args.batch or args.merge_output:
+            # Batch processing mode
+            processed_text = text
+            if args.lang == "both":
+                processed_text = extract_english_text(text)
+            elif args.lang == "en":
+                processed_text = text
 
-        # Save JSON result
-        if args.json_output:
-            logger.info(f"Saving pipeline JSON to: {args.json_output}")
-            with open(args.json_output, 'w', encoding='utf-8') as f:
-                json.dump(result_json, f, indent=2, ensure_ascii=False)
+            # Split into batches
+            batches = split_by_batch(processed_text, args.batch_size)
 
-        # Save XML
-        output_path = Path(args.output)
-        logger.info(f"Saving IDS XML to: {output_path}")
-        with open(output_path, 'w', encoding='utf-8') as f:
-            f.write(xml_str)
+            if not batches:
+                logger.error("No specifications found in input file")
+                sys.exit(1)
 
-        # Validate
-        logger.info("Validating generated XML...")
-        if converter.validate_xml(xml_str):
-            logger.info("XML validation passed!")
+            # Process each batch
+            temp_ids_files = []
+            failed_batches = []
+
+            for batch_name, batch_text, spec_names in batches:
+                logger.info(f"Processing {batch_name}: {spec_names}")
+
+                try:
+                    result_json, xml_str = await converter.convert_text(
+                        batch_text,
+                        title=args.title,
+                        language="en",
+                        batch_mode=False  # Process batch as single unit
+                    )
+
+                    # Save temporary IDS file
+                    temp_file = temp_dir / f"{batch_name}.ids"
+                    temp_dir.mkdir(parents=True, exist_ok=True)
+
+                    with open(temp_file, 'w', encoding='utf-8') as f:
+                        f.write(xml_str)
+
+                    temp_ids_files.append(str(temp_file))
+                    logger.info(f"Saved: {temp_file}")
+
+                except Exception as e:
+                    logger.error(f"Failed to process {batch_name}: {e}")
+                    failed_batches.append((batch_name, str(e)))
+
+            # Merge if requested
+            if args.merge_output and temp_ids_files:
+                logger.info(f"Merging {len(temp_ids_files)} IDS files...")
+
+                # Extract info from original IDS if provided
+                merge_info = None
+                if args.original:
+                    original_parser = IDSParser()
+                    original_data = original_parser.parse_file(args.original)
+                    merge_info = {
+                        'title': original_data.get('title', args.title or 'Merged IDS'),
+                        'version': original_data.get('version', '1.0'),
+                        'author': original_data.get('author', ''),
+                        'date': original_data.get('date', str(date.today())),
+                    }
+
+                merger = IDSMerger()
+                merge_report = merger.merge(
+                    temp_ids_files,
+                    str(output_path),
+                    info=merge_info,
+                    on_version_conflict="use_first"
+                )
+
+                logger.info(f"Merged IDS saved to: {output_path}")
+                logger.info(f"Total specifications: {merge_report['total_specifications']}")
+
+                # Clean up temp files if not keeping
+                if not args.keep_temp:
+                    for temp_file in temp_ids_files:
+                        Path(temp_file).unlink(missing_ok=True)
+                    logger.info("Temporary files cleaned up")
+
+                # Save merge report
+                report_path = output_path.parent / "merge_report.json"
+                with open(report_path, 'w', encoding='utf-8') as f:
+                    json.dump({
+                        **merge_report,
+                        'failed_batches': failed_batches
+                    }, f, indent=2, ensure_ascii=False)
+                logger.info(f"Merge report saved to: {report_path}")
+
+            elif temp_ids_files and not args.merge_output:
+                # Just use the first batch as output (or last one overwrites)
+                logger.info("Batch processing complete (no merge requested)")
+                if len(temp_ids_files) == 1:
+                    import shutil
+                    shutil.copy(temp_ids_files[0], output_path)
+                    logger.info(f"Output: {output_path}")
+
+            # Report failures
+            if failed_batches:
+                logger.warning(f"{len(failed_batches)} batches failed:")
+                for batch_name, error in failed_batches:
+                    logger.warning(f"  - {batch_name}: {error}")
+
         else:
-            logger.warning("XML validation failed!")
+            # Single file mode (original behavior)
+            result_json, xml_str = await converter.convert_text(
+                text,
+                title=args.title,
+                language=args.lang,
+                batch_mode=False
+            )
+
+            # Save JSON result
+            if args.json_output:
+                logger.info(f"Saving pipeline JSON to: {args.json_output}")
+                with open(args.json_output, 'w', encoding='utf-8') as f:
+                    json.dump(result_json, f, indent=2, ensure_ascii=False)
+
+            # Save XML
+            logger.info(f"Saving IDS XML to: {output_path}")
+            with open(output_path, 'w', encoding='utf-8') as f:
+                f.write(xml_str)
+
+            # Validate
+            logger.info("Validating generated XML...")
+            if converter.validate_xml(xml_str):
+                logger.info("XML validation passed!")
+            else:
+                logger.warning("XML validation failed!")
 
         # Compare with original
-        if args.original:
+        if args.original and output_path.exists():
             logger.info(f"Comparing with original: {args.original}")
-            report = converter.compare_with_original(args.original, xml_str)
+            with open(output_path, 'r', encoding='utf-8') as f:
+                generated_xml = f.read()
+
+            report = converter.compare_with_original(args.original, generated_xml)
 
             print("\n" + "=" * 60)
             print("Comparison Report")
@@ -445,14 +714,6 @@ async def main_async():
             print(f"Original specifications: {report['original_spec_count']}")
             print(f"Generated specifications: {report['generated_spec_count']}")
             print(f"Difference: {report['spec_difference']}")
-            print()
-            print("Original spec names:")
-            for name in report['original_spec_names']:
-                print(f"  - {name}")
-            print()
-            print("Generated spec names:")
-            for name in report['generated_spec_names']:
-                print(f"  - {name}")
 
             # Save comparison report
             report_path = output_path.parent / "comparison_report.json"
@@ -464,7 +725,6 @@ async def main_async():
         print("Conversion Complete!")
         print("=" * 60)
         print(f"Output: {output_path}")
-        print(f"Specifications generated: {len(result_json.get('specifications', []))}")
 
     except XSDValidationError as e:
         logger.error(f"XSD validation failed: {e}")

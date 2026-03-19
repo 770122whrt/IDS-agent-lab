@@ -1,0 +1,109 @@
+=== IDS Metadata ===
+Title: TI Bridge IDS file
+Version: 1.0
+Date: 2025-02-17
+Author: lars.wikstrom@triona.se
+
+【Specification 31】Cross Frame
+IFC Version: IFC4X3_ADD2
+Description: Bridge cross frames connect two girders laterally.
+Cross-framing between girders may be described using templates of member configurations. Such cross framing is captured within components, using standard shapes (e.g. AISC in U.S.) where applicable. For curved alignments where girders are placed at different elevations, members must be placed relative to the girders at each side, for which positioning is defined relative to alignment curves.
+
+Missing: Position (not possible in IDS), Girder Segment Left/Right (not possible in IDS
+
+Applicability:
+  Cardinality: 1..unbounded
+  • Applies to all IFCELEMENTASSEMBLY type entities
+
+Requirements:
+  1. Attribute Requirement
+     - Attribute Name: Name
+     - Cardinality: Required
+     - Instructions: Name of cross frame occurrence as would be identified on construction plans.
+
+
+【Specification 32】Diaphragm
+IFC Version: IFC4X3_ADD2
+Description: Diaphragms refer to sections of bridge girders immediately above supporting structures that provide additional lateral and vertical support.
+Diaphragms are modeled similarly as concrete girder segments, except are distinguished according to a predefined type (e.g. IfcBeamTypeEnum.DIAPHRAGM), and have connections to underlying supports.
+
+Missing: Solid geometry, Connection*, Reinforcing, Tendons
+
+Applicability:
+  Cardinality: 0..unbounded
+  • Applies to all IFCBEAM type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Relation Type: IFCRELCONTAINEDINSPATIALSTRUCTURE
+     - Related Entity: IFCBRIDGEPART
+     - Predefined Type: SUPERSTRUCTURE
+     - Cardinality: Required
+  2. Attribute Requirement
+     - Attribute Name: Name
+     - Cardinality: Required
+     - Instructions: Name of the diaphragm for referencing purposes as would be found on construction plans.
+  3. Material Requirement
+     - Cardinality: Required
+
+
+【Specification 33】Truss
+IFC Version: IFC4X3_ADD2
+Description: Trusses refer to a framework of linear structural elements in tension and compression for supporting the span of a bridge superstructure. Within a truss, struts refer to compression elements, and ties refer to tension elements.
+
+Missing: Connections. Also specified IfcPlate generically (without GUSSET_PLATE PDT) as part of a truss.
+
+Applicability:
+  Cardinality: 0..unbounded
+  • Applies to all IFCELEMENTASSEMBLY type entities
+
+Requirements:
+  1. Attribute Requirement
+     - Attribute Name: Name
+     - Cardinality: Required
+
+
+【Specification 34】Deck Span
+IFC Version: IFC4X3_ADD2
+Description: Bridge deck spans represent the surface of a bridge. They may be decomposed into
+segments and components.
+
+Applicability:
+  Cardinality: 0..unbounded
+  • Applies to all IFCELEMENTASSEMBLY type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Related Entity: IFCBRIDGEPART
+     - Predefined Type: Must be one of: DECK, DECK_SEGMENT
+     - Cardinality: Required
+  2. Attribute Requirement
+     - Attribute Name: Name
+     - Cardinality: Required
+  3. Material Requirement
+     - Cardinality: Required
+
+
+【Specification 35】Deck Segment
+IFC Version: IFC4X3_ADD2
+Description: This entity may be used to model segments of a bridge deck, separated by construction orexpansion joint. Geometry for bridge decks is typically represented using IfcSectionedSolidHorizontal for defining a cross section that may potentially vary along an alignment.
+
+Comment: Geometric requirements, connection reqirements, reinforcing and drainage.
+
+Applicability:
+  Cardinality: 0..unbounded
+  • Applies to all IFCBRIDGEPART type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Relation Type: IFCRELAGGREGATES
+     - Related Entity: IFCBRIDGEPART
+     - Predefined Type: DECK
+     - Cardinality: Required
+  2. Attribute Requirement
+     - Attribute Name: Name
+     - Cardinality: Required
+     - Instructions: Name of the deck segment for referencing purposes as would be found on construction plans.
+  3. Material Requirement
+     - Cardinality: Required
+     - Instructions: Material of the deck segment.

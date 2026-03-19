@@ -1,0 +1,92 @@
+=== IDS Metadata ===
+Title: TI Bridge IDS file
+Version: 1.0
+Date: 2025-02-17
+Author: lars.wikstrom@triona.se
+
+【Specification 6】Superstructure
+IFC Version: IFC4X3_ADD2
+Description: The superstructure of a bridge refers to those elements than span horizontally to carry loads onto substructures.
+
+Missing: Alignments
+
+Applicability:
+  Cardinality: 1..unbounded
+  • Applies to all IFCBRIDGEPART type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Relation Type: IFCRELAGGREGATES
+     - Related Entity: IFCBRIDGE
+     - Cardinality: Required
+  2. Attribute Requirement
+     - Attribute Name: Name
+     - Cardinality: Required
+
+
+【Specification 7】Girders
+IFC Version: IFC4X3_ADD2
+
+Applicability:
+  Cardinality: 0..unbounded
+  • Applies to all IFCELEMENTASSEMBLY type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Relation Type: IFCRELCONTAINEDINSPATIALSTRUCTURE
+     - Related Entity: IFCBRIDGEPART
+     - Predefined Type: SUPERSTRUCTURE
+     - Cardinality: Required
+  2. Attribute Requirement
+     - Attribute Name: Name
+     - Cardinality: Required
+  3. Material Requirement
+     - Cardinality: Required
+
+
+【Specification 8】Deck
+IFC Version: IFC4X3_ADD2
+Description: A bridge deck is comprised of those elements used for conveying traffic but do not perform structural functions of the superstructure.
+
+Applicability:
+  Cardinality: 1..unbounded
+  • Applies to all IFCBRIDGEPART type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Relation Type: IFCRELAGGREGATES
+     - Related Entity: IFCBRIDGE
+     - Cardinality: Required
+  2. Attribute Requirement
+     - Attribute Name: Name
+     - Cardinality: Required
+
+
+【Specification 9】Deck segments
+IFC Version: IFC4X3_ADD2
+
+Applicability:
+  Cardinality: 0..unbounded
+  • Applies to all IFCBRIDGEPART type entities
+
+Requirements:
+  1. Part Of Requirement
+     - Relation Type: IFCRELAGGREGATES
+     - Related Entity: IFCBRIDGEPART
+     - Predefined Type: DECK
+     - Cardinality: Required
+  2. Attribute Requirement
+     - Attribute Name: Name
+     - Cardinality: Required
+
+
+【Specification 10】Abutments
+IFC Version: IFC4X3_ADD2
+Description: Abutments refer to substructures at the ends of a bridge. They may be composed of wing walls (on each side), head wall, stem wall, and cone.
+
+Applicability:
+  Cardinality: 0..unbounded
+  • Applies to all IFCELEMENTASSEMBLY type entities
+  • Part of IFCBRIDGEPART (IFCRELCONTAINEDINSPATIALSTRUCTURE)
+
+Requirements:
