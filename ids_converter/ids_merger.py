@@ -346,7 +346,10 @@ class IDSMerger:
         # 构建 info 元素
         info_elem = etree.SubElement(root, '{http://standards.buildingsmart.org/IDS}info')
 
-        info_fields = ['title', 'version', 'author', 'date', 'purpose', 'copyright']
+        # IDS XSD requires elements in this exact order:
+        # title → copyright → version → description → author → date → purpose → milestone
+        # Note: 'description' is different from specification description
+        info_fields = ['title', 'copyright', 'version', 'description', 'author', 'date', 'purpose', 'milestone']
         for field in info_fields:
             if field in info and info[field]:
                 field_elem = etree.SubElement(info_elem, f'{{http://standards.buildingsmart.org/IDS}}{field}')
