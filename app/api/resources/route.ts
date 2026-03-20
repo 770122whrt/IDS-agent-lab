@@ -1,17 +1,29 @@
 // app/api/resources/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import { dbConnect } from "../../../backend/mongodb"; // 引入刚才修正过的数据库连接
-import { Resource } from "../../../backend/resource"; // 引入刚才写的模型
+import { dbConnect } from "../../../backend/mongodb";
+import { Resource } from "../../../backend/resource";
 
-import mongoose from "mongoose"; // 需要直接使用 mongoose 对象
-import { Readable } from "stream"; // Node.js 原生流模块
+import mongoose from "mongoose";
+import { Readable } from "stream";
+import { auth } from "../../lib/auth";
 
 // ---------------------------------------------------------
-// 1. POST 方法：获取用户的文件列表
+// 1. POST 方法：上传文件
 // ---------------------------------------------------------
 export async function POST(request: NextRequest) {
   try {
-    // 1. 确保数据库连接
+    // 1. 从 session 获取当前登录用户，而不是信任客户端参数
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
+
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "未登录，请先登录" }, { status: 401 });
+    }
+
+    const userId = session.user.id; // ✅ 使用服务端 session 中的用户 ID
+
+    // 2. 确保数据库连接
     await dbConnect();
     
     // 2. 获取底层 MongoDB 数据库对象
@@ -20,13 +32,12 @@ export async function POST(request: NextRequest) {
     const db = mongoose.connection.db;
     if (!db) throw new Error("数据库连接异常");
 
-    // 3. 解析 FormData
+    // 3. 解析 FormData（只获取文件，不获取 userId）
     const formData = await request.formData();
     const file = formData.get("file") as File | null;
-    const userId = formData.get("userId") as string | null;
 
-    if (!file || !userId) {
-      return NextResponse.json({ error: "缺少参数" }, { status: 400 });
+    if (!file) {
+      return NextResponse.json({ error: "缺少文件参数" }, { status: 400 });
     }
 
     // 4. 将文件转换为 Buffer
@@ -89,19 +100,22 @@ export async function POST(request: NextRequest) {
 }
 
 // ---------------------------------------------------------
-// 2. GET 方法：获取用户的文件列表
+// 2. GET 方法：获取当前用户的文件列表
 // ---------------------------------------------------------
 export async function GET(request: NextRequest) {
   try {
-    await dbConnect();
+    // 1. 从 session 获取当前登录用户，而不是信任客户端参数
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
 
-    // 1. 获取 URL 中的查询参数 ?userId=...
-    const { searchParams } = new URL(request.url);
-    const userId = searchParams.get("userId");
-
-    if (!userId) {
-      return NextResponse.json({ error: "未提供用户ID" }, { status: 400 });
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "未登录，请先登录" }, { status: 401 });
     }
+
+    const userId = session.user.id; // ✅ 使用服务端 session 中的用户 ID
+
+    await dbConnect();
 
     // 2. 查询数据库
     // .find({ userId }) -> 找到该用户的所有文件

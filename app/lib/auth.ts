@@ -1,6 +1,7 @@
 import { betterAuth, BetterAuthAdvancedOptions, BetterAuthClientOptions } from "better-auth";
 import { MongoClient } from "mongodb";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
+import { Resend } from "resend";
 
 const {
   MONGODB_URI,
@@ -8,11 +9,17 @@ const {
   GOOGLE_CLIENT_SECRET,
   GITHUB_CLIENT_ID,
   GITHUB_CLIENT_SECRET,
+  RESEND_API_KEY,
+  NEXT_PUBLIC_APP_URL,
 } = process.env;
 
 if (!MONGODB_URI) throw new Error("❌ Missing MONGODB_URI");
 if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) throw new Error("❌ Missing Google OAuth credentials");
 if (!GITHUB_CLIENT_ID || !GITHUB_CLIENT_SECRET) throw new Error("❌ Missing GitHub OAuth credentials");
+if (!RESEND_API_KEY) throw new Error("❌ Missing RESEND_API_KEY");
+if (!NEXT_PUBLIC_APP_URL) throw new Error("❌ Missing NEXT_PUBLIC_APP_URL");
+
+const resend = new Resend(RESEND_API_KEY);
 
 const client = new MongoClient(MONGODB_URI);
 await client.connect();
@@ -25,8 +32,22 @@ export const auth = betterAuth({
     autoSignIn: true, //auto sign in users after they sign up
 
     async sendResetPassword(data, request) {
-      console.log("Password reset requested for:", data);
-      // TODO: implement sending reset password email
+      const resetUrl = `${NEXT_PUBLIC_APP_URL}/reset-password?token=${data.token}&email=${encodeURIComponent(data.email)}`;
+
+      await resend.emails.send({
+        from: "noreply@yourdomain.com",
+        to: data.email,
+        subject: "重置您的密码",
+        html: `
+          <h1>密码重置请求</h1>
+          <p>您好，我们收到了您的密码重置请求。</p>
+          <p>请点击以下链接重置您的密码：</p>
+          <a href="${resetUrl}" style="display: inline-block; padding: 12px 24px; background-color: #0070f3; color: white; text-decoration: none; border-radius: 4px;">重置密码</a>
+          <p>该链接将在 1 小时后过期。</p>
+          <p>如果您没有请求重置密码，请忽略此邮件。</p>
+        `
+      });
+      console.log("Password reset email sent to:", data.email);
     },
   },
   socialProviders: {

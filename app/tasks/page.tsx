@@ -43,8 +43,6 @@ export default function TasksPage() {
   const [expandedJsonTasks, setExpandedJsonTasks] = useState<Set<string>>(new Set()); // 展开JSON的任务ID集合
   const ifcInputRefs = useRef<Record<string, HTMLInputElement | null>>({});
 
-  const userId = session?.user?.id || session?.user?.email || "";
-
   useEffect(() => {
     if (!sessionLoading && !session?.user) {
       router.push("/sign-in");
@@ -52,10 +50,12 @@ export default function TasksPage() {
   }, [sessionLoading, session?.user, router]);
 
   const fetchTasks = async () => {
-    if (!userId) return;
+    if (!session?.user?.id) return;
 
     try {
-      const res = await fetch(`/api/resources?userId=${userId}`);
+      const res = await fetch("/api/resources", {  // 不再传递 userId
+        credentials: "include", // 确保发送 cookie
+      });
       const data = await res.json();
       setTasks(data.resources || []);
     } catch (error) {
@@ -66,7 +66,7 @@ export default function TasksPage() {
   };
 
   useEffect(() => {
-    if (!userId) return;
+    if (!session?.user?.id) return;
 
     fetchTasks();
 
@@ -76,7 +76,7 @@ export default function TasksPage() {
     }, 5000);
 
     return () => clearInterval(intervalId);
-  }, [userId]);
+  }, [session?.user?.id]);
 
   const getStatusBadge = (status: string) => {
     switch (status) {
