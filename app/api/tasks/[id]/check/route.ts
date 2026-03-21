@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { dbConnect } from "../../../../../backend/mongodb";
 import { Resource } from "../../../../../backend/resource";
 import mongoose from "mongoose";
+import { rateLimit } from "../../../../lib/ratelimit";
 
 // 强制动态渲染，避免缓存
 export const dynamic = 'force-dynamic';
@@ -22,6 +23,12 @@ type ContextType = {
  * 返回: { message: string, taskId: string }
  */
 export async function POST(request: NextRequest, context: ContextType) {
+  // 速率限制检查
+  const isAllowed = await rateLimit(request);
+  if (!isAllowed) {
+    return NextResponse.json({ error: "Rate limit exceeded, please try again later" }, { status: 429 });
+  }
+
   try {
     await dbConnect();
 
@@ -31,64 +38,77 @@ export async function POST(request: NextRequest, context: ContextType) {
 
     if (!taskId) {
       return NextResponse.json(
-        { error: "任务ID缺失" },
+        { error: "Task ID missing" },
         { status: 400 }
       );
     }
 
-    // 查找任务记录
-    const task = await Resource.findById(taskId);
+    // Find task record - use atomic update to prevent race condition
+    const task = await Resource.findOneAndUpdate(
+      { _id: taskId, status: "completed", idsFileId: { $exists: true, $ne: null } },
+      { $set: { _checkLock: Date.now() } }, // Temporary lock marker
+      { new: true }
+    );
 
     if (!task) {
+      // Check what happened - task not found or status changed
+      const currentTask = await Resource.findById(taskId);
+      if (!currentTask) {
+        return NextResponse.json(
+          { error: "Task not found" },
+          { status: 404 }
+        );
+      }
+      if (currentTask.status !== "completed") {
+        return NextResponse.json(
+          { error: "Task status has changed, please refresh and try again", status: currentTask.status },
+          { status: 409 } // Conflict
+        );
+      }
+      if (!currentTask.idsFileId) {
+        return NextResponse.json(
+          { error: "IDS file does not exist, cannot proceed with review" },
+          { status: 400 }
+        );
+      }
       return NextResponse.json(
-        { error: "任务不存在" },
-        { status: 404 }
+        { error: "Task is being processed by another request" },
+        { status: 409 }
       );
     }
 
-    // 检查任务状态 - 只有 completed 状态才能进行审查
-    if (task.status !== "completed") {
-      return NextResponse.json(
-        { error: "任务尚未完成 IDS 生成，无法进行审查", status: task.status },
-        { status: 400 }
-      );
-    }
-
-    // 检查是否有 IDS 文件
-    if (!task.idsFileId) {
-      return NextResponse.json(
-        { error: "IDS 文件不存在，无法进行审查" },
-        { status: 400 }
-      );
-    }
-
-    // 解析 FormData
+    // Parse FormData
     const formData = await request.formData();
     const ifcFile = formData.get("ifc") as File | null;
 
     if (!ifcFile) {
+      // Release lock
+      await Resource.findByIdAndUpdate(taskId, { $unset: { _checkLock: 1 } });
       return NextResponse.json(
-        { error: "请上传 IFC 文件" },
+        { error: "Please upload IFC file" },
         { status: 400 }
       );
     }
 
-    // 验证文件类型
+    // Validate file type
     if (!ifcFile.name.toLowerCase().endsWith(".ifc")) {
+      // Release lock
+      await Resource.findByIdAndUpdate(taskId, { $unset: { _checkLock: 1 } });
       return NextResponse.json(
-        { error: "请上传 .ifc 格式的文件" },
+        { error: "Please upload .ifc format file" },
         { status: 400 }
       );
     }
 
-    console.log(`[IFC Check] 开始处理任务: ${taskId}`);
-    console.log(`[IFC Check] IFC 文件: ${ifcFile.name}, 大小: ${ifcFile.size} bytes`);
+    console.log(`[IFC Check] Processing task: ${taskId}`);
+    console.log(`[IFC Check] IFC file: ${ifcFile.name}, size: ${ifcFile.size} bytes`);
 
-    // 读取文件内容
+    // Read file content
     const ifcBuffer = Buffer.from(await ifcFile.arrayBuffer());
 
-    // 存储到 GridFS
+    // Store to GridFS
     const db = mongoose.connection.db;
+    if (!db) throw new Error("Database connection not available");
     const bucket = new mongoose.mongo.GridFSBucket(db, { bucketName: 'uploads' });
 
     const uploadStream = bucket.openUploadStream(ifcFile.name, {
@@ -100,7 +120,7 @@ export async function POST(request: NextRequest, context: ContextType) {
       }
     });
 
-    // 写入文件
+    // Write file
     await new Promise<void>((resolve, reject) => {
       uploadStream.end(ifcBuffer);
       uploadStream.on('finish', () => resolve());
@@ -108,12 +128,33 @@ export async function POST(request: NextRequest, context: ContextType) {
     });
 
     const ifcFileId = uploadStream.id;
-    console.log(`[IFC Check] IFC 文件已存储到 GridFS, ID: ${ifcFileId}`);
+    console.log(`[IFC Check] IFC file stored in GridFS, ID: ${ifcFileId}`);
 
-    // 更新任务记录 - 状态先设为 checking
-    await Resource.findByIdAndUpdate(taskId, {
-      $set: {
-        ifcFileId: ifcFileId,
+    // Update task record - set status to checking (atomic update with lock check)
+    const updatedTask = await Resource.findOneAndUpdate(
+      { _id: taskId, _checkLock: task._checkLock },
+      {
+        $set: {
+          ifcFileId: ifcFileId,
+          ifcFileName: ifcFile.name,
+          ifcFileSize: ifcFile.size,
+          status: "checking"
+        },
+        $unset: { _checkLock: 1 }
+      },
+      { new: true }
+    );
+
+    if (!updatedTask) {
+      // Another request already processed - clean up uploaded file
+      try {
+        await bucket.delete(new mongoose.Types.ObjectId(ifcFileId));
+      } catch (e) { /* ignore */ }
+      return NextResponse.json(
+        { error: "Task is being processed by another request, please try again" },
+        { status: 409 }
+      );
+    }
         ifcFileName: ifcFile.name,
         status: "checking"
       }
@@ -144,12 +185,12 @@ export async function POST(request: NextRequest, context: ContextType) {
       await Resource.findByIdAndUpdate(taskId, {
         $set: {
           status: "check_failed",
-          errorMessage: `审查服务错误: ${errorData.error || checkResponse.statusText}`
+          errorMessage: `Review service error: ${errorData.error || checkResponse.statusText}`
         }
       });
 
       return NextResponse.json(
-        { error: "审查服务调用失败", details: errorData },
+        { error: "Review service call failed", details: errorData },
         { status: 500 }
       );
     }
@@ -158,16 +199,16 @@ export async function POST(request: NextRequest, context: ContextType) {
     console.log(`[IFC Check] 审查任务已提交:`, checkResult);
 
     return NextResponse.json({
-      message: "IFC 文件上传成功，审查已开始",
+      message: "IFC file uploaded, review started",
       taskId: taskId,
       ifcFileId: ifcFileId.toString(),
       status: "checking"
     });
 
   } catch (error) {
-    console.error("IFC 审查上传失败:", error);
+    console.error("IFC review upload failed:", error);
     return NextResponse.json(
-      { error: "服务器内部错误", details: error instanceof Error ? error.message : String(error) },
+      { error: "Internal server error", details: error instanceof Error ? error.message : String(error) },
       { status: 500 }
     );
   }
@@ -178,6 +219,12 @@ export async function POST(request: NextRequest, context: ContextType) {
  * 获取审查状态
  */
 export async function GET(request: NextRequest, context: ContextType) {
+  // 速率限制检查
+  const isAllowed = await rateLimit(request);
+  if (!isAllowed) {
+    return NextResponse.json({ error: "Rate limit exceeded, please try again later" }, { status: 429 });
+  }
+
   try {
     await dbConnect();
 
@@ -186,7 +233,7 @@ export async function GET(request: NextRequest, context: ContextType) {
 
     if (!taskId) {
       return NextResponse.json(
-        { error: "任务ID缺失" },
+        { error: "Task ID missing" },
         { status: 400 }
       );
     }
@@ -195,7 +242,7 @@ export async function GET(request: NextRequest, context: ContextType) {
 
     if (!task) {
       return NextResponse.json(
-        { error: "任务不存在" },
+        { error: "Task not found" },
         { status: 404 }
       );
     }
@@ -211,9 +258,9 @@ export async function GET(request: NextRequest, context: ContextType) {
     });
 
   } catch (error) {
-    console.error("获取审查状态失败:", error);
+    console.error("Failed to get review status:", error);
     return NextResponse.json(
-      { error: "服务器内部错误", details: error instanceof Error ? error.message : String(error) },
+      { error: "Internal server error", details: error instanceof Error ? error.message : String(error) },
       { status: 500 }
     );
   }

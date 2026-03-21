@@ -53,7 +53,7 @@ export default function SignIn() {
         <CardContent className="space-y-4">
           {error && (
             <div className="text-red-600 text-sm font-medium mb-2 text-center">
-              {error === "Invalid password" ? "密码输入错误，请重试!" : error}
+              {error === "Invalid password" ? "Invalid password, please try again" : error}
             </div>
           )}
           {/* Email */}
@@ -73,7 +73,7 @@ export default function SignIn() {
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label htmlFor="password">Password</Label>
-              <Link href="#" className="text-sm text-blue-600 hover:underline">
+              <Link href="/reset-password" className="text-sm text-blue-600 hover:underline">
                 Forgot password?
               </Link>
             </div>

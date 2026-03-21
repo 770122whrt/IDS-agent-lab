@@ -1,33 +1,14 @@
 import { authClient } from "../../../lib/auth-client";
 
-const email = "m@example.com";
-const password = "123456";
+// This is a test file for sign-in functionality.
+// In production, sign-in should be handled by the frontend form.
 
-const { data, error } = await authClient.signIn.email({
-        /**
-         * The user email
-         */
-        email: "john.doe@example.com",
-        /**
-         * The user password
-         */
-        password:"password1234",
-        /**
-         * A URL to redirect to after the user verifies their email (optional)
-         */
-        callbackURL: "/dashboard",
-        /**
-         * remember the user session after the browser is closed. 
-         * @default true
-         */
-        rememberMe: false
-}, {
-    //callbacks
-})
+// Example usage (do not use in production):
+// const { data, error } = await authClient.signIn.email({
+//   email: "user@example.com",
+//   password: "your-password",
+//   callbackURL: "/dashboard",
+//   rememberMe: false
+// });
 
-// use data and error as needed
-if (error) {
-  console.error("fail to sign in:", error);
-} else {
-  console.log("Sign in successful:", data);
-}
+// For production, implement sign-in via the frontend using better-auth's signIn.email() method.

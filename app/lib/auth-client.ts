@@ -9,5 +9,7 @@ export const {
     signIn,
     signOut,
     signUp,
-    useSession
+    useSession,
+    resetPassword,
+    sendResetPasswordEmail
 } = authClient;

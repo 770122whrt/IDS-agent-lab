@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { dbConnect } from "../../../../backend/mongodb";
 import { Resource } from "../../../../backend/resource";
 import mongoose from "mongoose";
+import { rateLimit } from "../../../lib/ratelimit";
 
 // Next.js 15 要求 params 必须是一个 Promise 类型
 type ContextType = {
@@ -13,6 +14,12 @@ export async function GET(
   request: NextRequest,
   context: ContextType
 ) {
+  // 速率限制检查
+  const isAllowed = await rateLimit(request);
+  if (!isAllowed) {
+    return NextResponse.json({ error: "Rate limit exceeded, please try again later" }, { status: 429 });
+  }
+
   try {
     await dbConnect();
 
@@ -22,7 +29,7 @@ export async function GET(
 
     if (!taskId) {
       return NextResponse.json(
-        { error: "任务ID缺失" },
+        { error: "Task ID missing" },
         { status: 400 }
       );
     }
@@ -31,7 +38,7 @@ export async function GET(
 
     if (!task) {
       return NextResponse.json(
-        { error: "任务不存在" },
+        { error: "Task not found" },
         { status: 404 }
       );
     }
@@ -40,7 +47,7 @@ export async function GET(
   } catch (error) {
     console.error("Get task detail error:", error);
     return NextResponse.json(
-      { error: "服务器内部错误" },
+      { error: "Internal server error" },
       { status: 500 }
     );
   }
@@ -51,6 +58,12 @@ export async function DELETE(
   request: NextRequest,
   context: ContextType
 ) {
+  // 速率限制检查
+  const isAllowed = await rateLimit(request);
+  if (!isAllowed) {
+    return NextResponse.json({ error: "Rate limit exceeded, please try again later" }, { status: 429 });
+  }
+
   try {
     await dbConnect();
 
@@ -59,7 +72,7 @@ export async function DELETE(
 
     if (!taskId) {
       return NextResponse.json(
-        { error: "任务ID缺失" },
+        { error: "Task ID missing" },
         { status: 400 }
       );
     }
@@ -69,13 +82,14 @@ export async function DELETE(
 
     if (!task) {
       return NextResponse.json(
-        { error: "任务不存在" },
+        { error: "Task not found" },
         { status: 404 }
       );
     }
 
-    // 删除 GridFS 中的文件
+    // Delete files from GridFS
     const db = mongoose.connection.db;
+    if (!db) throw new Error("Database connection not available");
     const bucket = new mongoose.mongo.GridFSBucket(db, { bucketName: 'uploads' });
 
     // 删除 IDS 文件
@@ -113,12 +127,12 @@ export async function DELETE(
 
     return NextResponse.json({
       success: true,
-      message: "任务已删除"
+      message: "Task deleted"
     });
   } catch (error) {
     console.error("Delete task error:", error);
     return NextResponse.json(
-      { error: "服务器内部错误" },
+      { error: "Internal server error" },
       { status: 500 }
     );
   }

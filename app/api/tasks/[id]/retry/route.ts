@@ -1,17 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
 import { dbConnect } from "../../../../../backend/mongodb";
 import { Resource } from "../../../../../backend/resource";
+import { rateLimit } from "../../../../lib/ratelimit";
 
 // Next.js 15 要求 params 必须是一个 Promise 类型
 type ContextType = {
   params: Promise<{ id: string }>;
 };
 
-// POST: 重试失败的任务
+// POST: Retry failed的任务
 export async function POST(
   request: NextRequest,
   context: ContextType
 ) {
+  // 速率限制检查
+  const isAllowed = await rateLimit(request);
+  if (!isAllowed) {
+    return NextResponse.json({ error: "Rate limit exceeded, please try again later" }, { status: 429 });
+  }
+
   try {
     await dbConnect();
 
@@ -20,7 +27,7 @@ export async function POST(
 
     if (!taskId) {
       return NextResponse.json(
-        { error: "任务ID缺失" },
+        { error: "Task ID missing" },
         { status: 400 }
       );
     }
@@ -30,7 +37,7 @@ export async function POST(
 
     if (!task) {
       return NextResponse.json(
-        { error: "任务不存在" },
+        { error: "Task not found" },
         { status: 404 }
       );
     }
@@ -38,7 +45,7 @@ export async function POST(
     // 检查任务状态 - 支持 failed 和 check_failed
     if (task.status !== "failed" && task.status !== "check_failed") {
       return NextResponse.json(
-        { error: "只有失败的任务才能重试" },
+        { error: "Only failed tasks can be retried" },
         { status: 400 }
       );
     }
@@ -58,7 +65,7 @@ export async function POST(
 
       return NextResponse.json({
         success: true,
-        message: "任务已重置为完成状态，请重新上传 IFC 文件进行审查",
+        message: "Task reset to completed, please re-upload IFC file for review",
         taskId: taskId,
         retryType: "check_retry"
       });
@@ -67,7 +74,7 @@ export async function POST(
     // IDS 生成失败 (failed) 的重试逻辑 - 检查输入类型和内容
     if (task.input_type !== "text" || !task.inputText) {
       return NextResponse.json(
-        { error: "任务类型不支持重试，请重新创建" },
+        { error: "Task type not supported for retry, please recreate" },
         { status: 400 }
       );
     }
@@ -103,19 +110,19 @@ export async function POST(
         await Resource.findByIdAndUpdate(taskId, {
           $set: {
             status: "failed",
-            errorMessage: "重试失败: " + errorText,
+            errorMessage: "Retry failed: " + errorText,
           }
         });
 
         return NextResponse.json(
-          { error: "重试失败，Python 服务调用失败" },
+          { error: "Retry failed, Python service call failed" },
           { status: 500 }
         );
       }
 
       return NextResponse.json({
         success: true,
-        message: "任务已重新提交处理",
+        message: "Task re-submitted for processing",
         taskId: taskId,
         retryType: "ids_retry"
       });
@@ -127,12 +134,12 @@ export async function POST(
       await Resource.findByIdAndUpdate(taskId, {
         $set: {
           status: "failed",
-          errorMessage: "无法连接到 Python 分析服务",
+          errorMessage: "Cannot connect to Python analysis service",
         }
       });
 
       return NextResponse.json(
-        { error: "无法连接到分析服务，请确保 Python 后端正在运行" },
+        { error: "Cannot connect to analysis service, ensure Python backend is running" },
         { status: 503 }
       );
     }
@@ -140,7 +147,7 @@ export async function POST(
   } catch (error) {
     console.error("Retry task error:", error);
     return NextResponse.json(
-      { error: "服务器内部错误" },
+      { error: "Internal server error" },
       { status: 500 }
     );
   }

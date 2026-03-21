@@ -20,7 +20,8 @@ from pathlib import Path
 from datetime import datetime
 from typing import Any
 
-from fastapi import FastAPI, BackgroundTasks, HTTPException
+from fastapi import FastAPI, BackgroundTasks, HTTPException, Request
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from pymongo import MongoClient
 import gridfs
@@ -481,8 +482,112 @@ async def check_ifc(req: IFCCheckRequest, background_tasks: BackgroundTasks):
 
 
 @app.get("/health")
-def health_check():
-    return {"status": "ok"}
+def health_check(request: Request):
+    """
+    完善的健康检查端点
+    检查 MongoDB 连接、系统依赖、内存状态等
+    """
+    import psutil
+    import subprocess
+    import shutil
+
+    health_status = {
+        "status": "ok",
+        "timestamp": datetime.now().isoformat(),
+        "checks": {}
+    }
+
+    # 1. MongoDB 连接检查
+    try:
+        app = request.app
+        app.mongodb_client.admin.command('ping')
+        health_status["checks"]["mongodb"] = {
+            "status": "healthy",
+            "message": "Connected to MongoDB"
+        }
+    except Exception as e:
+        health_status["status"] = "degraded"
+        health_status["checks"]["mongodb"] = {
+            "status": "unhealthy",
+            "message": f"MongoDB connection failed: {str(e)}"
+        }
+
+    # 2. 内存使用检查
+    try:
+        memory = psutil.virtual_memory()
+        health_status["checks"]["memory"] = {
+            "status": "healthy" if memory.percent < 90 else "degraded",
+            "total_mb": round(memory.total / (1024 * 1024), 2),
+            "used_mb": round(memory.used / (1024 * 1024), 2),
+            "percent": memory.percent
+        }
+        if memory.percent >= 90:
+            health_status["status"] = "degraded"
+    except Exception as e:
+        health_status["checks"]["memory"] = {
+            "status": "unknown",
+            "message": f"Cannot check memory: {str(e)}"
+        }
+
+    # 3. 磁盘空间检查
+    try:
+        disk = shutil.disk_usage("/")
+        health_status["checks"]["disk"] = {
+            "status": "healthy" if disk.percent < 90 else "degraded",
+            "total_gb": round(disk.total / (1024 ** 3), 2),
+            "free_gb": round(disk.free / (1024 ** 3), 2),
+            "percent": disk.percent
+        }
+        if disk.percent >= 90:
+            health_status["status"] = "degraded"
+    except Exception as e:
+        health_status["checks"]["disk"] = {
+            "status": "unknown",
+            "message": f"Cannot check disk: {str(e)}"
+        }
+
+    # 4. Python 依赖检查 (ifctester)
+    try:
+        result = subprocess.run(
+            ["python", "-c", "import ifctester; print(ifctester.__version__)"],
+            capture_output=True, timeout=5
+        )
+        if result.returncode == 0:
+            health_status["checks"]["ifctester"] = {
+                "status": "healthy",
+                "version": result.stdout.decode().strip()
+            }
+        else:
+            health_status["checks"]["ifctester"] = {
+                "status": "unhealthy",
+                "message": "ifctester not available"
+            }
+            health_status["status"] = "degraded"
+    except Exception as e:
+        health_status["checks"]["ifctester"] = {
+            "status": "unknown",
+            "message": f"Cannot check ifctester: {str(e)}"
+        }
+
+    # 5. 临时目录检查
+    try:
+        temp_dir = tempfile.gettempdir()
+        temp_stat = os.statvfs(temp_dir) if hasattr(os, 'statvfs') else None
+        health_status["checks"]["temp_dir"] = {
+            "status": "healthy",
+            "path": temp_dir,
+            "writable": os.access(temp_dir, os.W_OK)
+        }
+    except Exception as e:
+        health_status["checks"]["temp_dir"] = {
+            "status": "unknown",
+            "message": f"Cannot check temp dir: {str(e)}"
+        }
+
+    # 设置 HTTP 状态码
+    status_code = 200 if health_status["status"] == "ok" else 503
+
+    return JSONResponse(content=health_status, status_code=status_code)
 
 
 if __name__ == "__main__":

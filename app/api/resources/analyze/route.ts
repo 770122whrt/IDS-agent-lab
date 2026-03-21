@@ -1,8 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { dbConnect } from "../../../../backend/mongodb";
 import { Resource } from "../../../../backend/resource";
+import { rateLimit } from "../../../lib/ratelimit";
 
 export async function POST(request: NextRequest) {
+  // 速率限制检查
+  const isAllowed = await rateLimit(request);
+  if (!isAllowed) {
+    return NextResponse.json({ error: "Rate limit exceeded, please try again later" }, { status: 429 });
+  }
+
   try {
     // 1. 解析请求
     const { resourceId } = await request.json();
