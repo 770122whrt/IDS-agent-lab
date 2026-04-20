@@ -1,0 +1,34 @@
+{
+  "test_info": {
+    "test_date": "2026-04-XX",
+    "total_mappings": 0,
+    "reference_baseline": 78.75,
+    "annotation_method": "manual"
+  },
+  "results": {
+    "correct_count": 0,
+    "incorrect_count": 0,
+    "accuracy": 0.0
+  },
+  "test_samples": [
+    {
+      "id": 1,
+      "natural_language": "墙",
+      "ground_truth": "IfcWall",
+      "system_output": "",
+      "is_correct": true
+    },
+    {
+      "id": 2,
+      "natural_language": "厚度",
+      "ground_truth": "Pset_WallCommon.Thickness",
+      "system_output": "",
+      "is_correct": true
+    }
+  ],
+  "analysis": {
+    "entity_mapping_accuracy": 0.0,
+    "property_mapping_accuracy": 0.0,
+    "common_errors": []
+  }
+}

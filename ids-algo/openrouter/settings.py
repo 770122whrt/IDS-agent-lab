@@ -22,6 +22,14 @@ class Settings(BaseSettings):
     llm_base_url: str = "https://openrouter.ai/api/v1"
     llm_timeout: int = 30
 
+    # OpenRouter配置（备用）
+    openrouter_api_key: Optional[str] = None
+    openrouter_base_url: str = "https://openrouter.ai/api/v1"
+
+    # Anthropic配置
+    anthropic_auth_token: Optional[str] = None
+    anthropic_base_url: Optional[str] = None
+
 
     # # 向后兼容的LLM配置 (临时保留)
     # @property
@@ -62,6 +70,10 @@ class Settings(BaseSettings):
             v = os.getenv("OPENROUTER_API_KEY")  # Try to read from environment variable
             if not v:
                 raise ValueError("OpenRouter API key is required")
+        elif provider == "anthropic" and not v:
+            v = info.data.get("anthropic_auth_token") or os.getenv("ANTHROPIC_AUTH_TOKEN")
+            if not v:
+                raise ValueError("Anthropic auth token is required")
         return v
 
 
@@ -76,27 +88,65 @@ class Settings(BaseSettings):
 
     def get_parser_llm_config(self) -> Dict[str, Any]:
         """获取结构化解析器LLM配置"""
-        return {
+        # 原始实现（保留作为参考）
+        # return {
+        #     "provider": self.llm_provider,
+        #     "model": self.parser_llm_model,
+        #     "api_key": self.llm_api_key,
+        #     "base_url": self.llm_base_url,
+        #     "temperature": self.parser_llm_temperature,
+        #     "max_tokens": self.parser_llm_max_tokens,
+        #     "timeout": self.llm_timeout,
+        # }
+
+        # 新实现：支持多provider
+        config = {
             "provider": self.llm_provider,
             "model": self.parser_llm_model,
-            "api_key": self.llm_api_key,
-            "base_url": self.llm_base_url,
             "temperature": self.parser_llm_temperature,
             "max_tokens": self.parser_llm_max_tokens,
             "timeout": self.llm_timeout,
         }
 
+        if self.llm_provider == "anthropic":
+            config["api_key"] = self.anthropic_auth_token or self.llm_api_key
+            config["base_url"] = self.anthropic_base_url or self.llm_base_url
+        else:
+            config["api_key"] = self.llm_api_key
+            config["base_url"] = self.llm_base_url
+
+        return config
+
     def get_classifier_llm_config(self) -> Dict[str, Any]:
         """获取Facet分类器LLM配置"""
-        return {
+        # 原始实现（保留作为参考）
+        # return {
+        #     "provider": self.llm_provider,
+        #     "model": self.classifier_llm_model,
+        #     "api_key": self.llm_api_key,
+        #     "base_url": self.llm_base_url,
+        #     "temperature": self.classifier_llm_temperature,
+        #     "max_tokens": self.classifier_llm_max_tokens,
+        #     "timeout": self.llm_timeout,
+        # }
+
+        # 新实现：支持多provider
+        config = {
             "provider": self.llm_provider,
             "model": self.classifier_llm_model,
-            "api_key": self.llm_api_key,
-            "base_url": self.llm_base_url,
             "temperature": self.classifier_llm_temperature,
             "max_tokens": self.classifier_llm_max_tokens,
             "timeout": self.llm_timeout,
         }
+
+        if self.llm_provider == "anthropic":
+            config["api_key"] = self.anthropic_auth_token or self.llm_api_key
+            config["base_url"] = self.anthropic_base_url or self.llm_base_url
+        else:
+            config["api_key"] = self.llm_api_key
+            config["base_url"] = self.llm_base_url
+
+        return config
 
 
 

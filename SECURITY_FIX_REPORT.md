@@ -23,8 +23,6 @@
 
 **问题说明**：
 - `sendResetPassword` 函数仅为空实现，只打印日志
-- 用户无法通过邮件重置密码
-
 **原代码**：
 ```typescript
 async sendResetPassword(data, request) {

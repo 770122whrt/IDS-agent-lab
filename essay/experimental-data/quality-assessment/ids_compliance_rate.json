@@ -1,0 +1,46 @@
+{
+  "test_info": {
+    "test_date": "2026-04-XX",
+    "total_files": 0,
+    "test_environment": {
+      "xsd_schema_version": "IDS 1.0",
+      "validator": "ifctester"
+    }
+  },
+  "results": {
+    "passed_count": 0,
+    "failed_count": 0,
+    "compliance_rate": 0.0
+  },
+  "failure_reasons": {
+    "missing_fields": {
+      "count": 0,
+      "percentage": 0.0,
+      "examples": []
+    },
+    "format_errors": {
+      "count": 0,
+      "percentage": 0.0,
+      "examples": []
+    },
+    "invalid_entity_names": {
+      "count": 0,
+      "percentage": 0.0,
+      "examples": []
+    },
+    "other": {
+      "count": 0,
+      "percentage": 0.0,
+      "examples": []
+    }
+  },
+  "test_files": [
+    {
+      "id": 1,
+      "filename": "example.ids",
+      "result": "passed/failed",
+      "failure_reason": "",
+      "error_details": ""
+    }
+  ]
+}

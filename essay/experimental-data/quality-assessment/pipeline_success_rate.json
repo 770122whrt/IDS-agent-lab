@@ -1,0 +1,43 @@
+{
+  "test_info": {
+    "test_date": "2026-04-XX",
+    "total_samples": 0,
+    "test_environment": {
+      "cpu": "",
+      "memory": "",
+      "network": ""
+    }
+  },
+  "results": {
+    "success_count": 0,
+    "failure_count": 0,
+    "success_rate": 0.0
+  },
+  "failure_reasons": {
+    "llm_call_failed": {
+      "count": 0,
+      "percentage": 0.0
+    },
+    "mapping_failed": {
+      "count": 0,
+      "percentage": 0.0
+    },
+    "validation_failed": {
+      "count": 0,
+      "percentage": 0.0
+    },
+    "other": {
+      "count": 0,
+      "percentage": 0.0
+    }
+  },
+  "test_samples": [
+    {
+      "id": 1,
+      "input_text": "示例：墙体厚度≥200mm",
+      "complexity": "simple",
+      "result": "success/failure",
+      "failure_reason": ""
+    }
+  ]
+}

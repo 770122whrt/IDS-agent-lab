@@ -1,0 +1,52 @@
+{
+  "test_info": {
+    "test_date": "2026-04-XX",
+    "total_samples": 0,
+    "test_environment": {
+      "cpu": "",
+      "memory": "",
+      "network": ""
+    }
+  },
+  "results": {
+    "stage_a_parsing": {
+      "average_time": 0.0,
+      "percentage": 0.0,
+      "description": "结构化解析（LLM调用）"
+    },
+    "stage_b_classification": {
+      "average_time": 0.0,
+      "percentage": 0.0,
+      "description": "方面分类（LLM调用+规则匹配）"
+    },
+    "stage_c_mapping": {
+      "average_time": 0.0,
+      "percentage": 0.0,
+      "description": "知识库映射（向量检索）"
+    },
+    "stage_d_constraints": {
+      "average_time": 0.0,
+      "percentage": 0.0,
+      "description": "约束提取（规则解析+LLM辅助）"
+    },
+    "stage_e_building": {
+      "average_time": 0.0,
+      "percentage": 0.0,
+      "description": "IDS构建（模板填充+XSD验证）"
+    }
+  },
+  "test_samples": [
+    {
+      "id": 1,
+      "input_text": "示例：墙体厚度≥200mm",
+      "stage_times": {
+        "stage_a": 0.0,
+        "stage_b": 0.0,
+        "stage_c": 0.0,
+        "stage_d": 0.0,
+        "stage_e": 0.0
+      },
+      "total_time": 0.0
+    }
+  ]
+}

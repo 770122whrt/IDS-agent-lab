@@ -1,0 +1,33 @@
+{
+  "test_info": {
+    "test_date": "2026-04-XX",
+    "total_samples": 0,
+    "repetitions_per_sample": 3,
+    "test_environment": {
+      "cpu": "",
+      "memory": "",
+      "network": ""
+    }
+  },
+  "results": {
+    "average_time": 0.0,
+    "max_time": 0.0,
+    "min_time": 0.0,
+    "std_deviation": 0.0
+  },
+  "test_samples": [
+    {
+      "id": 1,
+      "input_text": "示例：墙体厚度≥200mm",
+      "complexity": "simple",
+      "times": [0.0, 0.0, 0.0],
+      "average": 0.0
+    }
+  ],
+  "time_breakdown": {
+    "network_transmission": 0.0,
+    "llm_calls": 0.0,
+    "vector_search": 0.0,
+    "rule_building": 0.0
+  }
+}
