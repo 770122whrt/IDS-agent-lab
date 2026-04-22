@@ -3,7 +3,7 @@ phase: 1
 plan_id: phase1-summary
 title: Phase 1 Summary and Handoff
 estimated_duration: 15min
-dependencies: [verify-idstotextgenerator, create-conversion-script, enhance-idstotextgenerator, validate-output-format, document-output-format]
+dependencies: [verify-idstotextgenerator, create-conversion-script, enhance-idstotextgenerator, llm-natural-language-generation, validate-output-format, document-output-format]
 ---
 
 # Plan: Phase 1 Summary and Handoff
@@ -23,12 +23,14 @@ Summarize Phase 1 accomplishments, verify success criteria are met, and prepare 
 ### 1. Verify Success Criteria
 **Action:** Check all Phase 1 success criteria from ROADMAP.md:
 - [ ] IDSToTextGenerator can convert IDS to complete structured text
-- [ ] Output contains all entity information (applicability facets)
-- [ ] Output contains all requirements (partOf/attribute/property/material)
-- [ ] Output contains cardinality constraints (minOccurs/maxOccurs)
-- [ ] Output contains IFC version information
+- [ ] Structured text contains all entity information (applicability facets)
+- [ ] Structured text contains all requirements (partOf/attribute/property/material)
+- [ ] Structured text contains cardinality constraints (minOccurs/maxOccurs)
+- [ ] Structured text contains IFC version information
+- [ ] LLM successfully converts structured text to natural language
+- [ ] Natural language output matches pipeline input format (temp/input.json style)
+- [ ] File generated: ids_input_natural_language.json (45 specs)
 - [ ] Output format is clear and parseable
-- [ ] File generated: ids_input_text_full.txt (45 specs, ~30KB)
 
 **Success:** All criteria met
 
@@ -47,30 +49,35 @@ Summarize Phase 1 accomplishments, verify success criteria are met, and prepare 
 - ✅ Created/verified conversion script (convert_ids_to_text.py)
 - ✅ [Enhanced IDSToTextGenerator OR Confirmed no enhancement needed]
 - ✅ Generated complete structured text (ids_input_text_full.txt)
+- ✅ Generated natural language descriptions (ids_input_natural_language.json)
 - ✅ Validated output format compatibility
 - ✅ Documented format for Phase 2
 
 ## Deliverables
 
 1. **ids_input_text_full.txt** - Complete structured text with 45 specifications
-2. **convert_ids_to_text.py** - Conversion script
-3. **FORMAT.md** - Output format documentation
-4. [**Enhanced ids_to_text.py** - If enhancements were made]
+2. **ids_input_natural_language.json** - Natural language descriptions (45 specs)
+3. **convert_ids_to_text.py** - IDS to structured text conversion script
+4. **generate_natural_language.py** - Structured text to natural language script
+5. **FORMAT.md** - Output format documentation
+6. [**Enhanced ids_to_text.py** - If enhancements were made]
 
 ## Key Metrics
 
 - Specifications: 45 (100% preserved)
-- Requirements: 79 (100% preserved in text)
-- File size: ~30KB
+- Requirements: 79 (100% preserved in natural language)
+- File format: JSON (pipeline-compatible)
 - Information completeness: 100% (vs. 15% before)
+- Natural language quality: Verified against temp/input.json examples
 
 ## Handoff to Phase 2
 
 Phase 2 needs to:
-1. Read FORMAT.md to understand output structure
-2. Modify test_large_scale_ids.py to use ids_input_text_full.txt
-3. Modify batch_experiment.py to use ids_input_text_full.txt
+1. Read FORMAT.md to understand natural language output structure
+2. Modify test_large_scale_ids.py to use ids_input_natural_language.json
+3. Modify batch_experiment.py to use ids_input_natural_language.json
 4. Verify other test scripts and update as needed
+5. Test with pipeline to confirm 85%+ match rate and 70%+ requirements retention
 
 ## Issues/Blockers
 

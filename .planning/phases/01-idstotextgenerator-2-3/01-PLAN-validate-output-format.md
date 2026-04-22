@@ -3,7 +3,7 @@ phase: 1
 plan_id: validate-output-format
 title: Validate Output Format for Pipeline Compatibility
 estimated_duration: 30min
-dependencies: [create-conversion-script, enhance-idstotextgenerator]
+dependencies: [llm-natural-language-generation]
 ---
 
 # Plan: Validate Output Format for Pipeline Compatibility
@@ -14,9 +14,9 @@ Ensure the generated structured text format is compatible with the IDS pipeline 
 
 ## Context
 
-- Generated file: `ids-algo/experimental_results/large_scale_test/ids_input_text_full.txt`
-- Pipeline stages need to parse this text
-- Reference format: `ids-algo/temp/` directory examples
+- Generated file: `ids-algo/experimental_results/large_scale_test/ids_input_natural_language.json`
+- Pipeline stages need to parse this natural language input
+- Reference format: `ids-algo/temp/input.json` examples
 
 ## Tasks
 
@@ -30,64 +30,72 @@ Ensure the generated structured text format is compatible with the IDS pipeline 
 
 ### 2. Compare with temp Directory Format
 **Action:** Compare generated output with `ids-algo/temp/input.json`:
-- Check if structure matches
-- Verify entity format matches
-- Verify requirements format matches
+- Check JSON structure matches (array of objects with id, text, language)
+- Verify natural language style matches
+- Verify all information is preserved in natural language
 - Identify any format mismatches
 
 **Success:** Know if format is compatible
 
-### 3. Validate Specification Delimiters
-**Action:** Verify specifications are clearly separated:
-- Check delimiter format (e.g., 【Specification N】)
-- Ensure each specification is self-contained
-- Verify numbering is consistent (1-45)
+### 3. Validate JSON Structure
+**Action:** Verify JSON format is correct:
+- Check it's valid JSON (can be parsed)
+- Verify array structure with 45 objects
+- Verify each object has: id, text, language fields
+- Verify IDs are sequential (1-45)
 
-**Success:** Specifications are properly delimited
+**Success:** JSON structure is valid
 
-### 4. Validate Information Completeness
+### 4. Validate Natural Language Quality
 **Action:** Manually inspect 3-5 sample specifications:
 - Pick simple, medium, complex examples
-- Verify each has: IFC version, description, applicability, requirements
-- Verify cardinality is explicit
-- Verify all requirement types are present
+- Verify natural language is clear and readable
+- Verify all information from structured text is preserved
+- Verify style matches temp/input.json examples
+- Check entities, requirements, cardinality are expressed naturally
 
-**Success:** Sample specifications contain complete information
+**Success:** Sample specifications are high quality natural language
 
 ### 5. Test Parse-ability (Quick Check)
 **Action:** Try to parse the output programmatically:
 ```python
-# Quick test to see if format is parseable
-with open('ids_input_text_full.txt', 'r', encoding='utf-8') as f:
-    content = f.read()
-    
-# Count specifications
-spec_count = content.count('【Specification')
-print(f"Found {spec_count} specifications")
+import json
 
-# Check for required sections
-has_ifc_version = 'IFC Version:' in content
-has_applicability = 'Applicability:' in content
-has_requirements = 'Requirements:' in content
-print(f"Has IFC Version: {has_ifc_version}")
-print(f"Has Applicability: {has_applicability}")
-print(f"Has Requirements: {has_requirements}")
+# Quick test to see if format is parseable
+with open('ids_input_natural_language.json', 'r', encoding='utf-8') as f:
+    data = json.load(f)
+
+# Validate structure
+print(f"Total specifications: {len(data)}")
+print(f"Expected: 45")
+
+# Check each entry
+for entry in data[:3]:  # Check first 3
+    assert 'id' in entry
+    assert 'text' in entry
+    assert 'language' in entry
+    assert entry['language'] == 'en'
+    print(f"ID {entry['id']}: {entry['text'][:100]}...")
+
+print("✓ Format validation passed")
 ```
 
-**Success:** Format is parseable and contains expected sections
+**Success:** Format is parseable and matches expected structure
 
 ## Acceptance Criteria
 
 - [ ] Stage A input requirements understood
-- [ ] Output format compared with temp directory examples
-- [ ] Specifications properly delimited (45 total)
-- [ ] Sample specifications manually validated (3-5 samples)
+- [ ] Output format compared with temp/input.json
+- [ ] JSON structure validated (45 entries with id, text, language)
+- [ ] Sample natural language manually validated (3-5 samples)
 - [ ] Quick parse test passes
 - [ ] Format confirmed compatible with pipeline
+- [ ] Natural language quality verified
 
 ## Notes
 
-- This is a validation step, not implementation
-- If format issues found, may need to adjust IDSToTextGenerator output
-- Focus on ensuring downstream stages can parse the text
+- This validates the natural language output, not structured text
+- If format issues found, may need to adjust LLM prompt in previous plan
+- Focus on ensuring downstream stages can parse the natural language
 - Don't need to run full pipeline yet - just validate format
+- Natural language should match temp/input.json style
