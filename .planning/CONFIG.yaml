@@ -1,0 +1,98 @@
+# IDS大型数据集测试优化项目配置
+
+project:
+  name: "IDS大型数据集测试优化"
+  version: "1.0.0"
+  start_date: "2026-04-23"
+  target_completion: "2026-04-23"
+  branch: "ESSAY"
+
+phases:
+  granularity: "standard"  # 5-8个阶段，每个3-5个计划
+  execution: "parallel"    # 并行运行独立计划
+  git_tracking: true       # 规划文档提交到git
+
+targets:
+  match_rate:
+    current: 53.3
+    target: 85.0
+    unit: "%"
+  requirements_retention:
+    current: 3.8
+    target: 70.0
+    unit: "%"
+  specifications_tested: 45
+  quick_validation_samples: 5
+
+paths:
+  ids_converter: "ids-algo/ids_converter/ids_to_text.py"
+  test_large_scale: "ids-algo/test_large_scale_ids.py"
+  batch_experiment: "ids-algo/batch_experiment.py"
+  pipeline: "ids-algo/pipeline.py"
+  temp_reference: "ids-algo/temp/"
+  experimental_results: "ids-algo/experimental_results/"
+  large_scale_results: "ids-algo/experimental_results/large_scale_robustness/"
+
+output_format:
+  stage_outputs:
+    - "a1.json"  # Stage A input
+    - "a2.json"  # Stage A output
+    - "b1.json"  # Stage B input
+    - "b2.json"  # Stage B output
+    - "c1.json"  # Stage C input
+    - "c2.json"  # Stage C output
+    - "d1.json"  # Stage D input
+    - "d2.json"  # Stage D output
+    - "e1.json"  # Stage E input
+    - "e2.json"  # Stage E output
+  intermediate_results:
+    - "parsed_structure.json"
+    - "classified_facets.json"
+    - "mapped_facets.json"
+  final_results:
+    - "ids_output.json"
+    - "validation_result.json"
+  metrics:
+    - "processing_time"
+    - "memory_usage"
+    - "match_rate"
+    - "requirements_retention_rate"
+
+enhancement_scope:
+  ids_to_text_generator:
+    - "保留entity信息（applicability facets）"
+    - "保留requirements信息（partOf/attribute/property/material facets）"
+    - "保留基数约束（minOccurs/maxOccurs）"
+    - "保留IFC版本信息"
+  test_scripts:
+    - "test_large_scale_ids.py"
+    - "batch_experiment.py"
+    - "其他相关测试脚本"
+  result_saving:
+    - "各阶段输出（a1/a2格式）"
+    - "中间结果（parsed/classified/mapped）"
+    - "最终结果（IDS JSON和验证）"
+    - "性能指标（时间/内存/成功率）"
+
+validation:
+  quick_test:
+    samples: 5
+    expected_match_rate: 85
+    expected_requirements_retention: 70
+  full_test:
+    samples: 45
+    expected_match_rate: 85
+    expected_requirements_retention: 70
+
+deliverables:
+  - "增强版IDSToTextGenerator"
+  - "修复后的测试脚本"
+  - "完整的阶段输出和中间结果"
+  - "修复前后对比报告"
+  - "论文所需的性能和准确性数据"
+
+out_of_scope:
+  - "Stage C性能优化（批量LLM、向量索引）"
+  - "IFC4X3实体扩充"
+  - "自动化测试框架"
+  - "前端界面改进"
