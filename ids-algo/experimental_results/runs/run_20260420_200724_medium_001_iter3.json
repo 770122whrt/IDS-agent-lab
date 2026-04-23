@@ -1,0 +1,22 @@
+{
+  "sample_id": "medium_001",
+  "complexity": "medium",
+  "iteration": 3,
+  "timestamp": "2026-04-20T20:07:06.726683",
+  "success": true,
+  "timing": {
+    "stage_a": 3.5010455999999976,
+    "stage_b": 4.43235199999981,
+    "stage_c": 2.669026500000655,
+    "stage_d": 5.000001692678779e-07,
+    "stage_e_merge": 5.000001692678779e-07,
+    "stage_e_build": 6.683495400000538,
+    "total": 17.287030500000583
+  },
+  "num_specifications": 0,
+  "output": {
+    "specifications": []
+  },
+  "error": null,
+  "stage_c_mappings": []
+}

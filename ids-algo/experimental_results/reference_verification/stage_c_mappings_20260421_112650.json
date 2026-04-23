@@ -1,0 +1,44 @@
+[
+  {
+    "facet_type": "entity",
+    "original_text": "All bridge projects must contain exactly one IfcProject instance",
+    "mapped_name": "IfcProject",
+    "confidence": 0.6356689138525693,
+    "property_set": null,
+    "entity_name": null,
+    "constraints": [],
+    "additional_data": null,
+    "ifc_item": {
+      "name": "IfcProject",
+      "definition": "IfcProjectindicates the undertaking of some design, engineering, construction, or maintenance activities leading towards a product. The project establishes the context for information to be exchanged or shared, and it may represent a construction project but does not have to. TheIfcProject's main purpose in an exchange structure is to provide the root instance and the context for all other information items included.",
+      "ifc_version": "IFC4",
+      "item_type": "entity",
+      "predefined_types": []
+    }
+  },
+  {
+    "facet_type": "entity",
+    "original_text": "at least one IfcSite that defines the terrain",
+    "mapped_name": "IfcSite",
+    "confidence": 0.6256448278275719,
+    "property_set": null,
+    "entity_name": null,
+    "constraints": [],
+    "additional_data": null,
+    "ifc_item": {
+      "name": "IfcSite",
+      "definition": "A site is a defined area of land, possibly covered with water, on which the project construction is to be completed. A site may be used to erect, retrofit or turn down building(s), or for other construction related developments.",
+      "ifc_version": "IFC4",
+      "item_type": "entity",
+      "predefined_types": []
+    }
+  },
+  {
+    "facet_type": "entity",
+    "original_text": "Every bridge structure must be represented by an IfcBridge entity",
+    "mapped_name": "IfcCivilElement",
+    "confidence": 0.6414020883663843,
+    "property_set": null,
+    "entity_name": null,
+    "constraints": [
+      

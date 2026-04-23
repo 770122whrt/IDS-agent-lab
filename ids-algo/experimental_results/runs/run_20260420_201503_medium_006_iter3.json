@@ -1,0 +1,75 @@
+{
+  "sample_id": "medium_006",
+  "complexity": "medium",
+  "iteration": 3,
+  "timestamp": "2026-04-20T20:14:38.314275",
+  "success": true,
+  "timing": {
+    "stage_a": 3.2297517000006337,
+    "stage_b": 3.94300690000091,
+    "stage_c": 8.774095700000544,
+    "stage_d": 0.00018049999926006421,
+    "stage_e_merge": 2.3000011424301192e-06,
+    "stage_e_build": 8.86340989999917,
+    "total": 24.811080600000423
+  },
+  "num_specifications": 1,
+  "output": {
+    "specifications": [
+      {
+        "name": "Escape Door Clear Width and Opening Direction Compliance",
+        "ifcVersion": [
+          "IFC4"
+        ],
+        "description": "Validates that escape doors meet minimum clear width requirements and open in the direction of egress for life safety compliance.",
+        "instructions": null,
+        "applicability": {
+          "minOccurs": "1",
+          "maxOccurs": "unbounded",
+          "entity": {
+            "name": "IfcDoor",
+            "predefinedType": null
+          },
+          "partOf": null,
+          "classification": null,
+          "attribute": null,
+          "property": null,
+          "material": null
+        },
+        "requirements": {
+          "description": null,
+          "entity": null,
+          "partOf": null,
+          "classification": null,
+          "attribute": null,
+          "property": [
+            {
+              "propertySet": "Pset_DoorCommon",
+              "baseName": "Width",
+              "value": {
+                "simpleValue": "minimum clear width of 900mm",
+                "restriction": null
+              },
+              "dataType": "IfcPositiveLengthMeasure",
+              "uri": null,
+              "cardinality": "required",
+              "instructions": null
+            }
+          ],
+          "material": null
+        }
+      }
+    ]
+  },
+  "error": null,
+  "stage_c_mappings": [
+    {
+      "original_text": "Escape doors",
+      "facet_type": "entity"
+    },
+    {
+      "original_text": "minimum clear width of 900mm",
+      "facet_type": "property"
+    }
+  ]
+}

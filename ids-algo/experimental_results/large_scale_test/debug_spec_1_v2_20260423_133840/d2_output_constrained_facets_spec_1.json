@@ -1,0 +1,20 @@
+{
+  "constraints": [
+    {
+      "text": "for length",
+      "type": ""
+    },
+    {
+      "text": "for angle",
+      "type": ""
+    },
+    {
+      "text": "for mass",
+      "type": ""
+    },
+    {
+      "text": "for temperature",
+      "type": ""
+    }
+  ]
+}

@@ -1,0 +1,227 @@
+[
+  {
+    "id": "1",
+    "text": "The model must contain exactly one IfcProject entity that provides default units for length (meters), angle (degrees), mass (kilograms), and temperature (Celsius), with imperial alternatives of inches, pounds, and Fahrenheit respectively if needed. IFC version: IFC4X3_ADD2.",
+    "language": "en"
+  },
+  {
+    "id": "2",
+    "text": "The model may contain one or more IfcSite entities, each of which must be aggregated within an IfcProject entity using IfcRelAggregates. Each site must have a Name attribute to identify it for reference purposes. The site can define existing and proposed terrain, contain alignments and bridges, and may include boring points as contained objects.",
+    "language": "en"
+  },
+  {
+    "id": "3",
+    "text": "All IfcBridge entities must be part of either an IfcProject or another IfcBridge through an IfcRelAggregates relationship, and each bridge must have a Name attribute. Bridge structures are defined by an Axis curve, typically using IfcOffsetCurveByDistances to reference an IfcAlignmentCurve with starting and ending distances that specify the bridge's span location relative to the alignment. IFC version: IFC4X3_ADD2.",
+    "language": "en"
+  },
+  {
+    "id": "4",
+    "text": "All IfcAlignment entities must be part of exactly one IfcProject through an IfcRelAggregates relationship, and each IfcAlignment must have a Name attribute. This applies to IFC4X3_ADD2.",
+    "language": "en"
+  },
+  {
+    "id": "5",
+    "text": "All IfcBridgePart entities representing the substructure must be part of exactly one IfcBridge entity through an IfcRelAggregates relationship. There must be one or more substructure parts in any bridge model using IFC4X3_ADD2.",
+    "language": "en"
+  },
+  {
+    "id": "6",
+    "text": "All IfcBridgePart entities representing the superstructure must be part of exactly one IfcBridge entity through an IfcRelAggregates relationship, and each must have a Name attribute. The superstructure comprises bridge elements that span horizontally to carry loads onto substructures. IFC version: IFC4X3_ADD2.",
+    "language": "en"
+  },
+  {
+    "id": "7",
+    "text": "All IfcElementAssembly entities representing girders must be contained within an IfcBridgePart with predefined type SUPERSTRUCTURE, have a Name attribute, and have an associated material. IFC version: IFC4X3_ADD2.",
+    "language": "en"
+  },
+  {
+    "id": "8",
+    "text": "All IfcBridgePart entities representing a deck must be part of exactly one IfcBridge entity through an IfcRelAggregates relationship, and each deck must have a Name attribute.",
+    "language": "en"
+  },
+  {
+    "id": "9",
+    "text": "All IfcBridgePart entities with predefined type DECK must be aggregated as parts of another IfcBridgePart entity using IfcRelAggregates, and each deck segment must have a Name attribute.",
+    "language": "en"
+  },
+  {
+    "id": "10",
+    "text": "All abutment structures should be represented as IfcElementAssembly entities within an IfcBridgepart using IfcRelContainedInSpatialStructure, and may be composed of wing walls on each side, a head wall, stem wall, and cone. A model can contain zero or more abutments.",
+    "language": "en"
+  },
+  {
+    "id": "11",
+    "text": "All IfcElementAssembly entities representing piers must be contained within an IfcBridgePart with predefined type SUBSTRUCTURE, and each pier must have a Name attribute. Piers are decomposed into elements according to connectivity to indicate construction joints, with reinforcing placed within inner elements like footings, columns, members, and walls to reflect how it will be constructed. Piers and their components are positioned relative to the horizontal alignment curve using Cartesian placement, matching how they appear on construction plans.",
+    "language": "en"
+  },
+  {
+    "id": "12",
+    "text": "All IfcPile entities in IFC4X3_ADD2 must be part of an IfcBridgePart, have a Name attribute, and have an assigned material.",
+    "language": "en"
+  },
+  {
+    "id": "13",
+    "text": "All ground surface entities representing final site conditions must be contained within either an IfcSite or IfcBridge entity using the IfcRelContainedInSpatialStructure relation. There must be at least one such surface in the model. This applies to IFC4X3_ADD2.",
+    "language": "en"
+  },
+  {
+    "id": "14",
+    "text": "All ground surface entities representing existing site conditions must be contained within either an IfcSite or IfcBridge entity using the IfcRelContainedInSpatialStructure relation. There can be one or more of these surfaces in the model. This applies to IFC4X3_ADD2.",
+    "language": "en"
+  },
+  {
+    "id": "15",
+    "text": "All IfcGeographicElement entities with PredefinedType set to SOILBORING must be contained within either an IfcSite or IfcBridge, must have a Name attribute, and must have an associated material. IFC version: IFC4X3_ADD2.",
+    "language": "en"
+  },
+  {
+    "id": "16",
+    "text": "All IfcMaterial entities must have a Name attribute following material classification standards and a Category attribute set to one of Concrete, Steel, Wood, Plastic, Glass, or Earth. They should optionally include MassDensity in Pset_MaterialCommon and mechanical properties like YoungModulus, ShearModulus, and ThermalExpansionCoefficient in Pset_MaterialMechanical. If the category is Concrete, CompressiveStrength should be included in Pset_MaterialConcrete, and if Steel, YieldStress should be included in Pset_MaterialSteel. This applies to IFC4X3_ADD2.",
+    "language": "en"
+  },
+  {
+    "id": "17",
+    "text": "All IfcColumn entities that are part of a pier may have zero or more stems, where each stem must be aggregated as a child component within an IfcElementAssembly with the predefined type PIER using the IfcRelAggregates relationship.",
+    "language": "en"
+  },
+  {
+    "id": "18",
+    "text": "All IfcColumn entities with predefined type PIERSTEM must be aggregated (using IfcRelAggregates) into a parent IfcColumn, and may contain zero or more pier segment IfcColumn entities separated by construction joints.",
+    "language": "en"
+  },
+  {
+    "id": "19",
+    "text": "All IfcBeam entities representing pier caps must be contained within an IfcBridgePart entity whose predefined type is either Substructure or Superstructure, using the IfcRelContainedInSpatialStructure relationship. There can be zero or more pier cap beams in a model. This applies to IFC4X3_ADD2.",
+    "language": "en"
+  },
+  {
+    "id": "20",
+    "text": "All retaining wall entities (IfcWall) must be contained within an IfcBridgepart with predefined type SUBSTRUCTURE using the IfcRelContainedInSpatialStructure relationship. This applies to IFC4X3_ADD2.",
+    "language": "en"
+  },
+  {
+    "id": "21",
+    "text": "All IfcBuildingElementPart entities representing bridge aprons must be contained within an IfcBridgePart entity with a predefined type of SUBSTRUCTURE using the IfcRelContainedInSpatialStructure relation. IFC version: IFC4X3_ADD2.",
+    "language": "en"
+  },
+  {
+    "id": "22",
+    "text": "All arch elements, represented as IfcElementAssembly entities in IFC4X3_ADD2, must be contained within an IfcBridgepart with predefined type SUBSTRUCTURE using the IfcRelContainedInSpatialStructure relationship.",
+    "language": "en"
+  },
+  {
+    "id": "23",
+    "text": "All IfcFooting entities must be contained within an IfcBridgePart with a predefined type of either Substructure or Foundation. Each footing must have a Name attribute for referencing purposes as it would appear on construction plans. Material properties must be assigned to indicate concrete strength. Footings are geometrically described as enclosed polygonal areas extruded vertically, and for stepped footings, multiple extruded solids may be used as long as they don't intersect.",
+    "language": "en"
+  },
+  {
+    "id": "24",
+    "text": "All IfcPile entities must be contained within an IfcBridgepart with predefined type Substructure, have a required Name attribute describing the pile arrangement as shown on construction plans, and have a required material assignment. Piles are typically represented as circular profiles extruded vertically according to pile depth, with mapped representation used for multiple similar piles.",
+    "language": "en"
+  },
+  {
+    "id": "25",
+    "text": "All IfcBeam entities in IFC4X3_ADD2 may represent hat stones, which are top courses on abutments or culverts, with zero or more instances allowed in the model.",
+    "language": "en"
+  },
+  {
+    "id": "26",
+    "text": "All IfcElementAssembly entities representing bridge girders must be contained within an IfcBridgepart with predefined type SUPERSTRUCTURE, have a required Name attribute describing the girder line as it appears on construction plans, and have an assigned material. For steel girders, each girder line should be decomposed into beam segments, while concrete box girders represent the overall box typically connected to the bridge deck via a keyed construction joint.",
+    "language": "en"
+  },
+  {
+    "id": "27",
+    "text": "All IfcBorehole entities must be contained within either an IfcSite or IfcBridge using the IfcRelContainedInSpatialStructure relationship, and each borehole must have a Name attribute. IFC version: IFC4X3_ADD2.",
+    "language": "en"
+  },
+  {
+    "id": "28",
+    "text": "All IfcElementAssemblyType entities representing girders must have a Name attribute. There must be one or more of these girder type definitions in the model. This specification applies to IFC4X3_ADD2.",
+    "language": "en"
+  },
+  {
+    "id": "29",
+    "text": "All IfcBeam entities representing girder segments must be part of an IfcElementAssembly or IfcElementAssemblyType with predefined type GIRDER, have a Name attribute for referencing purposes as shown on construction plans, and have an assigned material. Each girder segment may have a constant cross section, tapered cross section, variable cross section, or free-form geometry.",
+    "language": "en"
+  },
+  {
+    "id": "30",
+    "text": "All IfcPlate entities in IFC4X3_ADD2 may be used to represent components of built-up girders such as webs, flanges, cover plates, longitudinal stiffeners, and vertical stiffeners. Plates can occur in different assemblies and are not required to be part of a specific parent structure.",
+    "language": "en"
+  },
+  {
+    "id": "31",
+    "text": "All IfcElementAssembly entities representing bridge cross frames must have a Name attribute that identifies the cross frame occurrence as shown on construction plans.",
+    "language": "en"
+  },
+  {
+    "id": "32",
+    "text": "All IfcBeam entities representing diaphragms must have a Name attribute, be contained within an IfcBridgepart with predefined type SUPERSTRUCTURE, and have an assigned material. Diaphragms are distinguished by the predefined type DIAPHRAGM and provide lateral and vertical support above supporting structures in bridge girders.",
+    "language": "en"
+  },
+  {
+    "id": "33",
+    "text": "All IfcElementAssembly entities representing trusses must have a Name attribute. Trusses are frameworks of linear structural elements in tension and compression that support bridge superstructure spans, where struts are compression elements and ties are tension elements. IFC version: IFC4X3_ADD2.",
+    "language": "en"
+  },
+  {
+    "id": "34",
+    "text": "All IfcElementAssembly entities representing bridge deck spans must be part of an IfcBridgePart with a predefined type of either DECK or DECK_SEGMENT, must have a Name attribute, and must have an associated material. IFC version: IFC4X3_ADD2.",
+    "language": "en"
+  },
+  {
+    "id": "35",
+    "text": "All IfcBridgepart entities with predefined type DECK must contain one or more deck segments as IfcBridgepart entities related through IfcRelAggregates. Each deck segment must have a Name attribute for referencing purposes as shown on construction plans, and must have an associated material. Geometry for bridge decks is typically represented using IfcSectionedSolidHorizontal to define a cross section that may vary along an alignment.",
+    "language": "en"
+  },
+  {
+    "id": "36",
+    "text": "All IfcWall entities with predefined type Parapet must be contained within an IfcBridgePart entity that is either a Deck or DeckSegment, must have a Name attribute for referencing purposes, and must have an associated material. This applies to IFC4X3_ADD2.",
+    "language": "en"
+  },
+  {
+    "id": "37",
+    "text": "All IfcRailing entities must be contained within an IfcBridgePart with a predefined type of either DECK or DECK_SEGMENT, and must have a Name attribute that identifies the railing segment as it appears on construction plans. The railing must also have an assigned material. IFC version: IFC4X3_ADD2.",
+    "language": "en"
+  },
+  {
+    "id": "38",
+    "text": "All IfcSlab entities representing approach slabs must be contained within an IfcBridgePart entity with a predefined type of either DECK or DECK_SEGMENT. This applies to IFC4X3_ADD2.",
+    "language": "en"
+  },
+  {
+    "id": "39",
+    "text": "All IfcBeam entities representing cornices must be contained within an IfcBridgePart with a predefined type of either DECK or DECK_SEGMENT using the IfcRelContainedInSpatialStructure relation. IFC version: IFC4X3_ADD2.",
+    "language": "en"
+  },
+  {
+    "id": "40",
+    "text": "All waterproofing membranes, represented as IfcCovering entities, must be contained within an IfcBridgePart with a predefined type of either DECK or DECK_SEGMENT using the IfcRelContainedInSpatialStructure relation. IFC version: IFC4X3_ADD2.",
+    "language": "en"
+  },
+  {
+    "id": "41",
+    "text": "All IfcBearing entities must have a Name attribute that identifies the bearing for referencing purposes, as it would appear on construction plans. Bearings are elements that connect substructure to superstructure and allow movement along one or more degrees of freedom. IFC version: IFC4X3_ADD2.",
+    "language": "en"
+  },
+  {
+    "id": "42",
+    "text": "All IfcBearingType entities must have a Name attribute. The bearing type defines common geometry and properties for mechanical constraint occurrences, with zero or more instances allowed in the model.",
+    "language": "en"
+  },
+  {
+    "id": "43",
+    "text": "All IfcDiscreteAccessory entities representing expansion joints must have a Name attribute that identifies the joint for referencing purposes as it would appear on construction plans. This applies to any number of these entities in the model (0 or more). The specification applies to IFC4X3_ADD2.",
+    "language": "en"
+  },
+  {
+    "id": "44",
+    "text": "All IfcDiscreteAccessoryType entities must have a Name attribute. There can be zero or more of these entities in the model, and they represent joints where common geometry and properties may be defined, including occurrence relationships, expansion extent, and connections.",
+    "language": "en"
+  },
+  {
+    "id": "45",
+    "text": "Built-up girders may be decomposed into plates or members representing the web, flanges, cover plates, longitudinal stiffeners, and vertical stiffeners. These component parts are optional and can occur in zero or more instances, and they may also appear in other assemblies like railings.",
+    "language": "en"
+  }
+]

@@ -1,0 +1,238 @@
+[
+  {
+    "facet_type": "entity",
+    "original_text": "IfcProject entities",
+    "mapped_name": "IfcRelDeclares",
+    "confidence": 0.5826115608215332,
+    "property_set": null,
+    "entity_name": null,
+    "constraints": [],
+    "additional_data": null,
+    "ifc_item": {
+      "name": "IfcRelDeclares",
+      "definition": "The objectified relationshipIfcRelDeclareshandles the declaration of objects (subtypes ofIfcObject) or properties (subtypes ofIfcPropertyDefinition) to a project or project library (represented byIfcProject, orIfcProjectLibrary).",
+      "ifc_version": "IFC4",
+      "item_type": "entity",
+      "predefined_types": []
+    }
+  },
+  {
+    "facet_type": "property",
+    "original_text": "Length Unit: Defaults to meters (SI). For imperial systems, inches are recommended.",
+    "mapped_name": "Width",
+    "confidence": 0.5791027545928955,
+    "property_set": null,
+    "entity_name": "IfcRelDeclares",
+    "constraints": [
+      {
+        "restriction_type": {
+          "_value_": "enumeration",
+          "_name_": "ENUMERATION",
+          "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x00000258E2BA14E0>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFA21108310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x00000258E2BA13A0>}",
+          "_sort_order_": 1
+        },
+        "restriction": {
+          "values": [
+            "F",
+            "imperial"
+          ]
+        },
+        "confidence": 0.8,
+        "original_text": "For imperial"
+      },
+      {
+        "restriction_type": {
+          "_value_": "enumeration",
+          "_name_": "ENUMERATION",
+          "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x00000258E2BA14E0>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFA21108310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x00000258E2BA13A0>}",
+          "_sort_order_": 1
+        },
+        "restriction": {
+          "values": [
+            "F",
+            "imperial"
+          ]
+        },
+        "confidence": 0.8,
+        "original_text": "For imperial"
+      },
+      {
+        "restriction_type": {
+          "_value_": "enumeration",
+          "_name_": "ENUMERATION",
+          "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x00000258E2BA14E0>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFA21108310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x00000258E2BA13A0>}",
+          "_sort_order_": 1
+        },
+        "restriction": {
+          "values": [
+            "F",
+            "imperial"
+          ]
+        },
+        "confidence": 0.8,
+        "original_text": "For imperial"
+      }
+    ],
+    "additional_data": null,
+    "ifc_item": {
+      "name": "Width",
+      "definition": "Width of the door opening.",
+      "ifc_version": "IFC4",
+      "item_type": "property",
+      "property_set": "Pset_DoorCommon",
+      "data_type": "IfcPositiveLengthMeasure"
+    }
+  },
+  {
+    "facet_type": "property",
+    "original_text": "Angle Unit: Defaults to degrees",
+    "mapped_name": "Height",
+    "confidence": 0.5525296926498413,
+    "property_set": null,
+    "entity_name": "IfcRelDeclares",
+    "constraints": [],
+    "additional_data": null,
+    "ifc_item": {
+      "name": "Height",
+      "definition": "Height of the door opening.",
+      "ifc_version": "IFC4",
+      "item_type": "property",
+      "property_set": "Pset_DoorCommon",
+      "data_type": "IfcPositiveLengthMeasure"
+    }
+  },
+  {
+    "facet_type": "property",
+    "original_text": "Mass Unit: Defaults to kilograms (SI). For imperial systems, pounds are recommended.",
+    "mapped_name": "Volume",
+    "confidence": 0.5533169507980347,
+    "property_set": null,
+    "entity_name": "IfcRelDeclares",
+    "constraints": [
+      {
+        "restriction_type": {
+          "_value_": "enumeration",
+          "_name_": "ENUMERATION",
+          "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x00000258E2BA14E0>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFA21108310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x00000258E2BA13A0>}",
+          "_sort_order_": 1
+        },
+        "restriction": {
+          "values": [
+            "F",
+            "imperial"
+          ]
+        },
+        "confidence": 0.8,
+        "original_text": "For imperial"
+      },
+      {
+        "restriction_type": {
+          "_value_": "enumeration",
+          "_name_": "ENUMERATION",
+          "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x00000258E2BA14E0>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFA21108310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x00000258E2BA13A0>}",
+          "_sort_order_": 1
+        },
+        "restriction": {
+          "values": [
+            "F",
+            "imperial"
+          ]
+        },
+        "confidence": 0.8,
+        "original_text": "For imperial"
+      },
+      {
+        "restriction_type": {
+          "_value_": "enumeration",
+          "_name_": "ENUMERATION",
+          "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x00000258E2BA14E0>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFA21108310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x00000258E2BA13A0>}",
+          "_sort_order_": 1
+        },
+        "restriction": {
+          "values": [
+            "F",
+            "imperial"
+          ]
+        },
+        "confidence": 0.8,
+        "original_text": "For imperial"
+      }
+    ],
+    "additional_data": null,
+    "ifc_item": {
+      "name": "Volume",
+      "definition": "Volume of the space.",
+      "ifc_version": "IFC4",
+      "item_type": "property",
+      "property_set": "Pset_SpaceCommon",
+      "data_type": "IfcVolumeMeasure"
+    }
+  },
+  {
+    "facet_type": "property",
+    "original_text": "Temperature Unit: Defaults to Celsius (SI). For imperial systems, Fahrenheit is recommended.",
+    "mapped_name": "ThermalTransmittance",
+    "confidence": 0.5860774517059326,
+    "property_set": null,
+    "entity_name": "IfcRelDeclares",
+    "constraints": [
+      {
+        "restriction_type": {
+          "_value_": "enumeration",
+          "_name_": "ENUMERATION",
+          "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x00000258E2BA14E0>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFA21108310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x00000258E2BA13A0>}",
+          "_sort_order_": 1
+        },
+        "restriction": {
+          "values": [
+            "F",
+            "imperial"
+          ]
+        },
+        "confidence": 0.8,
+        "original_text": "For imperial"
+      },
+      {
+        "restriction_type": {
+          "_value_": "enumeration",
+          "_name_": "ENUMERATION",
+          "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x00000258E2BA14E0>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFA21108310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x00000258E2BA13A0>}",
+          "_sort_order_": 1
+        },
+        "restriction": {
+          "values": [
+            "F",
+            "imperial"
+          ]
+        },
+        "confidence": 0.8,
+        "original_text": "For imperial"
+      },
+      {
+        "restriction_type": {
+          "_value_": "enumeration",
+          "_name_": "ENUMERATION",
+          "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x00000258E2BA14E0>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFA21108310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x00000258E2BA13A0>}",
+          "_sort_order_": 1
+        },
+        "restriction": {
+          "values": [
+            "F",
+            "imperial"
+          ]
+        },
+        "confidence": 0.8,
+        "original_text": "For imperial"
+      }
+    ],
+    "additional_data": null,
+    "ifc_item": {
+      "name": "ThermalTransmittance",
+      "definition": "Thermal transmittance coefficient (U-Value) of the element.",
+      "ifc_version": "IFC4",
+      "item_type": "property",
+      "property_set": "Pset_WallCommon",
+      "data_type": "IfcThermalTransmittanceMeasure"
+    }
+  }
+]

@@ -1,0 +1,719 @@
+{
+  "timestamp": "2026-04-23T11:28:03.927619",
+  "input_file": "experimental_results/large_scale_test/ids_input_natural_language.json",
+  "total_time": 174.95374689999971,
+  "results": [
+    {
+      "spec_id": "1",
+      "spec_index": 1,
+      "success": true,
+      "elapsed_time": 56.46072630000026,
+      "timing": {
+        "stage_a": 6.090249100000165,
+        "stage_b": 5.92923380000002,
+        "stage_c": 28.065262000000075,
+        "stage_d": 0.0049085000000559376,
+        "stage_e_merge": 9.299999874201603e-06,
+        "stage_e_build": 16.370200699999714,
+        "total": 56.46059229999992
+      },
+      "num_specifications": 0,
+      "num_requirements": 4,
+      "stage_c_mappings": [
+        {
+          "facet_type": "entity",
+          "original_text": "IfcProject entities",
+          "mapped_name": "IfcRelDeclares",
+          "confidence": 0.5826115608215332,
+          "property_set": null,
+          "entity_name": null,
+          "constraints": [],
+          "additional_data": null,
+          "ifc_item": {
+            "name": "IfcRelDeclares",
+            "definition": "The objectified relationshipIfcRelDeclareshandles the declaration of objects (subtypes ofIfcObject) or properties (subtypes ofIfcPropertyDefinition) to a project or project library (represented byIfcProject, orIfcProjectLibrary).",
+            "ifc_version": "IFC4",
+            "item_type": "entity",
+            "predefined_types": []
+          }
+        },
+        {
+          "facet_type": "property",
+          "original_text": "Length Unit: Defaults to meters (SI). For imperial systems, inches are recommended.",
+          "mapped_name": "Width",
+          "confidence": 0.5791027545928955,
+          "property_set": null,
+          "entity_name": "IfcRelDeclares",
+          "constraints": [
+            {
+              "restriction_type": {
+                "_value_": "enumeration",
+                "_name_": "ENUMERATION",
+                "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x0000027EA3FD54E0>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFA21108310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x0000027EA3FD53A0>}",
+                "_sort_order_": 1
+              },
+              "restriction": {
+                "values": [
+                  "F",
+                  "imperial"
+                ]
+              },
+              "confidence": 0.8,
+              "original_text": "For imperial"
+            },
+            {
+              "restriction_type": {
+                "_value_": "enumeration",
+                "_name_": "ENUMERATION",
+                "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x0000027EA3FD54E0>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFA21108310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x0000027EA3FD53A0>}",
+                "_sort_order_": 1
+              },
+              "restriction": {
+                "values": [
+                  "F",
+                  "imperial"
+                ]
+              },
+              "confidence": 0.8,
+              "original_text": "For imperial"
+            },
+            {
+              "restriction_type": {
+                "_value_": "enumeration",
+                "_name_": "ENUMERATION",
+                "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x0000027EA3FD54E0>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFA21108310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x0000027EA3FD53A0>}",
+                "_sort_order_": 1
+              },
+              "restriction": {
+                "values": [
+                  "F",
+                  "imperial"
+                ]
+              },
+              "confidence": 0.8,
+              "original_text": "For imperial"
+            }
+          ],
+          "additional_data": null,
+          "ifc_item": {
+            "name": "Width",
+            "definition": "Width of the door opening.",
+            "ifc_version": "IFC4",
+            "item_type": "property",
+            "property_set": "Pset_DoorCommon",
+            "data_type": "IfcPositiveLengthMeasure"
+          }
+        },
+        {
+          "facet_type": "property",
+          "original_text": "Angle Unit: Defaults to degrees",
+          "mapped_name": "Height",
+          "confidence": 0.5525296926498413,
+          "property_set": null,
+          "entity_name": "IfcRelDeclares",
+          "constraints": [],
+          "additional_data": null,
+          "ifc_item": {
+            "name": "Height",
+            "definition": "Height of the door opening.",
+            "ifc_version": "IFC4",
+            "item_type": "property",
+            "property_set": "Pset_DoorCommon",
+            "data_type": "IfcPositiveLengthMeasure"
+          }
+        },
+        {
+          "facet_type": "property",
+          "original_text": "Mass Unit: Defaults to kilograms (SI). For imperial systems, pounds are recommended.",
+          "mapped_name": "Volume",
+          "confidence": 0.5533169507980347,
+          "property_set": null,
+          "entity_name": "IfcRelDeclares",
+          "constraints": [
+            {
+              "restriction_type": {
+                "_value_": "enumeration",
+                "_name_": "ENUMERATION",
+                "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x0000027EA3FD54E0>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFA21108310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x0000027EA3FD53A0>}",
+                "_sort_order_": 1
+              },
+              "restriction": {
+                "values": [
+                  "F",
+                  "imperial"
+                ]
+              },
+              "confidence": 0.8,
+              "original_text": "For imperial"
+            },
+            {
+              "restriction_type": {
+                "_value_": "enumeration",
+                "_name_": "ENUMERATION",
+                "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x0000027EA3FD54E0>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFA21108310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x0000027EA3FD53A0>}",
+                "_sort_order_": 1
+              },
+              "restriction": {
+                "values": [
+                  "F",
+                  "imperial"
+                ]
+              },
+              "confidence": 0.8,
+              "original_text": "For imperial"
+            },
+            {
+              "restriction_type": {
+                "_value_": "enumeration",
+                "_name_": "ENUMERATION",
+                "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x0000027EA3FD54E0>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFA21108310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x0000027EA3FD53A0>}",
+                "_sort_order_": 1
+              },
+              "restriction": {
+                "values": [
+                  "F",
+                  "imperial"
+                ]
+              },
+              "confidence": 0.8,
+              "original_text": "For imperial"
+            }
+          ],
+          "additional_data": null,
+          "ifc_item": {
+            "name": "Volume",
+            "definition": "Volume of the space.",
+            "ifc_version": "IFC4",
+            "item_type": "property",
+            "property_set": "Pset_SpaceCommon",
+            "data_type": "IfcVolumeMeasure"
+          }
+        },
+        {
+          "facet_type": "property",
+          "original_text": "Temperature Unit: Defaults to Celsius (SI). For imperial systems, Fahrenheit is recommended.",
+          "mapped_name": "ThermalTransmittance",
+          "confidence": 0.5860774517059326,
+          "property_set": null,
+          "entity_name": "IfcRelDeclares",
+          "constraints": [
+            {
+              "restriction_type": {
+                "_value_": "enumeration",
+                "_name_": "ENUMERATION",
+                "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x0000027EA3FD54E0>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFA21108310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x0000027EA3FD53A0>}",
+                "_sort_order_": 1
+              },
+              "restriction": {
+                "values": [
+                  "F",
+                  "imperial"
+                ]
+              },
+              "confidence": 0.8,
+              "original_text": "For imperial"
+            },
+            {
+              "restriction_type": {
+                "_value_": "enumeration",
+                "_name_": "ENUMERATION",
+                "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x0000027EA3FD54E0>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFA21108310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x0000027EA3FD53A0>}",
+                "_sort_order_": 1
+              },
+              "restriction": {
+                "values": [
+                  "F",
+                  "imperial"
+                ]
+              },
+              "confidence": 0.8,
+              "original_text": "For imperial"
+            },
+            {
+              "restriction_type": {
+                "_value_": "enumeration",
+                "_name_": "ENUMERATION",
+                "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x0000027EA3FD54E0>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFA21108310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x0000027EA3FD53A0>}",
+                "_sort_order_": 1
+              },
+              "restriction": {
+                "values": [
+                  "F",
+                  "imperial"
+                ]
+              },
+              "confidence": 0.8,
+              "original_text": "For imperial"
+            }
+          ],
+          "additional_data": null,
+          "ifc_item": {
+            "name": "ThermalTransmittance",
+            "definition": "Thermal transmittance coefficient (U-Value) of the element.",
+            "ifc_version": "IFC4",
+            "item_type": "property",
+            "property_set": "Pset_WallCommon",
+            "data_type": "IfcThermalTransmittanceMeasure"
+          }
+        }
+      ],
+      "output": {
+        "specifications": []
+      },
+      "error": null
+    },
+    {
+      "spec_id": "2",
+      "spec_index": 2,
+      "success": true,
+      "elapsed_time": 72.2291279000001,
+      "timing": {
+        "stage_a": 14.861226699999861,
+        "stage_b": 7.110685699999976,
+        "stage_c": 22.723341100000198,
+        "stage_d": 0.0006475000000136788,
+        "stage_e_merge": 9.599999430065509e-06,
+        "stage_e_build": 27.532472299999426,
+        "total": 72.22905009999977
+      },
+      "num_specifications": 1,
+      "num_requirements": 1,
+      "stage_c_mappings": [
+        {
+          "facet_type": "entity",
+          "original_text": "IfcSite entities",
+          "mapped_name": "IfcSite",
+          "confidence": 0.528990626335144,
+          "property_set": null,
+          "entity_name": null,
+          "constraints": [],
+          "additional_data": null,
+          "ifc_item": {
+            "name": "IfcSite",
+            "definition": "A site is a defined area of land, possibly covered with water, on which the project construction is to be completed. A site may be used to erect, retrofit or turn down building(s), or for other construction related developments.",
+            "ifc_version": "IFC4",
+            "item_type": "entity",
+            "predefined_types": []
+          }
+        },
+        {
+          "facet_type": "entity",
+          "original_text": "IfcProject entity",
+          "mapped_name": "IfcPersonAndOrganization",
+          "confidence": 0.6018280386924744,
+          "property_set": null,
+          "entity_name": null,
+          "constraints": [
+            {
+              "restriction_type": {
+                "_value_": "enumeration",
+                "_name_": "ENUMERATION",
+                "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x0000027EA3FD54E0>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFA21108310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x0000027EA3FD53A0>}",
+                "_sort_order_": 1
+              },
+              "restriction": {
+                "values": [
+                  "aggregated as part of an IfcProject entity through an IfcRelAggregates relationship"
+                ]
+              },
+              "confidence": 0.8,
+              "original_text": "MUST be aggregated as part of an IfcProject entity through an IfcRelAggregates relationship"
+            }
+          ],
+          "additional_data": null,
+          "ifc_item": {
+            "name": "IfcPersonAndOrganization",
+            "definition": "This entity represents a person acting on behalf of an organization.",
+            "ifc_version": "IFC4",
+            "item_type": "entity",
+            "predefined_types": []
+          }
+        },
+        {
+          "facet_type": "entity",
+          "original_text": "bridges",
+          "mapped_name": "IfcRailing",
+          "confidence": 0.45529335737228394,
+          "property_set": null,
+          "entity_name": null,
+          "constraints": [],
+          "additional_data": null,
+          "ifc_item": {
+            "name": "IfcRailing",
+            "definition": "The railing is a frame assembly adjacent to human circulation spaces and at some space boundaries where it is used in lieu of walls or to compliment walls. Designed to aid humans, either as an optional physical support, or to prevent injury by falling.",
+            "ifc_version": "IFC4",
+            "item_type": "entity",
+            "predefined_types": []
+          }
+        },
+        {
+          "facet_type": "entity",
+          "original_text": "roads",
+          "mapped_name": "IfcRelConnectsPathElements",
+          "confidence": 0.45040014386177063,
+          "property_set": null,
+          "entity_name": null,
+          "constraints": [],
+          "additional_data": null,
+          "ifc_item": {
+            "name": "IfcRelConnectsPathElements",
+            "definition": "TheIfcRelConnectsPathElementsrelationship provides the connectivity information between two elements, which have path information.",
+            "ifc_version": "IFC4",
+            "item_type": "entity",
+            "predefined_types": []
+          }
+        },
+        {
+          "facet_type": "entity",
+          "original_text": "rails",
+          "mapped_name": "IfcRailing",
+          "confidence": 0.6042562127113342,
+          "property_set": null,
+          "entity_name": null,
+          "constraints": [],
+          "additional_data": null,
+          "ifc_item": {
+            "name": "IfcRailing",
+            "definition": "The railing is a frame assembly adjacent to human circulation spaces and at some space boundaries where it is used in lieu of walls or to compliment walls. Designed to aid humans, either as an optional physical support, or to prevent injury by falling.",
+            "ifc_version": "IFC4",
+            "item_type": "entity",
+            "predefined_types": []
+          }
+        },
+        {
+          "facet_type": "entity",
+          "original_text": "terrain",
+          "mapped_name": "IfcGeographicElement",
+          "confidence": 0.4300702214241028,
+          "property_set": null,
+          "entity_name": null,
+          "constraints": [],
+          "additional_data": null,
+          "ifc_item": {
+            "name": "IfcGeographicElement",
+            "definition": "AnIfcGeographicElementis a generalization of all elements within a geographical landscape. It includes occurrences of typical geographical elements, often referred to as features, such as trees or terrain. Common type information behind several occurrences ofIfcGeographicElementis provided by theIfcGeographicElementType.",
+            "ifc_version": "IFC4",
+            "item_type": "entity",
+            "predefined_types": []
+          }
+        },
+        {
+          "facet_type": "entity",
+          "original_text": "alignments",
+          "mapped_name": "IfcAxis2Placement3D",
+          "confidence": 0.5130372047424316,
+          "property_set": null,
+          "entity_name": null,
+          "constraints": [],
+          "additional_data": null,
+          "ifc_item": {
+            "name": "IfcAxis2Placement3D",
+            "definition": "TheIfcAxis2Placement3Dprovides location and orientations to place items in a three-dimensional space. The attributeAxisdefines the Z direction,RefDirectionthe X direction. The Y direction is derived.",
+            "ifc_version": "IFC4",
+            "item_type": "entity",
+            "predefined_types": []
+          }
+        },
+        {
+          "facet_type": "entity",
+          "original_text": "Boring points",
+          "mapped_name": "IfcVoidingFeature",
+          "confidence": 0.40321603417396545,
+          "property_set": null,
+          "entity_name": null,
+          "constraints": [],
+          "additional_data": null,
+          "ifc_item": {
+            "name": "IfcVoidingFeature",
+            "definition": "A voiding feature is a modification of an element which reduces its volume. Such a feature may be manufactured in different ways, for example by cutting, drilling, or milling of members made of various materials, or by inlays into the formwork of cast members made of materials such as concrete.",
+            "ifc_version": "IFC4",
+            "item_type": "entity",
+            "predefined_types": []
+          }
+        },
+        {
+          "facet_type": "attribute",
+          "original_text": "The site MUST have a Name attribute assigned",
+          "mapped_name": "Name",
+          "confidence": 0.8,
+          "property_set": null,
+          "entity_name": null,
+          "constraints": [],
+          "additional_data": null,
+          "ifc_item": {
+            "name": "",
+            "definition": "",
+            "ifc_version": "",
+            "item_type": ""
+          }
+        },
+        {
+          "facet_type": "partof",
+          "original_text": "The site MUST be aggregated as part of an IfcProject entity through an IfcRelAggregates relationship",
+          "mapped_name": "IfcSite",
+          "confidence": 1.0,
+          "property_set": null,
+          "entity_name": null,
+          "constraints": [
+            {
+              "restriction_type": {
+                "_value_": "enumeration",
+                "_name_": "ENUMERATION",
+                "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x0000027EA3FD54E0>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFA21108310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x0000027EA3FD53A0>}",
+                "_sort_order_": 1
+              },
+              "restriction": {
+                "values": [
+                  "aggregated as part of an IfcProject entity through an IfcRelAggregates relationship"
+                ]
+              },
+              "confidence": 0.8,
+              "original_text": "MUST be aggregated as part of an IfcProject entity through an IfcRelAggregates relationship"
+            }
+          ],
+          "additional_data": {
+            "relation": "IFCRELCONTAINEDINSPATIALSTRUCTURE"
+          },
+          "ifc_item": {
+            "name": "",
+            "definition": "",
+            "ifc_version": "",
+            "item_type": ""
+          }
+        },
+        {
+          "facet_type": "partof",
+          "original_text": "Sites may define existing and proposed terrain in the vicinity of the bridge project",
+          "mapped_name": "IfcSite",
+          "confidence": 1.0,
+          "property_set": null,
+          "entity_name": null,
+          "constraints": [],
+          "additional_data": {
+            "relation": "IFCRELCONTAINEDINSPATIALSTRUCTURE"
+          },
+          "ifc_item": {
+            "name": "",
+            "definition": "",
+            "ifc_version": "",
+            "item_type": ""
+          }
+        },
+        {
+          "facet_type": "partof",
+          "original_text": "Boring points may also be included as objects contained within the site",
+          "mapped_name": "IfcSite",
+          "confidence": 1.0,
+          "property_set": null,
+          "entity_name": null,
+          "constraints": [],
+          "additional_data": {
+            "relation": "IFCRELCONTAINEDINSPATIALSTRUCTURE"
+          },
+          "ifc_item": {
+            "name": "",
+            "definition": "",
+            "ifc_version": "",
+            "item_type": ""
+          }
+        }
+      ],
+      "output": {
+        "specifications": [
+          {
+            "name": "Site Entity Aggregation and Identification",
+            "ifcVersion": [
+              "IFC4X3_ADD2"
+            ],
+            "description": "Validates that IfcSite entities are properly aggregated within an IfcProject and have required identification attributes.",
+            "instructions": null,
+            "applicability": {
+              "minOccurs": "1",
+              "maxOccurs": "unbounded",
+              "entity": {
+                "name": "IfcSite",
+                "predefinedType": null
+              },
+              "partOf": null,
+              "classification": null,
+              "attribute": null,
+              "property": null,
+              "material": null
+            },
+            "requirements": {
+              "description": null,
+              "entity": null,
+              "partOf": [
+                {
+                  "entity": "IfcSite",
+                  "relation": "IFCRELCONTAINEDINSPATIALSTRUCTURE",
+                  "cardinality": "required",
+                  "instructions": "PartOf relationship: The site MUST be aggregated as part of an IfcProject entity through an IfcRelAggregates relationship"
+                }
+              ],
+              "classification": null,
+              "attribute": [
+                {
+                  "name": "Name",
+                  "value": {
+                    "simpleValue": "The site MUST have a Name attribute assigned",
+                    "restriction": null
+                  },
+                  "cardinality": "required",
+                  "instructions": null
+                }
+              ],
+              "property": null,
+              "material": null
+            }
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "spec_id": "3",
+      "spec_index": 3,
+      "success": true,
+      "elapsed_time": 44.73267189999933,
+      "timing": {
+        "stage_a": 4.989833399999952,
+        "stage_b": 6.096388899999511,
+        "stage_c": 26.728769000000284,
+        "stage_d": 0.0003802999999606982,
+        "stage_e_merge": 2.7999994927085936e-06,
+        "stage_e_build": 6.916469799999504,
+        "total": 44.73255699999936
+      },
+      "num_specifications": 0,
+      "num_requirements": 2,
+      "stage_c_mappings": [
+        {
+          "facet_type": "entity",
+          "original_text": "IfcBridge type entities",
+          "mapped_name": "IfcTubeBundleType",
+          "confidence": 0.5733559131622314,
+          "property_set": null,
+          "entity_name": null,
+          "constraints": [],
+          "additional_data": null,
+          "ifc_item": {
+            "name": "IfcTubeBundleType",
+            "definition": "The energy conversion device typeIfcTubeBundleTypedefines commonly shared information for occurrences of tube bundles. The set of shared information may include\\:common properties with shared property setscommon representationscommon materialscommon composition of elementscommon portsIt is used to define a tube bundle type specification indicating the specific product information that is common to all occurrences of that product type. TheIfcTubeBundleTypemay be declared withinIfcProjectorIfcProjectLibraryusingIfcRelDeclaresand may be exchanged with or without occurrences of the type. Occurrences ofIfcTubeBundleTypeare represented by instances ofIfcTubeBundle. Refer to the documentation atIfcTubeBundlefor supported property sets, materials, composition, and ports.",
+            "ifc_version": "IFC4",
+            "item_type": "entity",
+            "predefined_types": []
+          }
+        },
+        {
+          "facet_type": "entity",
+          "original_text": "bridge structures",
+          "mapped_name": "IfcStructuralConnection",
+          "confidence": 0.5136738419532776,
+          "property_set": null,
+          "entity_name": null,
+          "constraints": [],
+          "additional_data": null,
+          "ifc_item": {
+            "name": "IfcStructuralConnection",
+            "definition": "AnIfcStructuralConnectionrepresents a structural connection object (node connection, edge connection, or surface connection) or supports.",
+            "ifc_version": "IFC4",
+            "item_type": "entity",
+            "predefined_types": []
+          }
+        },
+        {
+          "facet_type": "entity",
+          "original_text": "Axis curve",
+          "mapped_name": "IfcGridAxis",
+          "confidence": 0.5534957647323608,
+          "property_set": null,
+          "entity_name": null,
+          "constraints": [],
+          "additional_data": null,
+          "ifc_item": {
+            "name": "IfcGridAxis",
+            "definition": "An individual axis,IfcGridAxis, is defined in the context of a design grid. The axis definition is based on a curve of dimensionality 2. The grid axis is positioned within the XY plane of the position coordinate system defined by theIfcGrid.",
+            "ifc_version": "IFC4",
+            "item_type": "entity",
+            "predefined_types": []
+          }
+        },
+        {
+          "facet_type": "entity",
+          "original_text": "IfcOffsetCurveByDistances",
+          "mapped_name": "IfcOffsetCurve3D",
+          "confidence": 0.6340105533599854,
+          "property_set": null,
+          "entity_name": null,
+          "constraints": [],
+          "additional_data": null,
+          "ifc_item": {
+            "name": "IfcOffsetCurve3D",
+            "definition": "AnIfcOffsetCurve3Dis a curve defined by an offset in 3D space from itsBasisCurve.",
+            "ifc_version": "IFC4",
+            "item_type": "entity",
+            "predefined_types": []
+          }
+        },
+        {
+          "facet_type": "entity",
+          "original_text": "IfcAlignmentCurve",
+          "mapped_name": "IfcBoundedCurve",
+          "confidence": 0.602749228477478,
+          "property_set": null,
+          "entity_name": null,
+          "constraints": [],
+          "additional_data": null,
+          "ifc_item": {
+            "name": "IfcBoundedCurve",
+            "definition": "AnIfcBoundedCurveis a curve of finite length.",
+            "ifc_version": "IFC4",
+            "item_type": "entity",
+            "predefined_types": []
+          }
+        },
+        {
+          "facet_type": "property",
+          "original_text": "span location of the bridge relative to an alignment",
+          "mapped_name": "Area",
+          "confidence": 0.5237573385238647,
+          "property_set": null,
+          "entity_name": "IfcTubeBundleType",
+          "constraints": [],
+          "additional_data": null,
+          "ifc_item": {
+            "name": "Area",
+            "definition": "Area of the space.",
+            "ifc_version": "IFC4",
+            "item_type": "property",
+            "property_set": "Pset_SpaceCommon",
+            "data_type": "IfcAreaMeasure"
+          }
+        },
+        {
+          "facet_type": "property",
+          "original_text": "starting and ending distances along the curve",
+          "mapped_name": "Area",
+          "confidence": 0.5064008235931396,
+          "property_set": null,
+          "entity_name": "IfcTubeBundleType",
+          "constraints": [],
+          "additional_data": null,
+          "ifc_item": {
+            "name": "Area",
+            "definition": "Area of the space.",
+            "ifc_version": "IFC4",
+            "item_type": "property",
+            "property_set": "Pset_SpaceCommon",
+            "data_type": "IfcAreaMeasure"
+          }
+        }
+      ],
+      "output": {
+        "specifications": []
+      },
+      "error": null
+    }
+  ]
+}

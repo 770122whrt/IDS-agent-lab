@@ -1,0 +1,32 @@
+{
+  "facets": [
+    {
+      "text": "IfcProject",
+      "type": "entity",
+      "confidence": 0.95
+    },
+    {
+      "text": "provides default units for length (meters)",
+      "type": "property",
+      "confidence": 0.9
+    },
+    {
+      "text": "provides default units for angle (degrees)",
+      "type": "property",
+      "confidence": 0.9
+    },
+    {
+      "text": "provides default units for mass (kilograms)",
+      "type": "property",
+      "confidence": 0.9
+    },
+    {
+      "text": "provides default units for temperature (Celsius)",
+      "type": "property",
+      "confidence": 0.9
+    }
+  ],
+  "entity_count": 1,
+  "property_count": 4,
+  "material_count": 0
+}

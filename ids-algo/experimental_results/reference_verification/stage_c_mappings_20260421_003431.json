@@ -1,0 +1,98 @@
+[
+  {
+    "original_text": "All bridge projects must contain exactly one IfcProject instance",
+    "facet_type": "entity"
+  },
+  {
+    "original_text": "at least one IfcSite that defines the terrain",
+    "facet_type": "entity"
+  },
+  {
+    "original_text": "Every bridge structure must be represented by an IfcBridge entity",
+    "facet_type": "entity"
+  },
+  {
+    "original_text": "Horizontal and vertical alignment curves must be defined using IfcAlignment entities",
+    "facet_type": "entity"
+  },
+  {
+    "original_text": "substructure of the bridge must be modeled as IfcBridgePart with predefined type SUBSTRUCTURE",
+    "facet_type": "entity"
+  },
+  {
+    "original_text": "superstructure of the bridge must be modeled as IfcBridgePart with predefined type SUPERSTRUCTURE",
+    "facet_type": "entity"
+  },
+  {
+    "original_text": "Bridge girders should be modeled as IfcElementAssembly with predefined type GIRDER",
+    "facet_type": "entity"
+  },
+  {
+    "original_text": "bridge deck must be modeled as IfcBridgePart with predefined type DECK",
+    "facet_type": "entity"
+  },
+  {
+    "original_text": "Deck segments should be modeled as IfcBridgePart with predefined type DECK_SEGMENT",
+    "facet_type": "entity"
+  },
+  {
+    "original_text": "Abutments at the ends of the bridge must be modeled as IfcBridgePart with predefined type ABUTMENT",
+    "facet_type": "entity"
+  },
+  {
+    "original_text": "Bridge piers must be modeled as IfcBridgePart with predefined type PIER",
+    "facet_type": "entity"
+  },
+  {
+    "original_text": "Foundation piles must be modeled as IfcPile entities",
+    "facet_type": "entity"
+  },
+  {
+    "original_text": "proposed ground surface must be modeled as IfcGeographicElement with predefined type TERRAIN",
+    "facet_type": "entity"
+  },
+  {
+    "original_text": "existing ground surface must be modeled as IfcGeographicElement with predefined type TERRAIN",
+    "facet_type": "entity"
+  },
+  {
+    "original_text": "Boring points indicating soil layers and properties must be modeled as IfcGeographicElement",
+    "facet_type": "entity"
+  },
+  {
+    "original_text": "IfcProject instance that identifies the overall project and provides defaults for units",
+    "facet_type": "property"
+  },
+  {
+    "original_text": "IfcSite that defines the terrain within vicinity of the bridge project",
+    "facet_type": "property"
+  },
+  {
+    "original_text": "Boring points must include the property Depth in the property set Pset_GeographicElementCommon",
+    "facet_type": "property"
+  },
+  {
+    "original_text": "Bridge girders must specify material information",
+    "facet_type": "material"
+  },
+  {
+    "original_text": "Foundation piles must specify material information",
+    "facet_type": "material"
+  },
+  {
+    "original_text": "The site must be aggregated under the IfcProject",
+    "facet_type": "partof"
+  },
+  {
+    "original_text": "It must be contained within the IfcSite",
+    "facet_type": "partof"
+  },
+  {
+    "original_text": "It must be contained within the IfcSite",
+    "facet_type": "partof"
+  },
+  {
+    "original_text": "They must be contained within the IfcSite",
+    "facet_type": "partof"
+  }
+]

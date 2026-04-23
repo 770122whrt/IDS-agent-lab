@@ -39,10 +39,9 @@ class MaterialResolver:
                 ifc_version = context.get("ifc_version", "IFC4") if context else "IFC4"
                 results = db.search(query_text, top_k=5, ifc_versions=[ifc_version])
                 if results and len(results) > 0:
-                    # results是tuple列表: (ifc_item, distance)
-                    ifc_item, distance = results[0]
-                    # 将距离转换为相似度
-                    similarity = 1.0 / (1.0 + distance)
+                    # results是tuple列表: (ifc_item, similarity)
+                    ifc_item, similarity = results[0]
+                    # similarity已经是点积相似度，不需要转换
                     if similarity > 0.5:
                         return {
                             "mapped_name": ifc_item.name,

@@ -1,0 +1,51 @@
+{
+  "timestamp": "2026-04-23T11:28:03.935625",
+  "input_file": "experimental_results/large_scale_test/ids_input_natural_language.json",
+  "total_time": 174.95374689999971,
+  "metrics": {
+    "total_specifications": 3,
+    "successful": 3,
+    "failed": 0,
+    "match_rate": 100.0,
+    "total_requirements": 7,
+    "avg_processing_time": 57.80750869999989,
+    "timing_stats": {
+      "stage_a": {
+        "mean": 8.64710306666666,
+        "min": 4.989833399999952,
+        "max": 14.861226699999861
+      },
+      "stage_b": {
+        "mean": 6.378769466666502,
+        "min": 5.92923380000002,
+        "max": 7.110685699999976
+      },
+      "stage_c": {
+        "mean": 25.83912403333352,
+        "min": 22.723341100000198,
+        "max": 28.065262000000075
+      },
+      "stage_d": {
+        "mean": 0.0019787666666767714,
+        "min": 0.0003802999999606982,
+        "max": 0.0049085000000559376
+      },
+      "stage_e_merge": {
+        "mean": 7.2333329323252355e-06,
+        "min": 2.7999994927085936e-06,
+        "max": 9.599999430065509e-06
+      },
+      "stage_e_build": {
+        "mean": 16.939714266666215,
+        "min": 6.916469799999504,
+        "max": 27.532472299999426
+      },
+      "total": {
+        "mean": 57.80739979999968,
+        "min": 44.73255699999936,
+        "max": 72.22905009999977
+      }
+    },
+    "failed_spec_ids": []
+  }
+}

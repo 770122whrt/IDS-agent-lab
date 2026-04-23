@@ -1,0 +1,94 @@
+{
+  "sample_id": "medium_001",
+  "complexity": "medium",
+  "iteration": 1,
+  "timestamp": "2026-04-20T20:05:54.385340",
+  "success": true,
+  "timing": {
+    "stage_a": 2.9329982000008386,
+    "stage_b": 4.293931299999713,
+    "stage_c": 14.205326000000241,
+    "stage_d": 0.00020730000051116804,
+    "stage_e_merge": 3.6999999792897142e-06,
+    "stage_e_build": 15.375305900000058,
+    "total": 36.80855379999957
+  },
+  "num_specifications": 1,
+  "output": {
+    "specifications": [
+      {
+        "name": "Load-Bearing Wall Thickness and Fire Rating Compliance",
+        "ifcVersion": [
+          "IFC4"
+        ],
+        "description": "Validates that all load-bearing walls meet minimum thickness (>200mm) and fire rating (≥120 minutes) requirements for structural and fire safety compliance.",
+        "instructions": null,
+        "applicability": {
+          "minOccurs": "1",
+          "maxOccurs": "unbounded",
+          "entity": {
+            "name": "IfcWall",
+            "predefinedType": null
+          },
+          "partOf": null,
+          "classification": null,
+          "attribute": null,
+          "property": null,
+          "material": null
+        },
+        "requirements": {
+          "description": null,
+          "entity": null,
+          "partOf": null,
+          "classification": null,
+          "attribute": null,
+          "property": [
+            {
+              "propertySet": "Pset_WallCommon",
+              "baseName": "Thickness",
+              "value": {
+                "simpleValue": "thickness greater than 200mm",
+                "restriction": null
+              },
+              "dataType": "IfcPositiveLengthMeasure",
+              "uri": null,
+              "cardinality": "required",
+              "instructions": null
+            },
+            {
+              "propertySet": "Pset_WallCommon",
+              "baseName": "FireRating",
+              "value": {
+                "simpleValue": ">= 120.0 minutes",
+                "restriction": {
+                  "base": "string",
+                  "minInclusive": 120.0
+                }
+              },
+              "dataType": "IfcLabel",
+              "uri": null,
+              "cardinality": "required",
+              "instructions": null
+            }
+          ],
+          "material": null
+        }
+      }
+    ]
+  },
+  "error": null,
+  "stage_c_mappings": [
+    {
+      "original_text": "load-bearing walls",
+      "facet_type": "entity"
+    },
+    {
+      "original_text": "thickness greater than 200mm",
+      "facet_type": "property"
+    },
+    {
+      "original_text": "fire rating of at least 120 minutes",
+      "facet_type": "property"
+    }
+  ]
+}

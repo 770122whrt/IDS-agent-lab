@@ -1,0 +1,44 @@
+{
+  "building_objects": [
+    {
+      "raw_text": "IfcProject entity",
+      "object_type": "IfcProject",
+      "modifiers": [
+        "exactly one"
+      ],
+      "confidence": 0.95
+    }
+  ],
+  "property_descriptions": [
+    {
+      "raw_text": "provides default units for length (meters)",
+      "property_name": "length_unit",
+      "constraint_text": "meters",
+      "confidence": 0.9
+    },
+    {
+      "raw_text": "provides default units for angle (degrees)",
+      "property_name": "angle_unit",
+      "constraint_text": "degrees",
+      "confidence": 0.9
+    },
+    {
+      "raw_text": "provides default units for mass (kilograms)",
+      "property_name": "mass_unit",
+      "constraint_text": "kilograms",
+      "confidence": 0.9
+    },
+    {
+      "raw_text": "provides default units for temperature (Celsius)",
+      "property_name": "temperature_unit",
+      "constraint_text": "Celsius",
+      "confidence": 0.9
+    }
+  ],
+  "material_requirements": [],
+  "spatial_relationships": [],
+  "unmatched_fragments": [
+    "imperial alternatives of inches, pounds, and Fahrenheit respectively if needed",
+    "IFC version: IFC4X3_ADD2"
+  ]
+}

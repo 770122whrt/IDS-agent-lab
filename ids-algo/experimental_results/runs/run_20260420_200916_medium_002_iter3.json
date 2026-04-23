@@ -1,0 +1,90 @@
+{
+  "sample_id": "medium_002",
+  "complexity": "medium",
+  "iteration": 3,
+  "timestamp": "2026-04-20T20:08:40.675392",
+  "success": true,
+  "timing": {
+    "stage_a": 4.417115200000808,
+    "stage_b": 4.683444100000088,
+    "stage_c": 16.042167900000095,
+    "stage_d": 0.0006381000002875226,
+    "stage_e_merge": 7.3999999585794285e-06,
+    "stage_e_build": 10.757993299999725,
+    "total": 35.903372200000376
+  },
+  "num_specifications": 1,
+  "output": {
+    "specifications": [
+      {
+        "name": "Fire Resistance Rating for Doors in Fire Compartments",
+        "ifcVersion": [
+          "IFC4"
+        ],
+        "description": "Validates that doors located within fire compartments have appropriate fire resistance ratings assigned.",
+        "instructions": null,
+        "applicability": {
+          "minOccurs": "1",
+          "maxOccurs": "unbounded",
+          "entity": {
+            "name": "IfcDoor",
+            "predefinedType": null
+          },
+          "partOf": [
+            {
+              "entity": "IfcFireSuppressionTerminal",
+              "relation": "IFCRELCONTAINEDINSPATIALSTRUCTURE",
+              "cardinality": "required",
+              "instructions": "PartOf relationship: fire compartments"
+            }
+          ],
+          "classification": null,
+          "attribute": null,
+          "property": null,
+          "material": null
+        },
+        "requirements": {
+          "description": null,
+          "entity": null,
+          "partOf": null,
+          "classification": null,
+          "attribute": null,
+          "property": [
+            {
+              "propertySet": "Pset_WallCommon",
+              "baseName": "FireRating",
+              "value": {
+                "simpleValue": "fire resistance ratings",
+                "restriction": null
+              },
+              "dataType": "IfcLabel",
+              "uri": null,
+              "cardinality": "required",
+              "instructions": null
+            }
+          ],
+          "material": null
+        }
+      }
+    ]
+  },
+  "error": null,
+  "stage_c_mappings": [
+    {
+      "original_text": "Doors",
+      "facet_type": "entity"
+    },
+    {
+      "original_text": "windows",
+      "facet_type": "entity"
+    },
+    {
+      "original_text": "fire compartments",
+      "facet_type": "entity"
+    },
+    {
+      "original_text": "fire resistance ratings",
+      "facet_type": "property"
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "specifications": [
+    {
+      "name": "IfcProject Default Units Configuration",
+      "ifcVersion": [
+        "IFC4X3_ADD2"
+      ],
+      "description": "Validates that the model contains exactly one IfcProject entity with properly configured default units for length, angle, mass, and temperature in both metric and imperial systems as applicable.",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcProject",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": [
+          {
+            "propertySet": "IfcProject",
+            "baseName": "LengthUnit",
+            "value": {
+              "simpleValue": "f, length",
+              "restriction": {
+                "base": "string",
+                "enumeration": [
+                  "f",
+                  "length"
+                ]
+              }
+            },
+            "dataType": "IfcSIUnit",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          },
+          {
+            "propertySet": "IfcProject",
+            "baseName": "AngleUnit",
+            "value": {
+              "simpleValue": "f, angle",
+              "restriction": {
+                "base": "string",
+                "enumeration": [
+                  "f",
+                  "angle"
+                ]
+              }
+            },
+            "dataType": "IfcSIUnit",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          },
+          {
+            "propertySet": "IfcProject",
+            "baseName": "UnitsInContext",
+            "value": {
+              "simpleValue": "f, mass",
+              "restriction": {
+                "base": "string",
+                "enumeration": [
+                  "f",
+                  "mass"
+                ]
+              }
+            },
+            "dataType": "IfcUnitAssignment",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          },
+          {
+            "propertySet": "IfcProject",
+            "baseName": "TemperatureUnit",
+            "value": {
+              "simpleValue": "f, temperature",
+              "restriction": {
+                "base": "string",
+                "enumeration": [
+                  "f",
+                  "temperature"
+                ]
+              }
+            },
+            "dataType": "IfcSIUnit",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "material": null
+      }
+    }
+  ]
+}

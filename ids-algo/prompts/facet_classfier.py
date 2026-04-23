@@ -44,4 +44,9 @@ Output JSON format:
     "partof_candidates": [...]
 }}
 
+**CRITICAL for Entity facets:**
+- For building_object components, use details.object_type as source_text (e.g., "IfcWall", "IfcProject")
+- Do NOT use the full text field which may contain extra words like "entity"
+- Example: If text="IfcProject entity" and details.object_type="IfcProject", use "IfcProject" as source_text
+
 Output JSON only, no other text."""

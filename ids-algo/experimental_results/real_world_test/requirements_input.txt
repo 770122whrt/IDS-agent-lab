@@ -1,0 +1,59 @@
+All load-bearing walls must be made of concrete with compressive strength >= 30 MPa.
+
+All structural columns must have a minimum cross-sectional area of 0.25 square meters.
+
+All beams with span greater than 6 meters must be made of steel or reinforced concrete.
+
+All foundation elements must have property Pset_ConcreteElementGeneral.StrengthClass specified.
+
+All structural slabs must have thickness >= 150mm and must be classified as load-bearing.
+
+All shear walls must be classified as load-bearing elements with property Pset_WallCommon.LoadBearing set to true.
+
+All structural frames must have seismic design category specified in property Pset_BuildingCommon.SeismicDesignCategory.
+
+All post-tensioned concrete elements must have property Pset_ConcreteElementGeneral.PostTensioned set to true.
+
+All structural connections must be classified by connection type using classification system Uniclass 2015.
+
+All structural members must have material grade specified and must include manufacturer information.
+
+All fire doors must have fire rating >= 60 minutes specified in property Pset_DoorCommon.FireRating.
+
+All fire-rated walls must have property Pset_WallCommon.FireRating and must be made of fire-resistant materials.
+
+All escape routes must have minimum clear width of 1.2 meters.
+
+All fire compartment boundaries must be clearly identified with property Pset_SpaceFireSafetyRequirements.FireCompartmentation set to true.
+
+All fire protection systems must be classified according to fire safety code using classification reference.
+
+All HVAC ducts must have property Pset_DuctSegmentTypeCommon.NominalDiameter specified.
+
+All electrical cables must be classified by voltage rating and must have property Pset_CableSegmentTypeCommon.RatedVoltage.
+
+All plumbing pipes must have material specification and must have property Pset_PipeSegmentTypeCommon.NominalDiameter.
+
+All lighting fixtures must have property Pset_LightFixtureTypeCommon.LightEmitterType specified.
+
+All mechanical equipment must have manufacturer and model number specified in property Pset_ManufacturerTypeInformation.
+
+All ramps must have slope <= 1:12 (8.33%) specified in property Pset_RampCommon.RequiredSlope.
+
+All accessible doors must have clear width >= 850mm and must have property Pset_DoorCommon.IsExternal.
+
+All accessible toilets must have grab bars installed and must be classified as accessible facilities.
+
+All elevators serving accessible routes must be wheelchair accessible with minimum car dimensions specified.
+
+All accessible parking spaces must be clearly marked and must have minimum width of 3.6 meters.
+
+All external walls must have thermal transmittance U-value <= 0.3 W/m²K specified in property Pset_WallCommon.ThermalTransmittance.
+
+All windows must have property Pset_WindowCommon.ThermalTransmittance <= 1.8 W/m²K.
+
+All roofs must have insulation with thermal resistance R-value >= 5.0 m²K/W.
+
+All HVAC systems must have energy efficiency rating specified in property Pset_AirToAirHeatRecoveryTypeCommon.NominalEfficiency.
+
+All lighting systems must use LED technology with luminous efficacy >= 100 lumens per watt.

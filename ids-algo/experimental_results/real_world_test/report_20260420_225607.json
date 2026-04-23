@@ -1,0 +1,176 @@
+{
+  "test_id": "20260420_225607",
+  "test_type": "real_world_requirements",
+  "timestamp": "2026-04-20T23:01:15.992800",
+  "input": {
+    "ifc_file": "..\\ids_converter\\20250317023029_TRV-hdmi2-BRO-4x3.ifc",
+    "requirements_count": 30,
+    "requirements_by_domain": {
+      "structural": 10,
+      "fire_safety": 5,
+      "mep": 5,
+      "accessibility": 5,
+      "energy_efficiency": 5
+    },
+    "text_length": 3124,
+    "estimated_tokens": 781
+  },
+  "performance": {
+    "total_time_seconds": 308.61,
+    "start_memory_mb": 356.56,
+    "end_memory_mb": 2837.12,
+    "peak_memory_mb": 2837.12,
+    "memory_delta_mb": 2480.57
+  },
+  "timing": {
+    "stage_a": 26.04,
+    "stage_b": 19.49,
+    "stage_c": 221.45,
+    "stage_d": 0.01,
+    "stage_e_merge": 0.0,
+    "stage_e_build": 41.62,
+    "total": 308.61
+  },
+  "output": {
+    "total_specifications": 27,
+    "success_rate": "27/30 (90.0%)",
+    "specifications_by_domain": {}
+  },
+  "specification_summary": [
+    {
+      "name": "Load-Bearing Concrete Walls - Structural Requirements",
+      "applicability_facets": 5,
+      "requirements_facets": 1
+    },
+    {
+      "name": "Structural Columns - Dimensional Requirements",
+      "applicability_facets": 3,
+      "requirements_facets": 1
+    },
+    {
+      "name": "Long-Span Beams - Material and Span Requirements",
+      "applicability_facets": 4,
+      "requirements_facets": 1
+    },
+    {
+      "name": "Foundation Elements - Concrete Strength Classification",
+      "applicability_facets": 3,
+      "requirements_facets": 1
+    },
+    {
+      "name": "Structural Frames - Seismic Design Category",
+      "applicability_facets": 3,
+      "requirements_facets": 1
+    },
+    {
+      "name": "Post-Tensioned Concrete Elements - Tendon Classification",
+      "applicability_facets": 3,
+      "requirements_facets": 1
+    },
+    {
+      "name": "Structural Connections - Uniclass 2015 Classification",
+      "applicability_facets": 3,
+      "requirements_facets": 0
+    },
+    {
+      "name": "Structural Members - Material Grade and Manufacturer Information",
+      "applicability_facets": 3,
+      "requirements_facets": 1
+    },
+    {
+      "name": "Fire Doors - Fire Rating Requirements",
+      "applicability_facets": 3,
+      "requirements_facets": 1
+    },
+    {
+      "name": "Fire-Rated Walls - Fire Rating and Material Requirements",
+      "applicability_facets": 3,
+      "requirements_facets": 2
+    },
+    {
+      "name": "Escape Routes - Clear Width Requirements",
+      "applicability_facets": 4,
+      "requirements_facets": 0
+    },
+    {
+      "name": "Fire Compartment Boundaries - Compartmentation Classification",
+      "applicability_facets": 3,
+      "requirements_facets": 1
+    },
+    {
+      "name": "Fire Protection Systems - Fire Safety Code Classification",
+      "applicability_facets": 3,
+      "requirements_facets": 0
+    },
+    {
+      "name": "HVAC Ducts - Nominal Diameter Specification",
+      "applicability_facets": 3,
+      "requirements_facets": 1
+    },
+    {
+      "name": "Electrical Cables - Voltage Rating Classification",
+      "applicability_facets": 3,
+      "requirements_facets": 1
+    },
+    {
+      "name": "Plumbing Pipes - Material and Diameter Specification",
+      "applicability_facets": 3,
+      "requirements_facets": 2
+    },
+    {
+      "name": "Lighting Fixtures - Light Emitter Type Specification",
+      "applicability_facets": 3,
+      "requirements_facets": 1
+    },
+    {
+      "name": "Ramps - Slope Requirements",
+      "applicability_facets": 3,
+      "requirements_facets": 1
+    },
+    {
+      "name": "Accessible Doors - Width and External Classification",
+      "applicability_facets": 3,
+      "requirements_facets": 2
+    },
+    {
+      "name": "Accessible Toilets - Grab Bar Installation and Classification",
+      "applicability_facets": 3,
+      "requirements_facets": 0
+    },
+    {
+      "name": "Accessible Elevators - Wheelchair Accessibility and Dimensions",
+      "applicability_facets": 3,
+      "requirements_facets": 0
+    },
+    {
+      "name": "Accessible Parking Spaces - Marking and Width Requirements",
+      "applicability_facets": 3,
+      "requirements_facets": 1
+    },
+    {
+      "name": "External Walls - Thermal Transmittance Requirements",
+      "applicability_facets": 3,
+      "requirements_facets": 1
+    },
+    {
+      "name": "Windows - Thermal Transmittance Requirements",
+      "applicability_facets": 3,
+      "requirements_facets": 1
+    },
+    {
+      "name": "Roofs - Thermal Resistance Requirements",
+      "applicability_facets": 3,
+      "requirements_facets": 1
+    },
+    {
+      "name": "HVAC Systems - Energy Efficiency Rating",
+      "applicability_facets": 3,
+      "requirements_facets": 1
+    },
+    {
+      "name": "Lighting Systems - LED Technology and Luminous Efficacy",
+      "applicability_facets": 4,
+      "requirements_facets": 1
+    }
+  ]
+}

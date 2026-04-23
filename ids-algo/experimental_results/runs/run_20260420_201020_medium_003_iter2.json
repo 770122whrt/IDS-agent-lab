@@ -1,0 +1,115 @@
+{
+  "sample_id": "medium_003",
+  "complexity": "medium",
+  "iteration": 2,
+  "timestamp": "2026-04-20T20:09:47.863988",
+  "success": true,
+  "timing": {
+    "stage_a": 5.308016899999529,
+    "stage_b": 4.284149900000557,
+    "stage_c": 15.259566200000336,
+    "stage_d": 0.0005772999993496342,
+    "stage_e_merge": 5.099999725644011e-06,
+    "stage_e_build": 7.621130300000004,
+    "total": 32.4745410000005
+  },
+  "num_specifications": 1,
+  "output": {
+    "specifications": [
+      {
+        "name": "Concrete Column Compressive Strength and Dimensional Requirements",
+        "ifcVersion": [
+          "IFC4"
+        ],
+        "description": "Validates that all concrete columns meet minimum compressive strength (≥30MPa) and cross-sectional area (≥0.1m²) requirements.",
+        "instructions": null,
+        "applicability": {
+          "minOccurs": "1",
+          "maxOccurs": "unbounded",
+          "entity": {
+            "name": "IfcColumnStandardCase",
+            "predefinedType": null
+          },
+          "partOf": null,
+          "classification": null,
+          "attribute": null,
+          "property": null,
+          "material": [
+            {
+              "value": "Concrete",
+              "uri": null,
+              "cardinality": "required",
+              "instructions": null
+            }
+          ]
+        },
+        "requirements": {
+          "description": null,
+          "entity": null,
+          "partOf": null,
+          "classification": null,
+          "attribute": null,
+          "property": [
+            {
+              "propertySet": "Pset_ConcreteElementGeneral",
+              "baseName": "CompressiveStrength",
+              "value": {
+                "simpleValue": "compressive strength greater than 30MPa",
+                "restriction": null
+              },
+              "dataType": "IfcPressureMeasure",
+              "uri": null,
+              "cardinality": "required",
+              "instructions": null
+            },
+            {
+              "propertySet": "Pset_SpaceCommon",
+              "baseName": "Area",
+              "value": {
+                "simpleValue": "cross-sectional area greater than 0.1 square meters",
+                "restriction": null
+              },
+              "dataType": "IfcAreaMeasure",
+              "uri": null,
+              "cardinality": "required",
+              "instructions": null
+            }
+          ],
+          "material": null
+        }
+      }
+    ]
+  },
+  "error": null,
+  "stage_c_mappings": [
+    {
+      "original_text": "concrete columns",
+      "facet_type": "entity"
+    },
+    {
+      "original_text": "compressive strength greater than 30MPa",
+      "facet_type": "property"
+    },
+    {
+      "original_text": "cross-sectional area greater than 0.1 square meters",
+      "facet_type": "property"
+    },
+    {
+      "original_text": "concrete",
+      "facet_type": "material"
+    }
+  ],
+  "full_stage_outputs": {
+    "stage_a": {
+      "objects": [],
+      "properties": [],
+      "materials": []
+    },
+    "stage_b": {
+      "facets": []
+    },
+    "stage_d": {
+      "constraints": []
+    }
+  }
+}

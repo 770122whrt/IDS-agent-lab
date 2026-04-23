@@ -1,0 +1,26 @@
+{
+  "building_objects": [
+    {
+      "raw_text": "All walls",
+      "object_type": "wall",
+      "modifiers": [
+        "all"
+      ],
+      "confidence": 0.95
+    }
+  ],
+  "property_descriptions": [
+    {
+      "raw_text": "FireRating in the set Pset_WallCommon with a value being one of REI30, REI60, REI90",
+      "property_name": "FireRating",
+      "constraint_text": "value in {REI30, REI60, REI90}",
+      "confidence": 0.92
+    }
+  ],
+  "material_requirements": [],
+  "spatial_relationships": [],
+  "unmatched_fragments": [
+    "Pset_WallCommon"
+  ],
+  "llm_analysis": "Prompt: You are a building specification analysis expert. Parse natural language building descriptions into structured components.\n\nInput text: All walls should have the property FireRating in the set Pset_WallCommon with a value being one of REI30, REI60, REI90.\n\nExtract these components:\n1. building_objects: Concrete building elements (walls, doors, windows, slabs)\n2. property_descriptions: Quantifiable property requirements (thickness>=240mm, fire rating 2 hours)\n3. material_requirements: Material requirements (reinforced concrete, brick, wood)\n4. spatial_relationships: Spatial relations (located in, contains, connects)\n5. unmatched_fragments: Unclassifiable text fragments\n\nOutput JSON format:\n{\n    \"building_objects\": [\n        {\n            \"raw_text\": \"original text fragment\",\n            \"object_type\": \"object type\",\n            \"modifiers\": [\"modifier words\"],\n            \"confidence\": 0.9\n        }\n    ],\n    \"property_descriptions\": [\n        {\n            \"raw_text\": \"original text fragment\", \n            \"property_name\": \"property name\",\n            \"constraint_text\": \"constraint expression\",\n            \"confidence\": 0.9\n        }\n    ],\n    \"material_requirements\": [\n        {\n            \"raw_text\": \"original text fragment\",\n            \"material_name\": \"material name\", \n            \"specifications\": \"specification requirements\",\n            \"confidence\": 0.9\n        }\n    ],\n    \"spatial_relationships\": [\n        {\n            \"raw_text\": \"original text fragment\",\n            \"subject\": \"subject\",\n            \"relation\": \"relation type\",\n            \"object\": \"object\",\n            \"confidence\": 0.9\n        }\n    ],\n    \"unmatched_fragments\": [\"unclassifiable text fragments\"]\n}\n\nOutput JSON only, no other text....\nResponse: {'content': '```json\\n{\\n    \"building_objects\": [\\n        {\\n            \"raw_text\": \"All walls\",\\n            \"object_type\": \"wall\",\\n            \"modifiers\": [\"all\"],\\n            \"confidence\": 0.95\\n        }\\n    ],\\n    \"property_descriptions\": [\\n        {\\n            \"raw_text\": \"FireRating in the set Pset_WallCommon with a value being one of REI30, REI60, REI90\",\\n            \"property_name\": \"FireRating\",\\n            \"constraint_text\": \"value in {REI30, REI60, REI90}\",\\n            \"confidence\": 0.92\\n        }\\n    ],\\n    \"material_requirements\": [],\\n    \"spatial_relationships\": [],\\n    \"unmatched_fragments\": [\\n        \"Pset_WallCommon\"\\n    ]\\n}\\n```'}..."
+}

@@ -191,6 +191,10 @@ class IdsBuilder:
         """使用LLM进行槽分配"""
         prompt = self._build_self_validating_prompt(context)
 
+        # 调试：记录prompt长度和前500字符
+        logger.info(f"Stage E LLM Prompt length: {len(prompt)} characters (~{len(prompt)//4} tokens)")
+        logger.debug(f"Stage E LLM Prompt preview (first 500 chars):\n{prompt[:500]}...")
+
         messages = [{"role": "user", "content": prompt}]
         response = await self.llm_client.generate(messages)
 
@@ -198,6 +202,10 @@ class IdsBuilder:
         response_content = (
             response.get("content", "") if isinstance(response, dict) else str(response)
         )
+
+        # 调试：记录响应长度和完整内容
+        logger.info(f"Stage E LLM Response length: {len(response_content)} characters")
+        logger.info(f"Stage E LLM Response FULL CONTENT:\n{'='*80}\n{response_content}\n{'='*80}")
 
         # 解析槽
         slots = self._parse_llm_slots(response_content)

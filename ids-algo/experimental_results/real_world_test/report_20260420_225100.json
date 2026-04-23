@@ -1,0 +1,40 @@
+{
+  "test_id": "20260420_225100",
+  "test_type": "real_world_requirements",
+  "timestamp": "2026-04-20T22:55:09.603651",
+  "input": {
+    "ifc_file": "..\\ids_converter\\20250317023029_TRV-hdmi2-BRO-4x3.ifc",
+    "requirements_count": 30,
+    "requirements_by_domain": {
+      "structural": 10,
+      "fire_safety": 5,
+      "mep": 5,
+      "accessibility": 5,
+      "energy_efficiency": 5
+    },
+    "text_length": 3124,
+    "estimated_tokens": 781
+  },
+  "performance": {
+    "total_time_seconds": 248.77,
+    "start_memory_mb": 356.09,
+    "end_memory_mb": 2835.86,
+    "peak_memory_mb": 2835.86,
+    "memory_delta_mb": 2479.76
+  },
+  "timing": {
+    "stage_a": 22.28,
+    "stage_b": 18.57,
+    "stage_c": 197.54,
+    "stage_d": 0.01,
+    "stage_e_merge": 0.0,
+    "stage_e_build": 10.37,
+    "total": 248.77
+  },
+  "output": {
+    "total_specifications": 0,
+    "success_rate": "0/30 (0.0%)",
+    "specifications_by_domain": {}
+  },
+  "specification_summary": []
+}

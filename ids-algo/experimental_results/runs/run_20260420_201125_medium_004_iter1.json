@@ -1,0 +1,89 @@
+{
+  "sample_id": "medium_004",
+  "complexity": "medium",
+  "iteration": 1,
+  "timestamp": "2026-04-20T20:11:01.064692",
+  "success": true,
+  "timing": {
+    "stage_a": 3.0523850999998103,
+    "stage_b": 3.4433493999995335,
+    "stage_c": 9.345224300000154,
+    "stage_d": 0.00018309999995835824,
+    "stage_e_merge": 3.8000007407390513e-06,
+    "stage_e_build": 8.805131199999778,
+    "total": 24.647054000000026
+  },
+  "num_specifications": 1,
+  "output": {
+    "specifications": [
+      {
+        "name": "Structural Slab Reinforced Concrete Composition and Thickness",
+        "ifcVersion": [
+          "IFC4"
+        ],
+        "description": "Validates that structural slabs are constructed from reinforced concrete and meet minimum thickness requirements for structural integrity.",
+        "instructions": null,
+        "applicability": {
+          "minOccurs": "1",
+          "maxOccurs": "unbounded",
+          "entity": {
+            "name": "IfcStructuralSurfaceMember",
+            "predefinedType": null
+          },
+          "partOf": null,
+          "classification": null,
+          "attribute": null,
+          "property": null,
+          "material": [
+            {
+              "value": "Reinforced Concrete",
+              "uri": null,
+              "cardinality": "required",
+              "instructions": null
+            }
+          ]
+        },
+        "requirements": {
+          "description": null,
+          "entity": null,
+          "partOf": null,
+          "classification": null,
+          "attribute": null,
+          "property": [
+            {
+              "propertySet": "Pset_WallCommon",
+              "baseName": "Thickness",
+              "value": {
+                "simpleValue": ">= 150.0 mm",
+                "restriction": {
+                  "base": "string",
+                  "minInclusive": 150.0
+                }
+              },
+              "dataType": "IfcPositiveLengthMeasure",
+              "uri": null,
+              "cardinality": "required",
+              "instructions": null
+            }
+          ],
+          "material": null
+        }
+      }
+    ]
+  },
+  "error": null,
+  "stage_c_mappings": [
+    {
+      "original_text": "Structural slabs",
+      "facet_type": "entity"
+    },
+    {
+      "original_text": "minimum thickness of 150mm",
+      "facet_type": "property"
+    },
+    {
+      "original_text": "reinforced concrete",
+      "facet_type": "material"
+    }
+  ]
+}

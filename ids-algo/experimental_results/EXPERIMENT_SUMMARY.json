@@ -1,0 +1,69 @@
+{
+  "report_date": "2026-04-20T21:09:45.402304",
+  "experiments": {
+    "batch_experiment": {
+      "description": "13个测试样本的批量实验（simple/medium/complex）",
+      "total_runs": 39,
+      "success_rate": 100.0,
+      "avg_response_time": 28.273732474359093,
+      "data_files": {
+        "summary_json": "experimental_results\\summary_20260420_201945.json",
+        "summary_csv": "experimental_results\\summary_20260420_201945.csv",
+        "individual_runs": "runs/ (39 files)"
+      },
+      "key_findings": [
+        "100% success rate across all complexity levels",
+        "Average response time: 28.27s",
+        "Stage C (KB Mapping) is the bottleneck: 37.7%"
+      ]
+    },
+    "large_scale_robustness": {
+      "description": "45个specification的大规模IDS处理测试",
+      "input_size": {
+        "ifc_file": "985KB",
+        "ids_file": "57KB (45 specifications)",
+        "text_length": 12438,
+        "estimated_tokens": 3109
+      },
+      "performance": {
+        "total_time": "287.37s",
+        "memory_peak": "2837.9MB",
+        "memory_delta": "+2479.4MB"
+      },
+      "output": {
+        "specifications_generated": 29,
+        "coverage_rate": "64.4%"
+      },
+      "data_files": {
+        "performance_report": "experimental_results\\large_scale_test\\report_20260420_205651.json",
+        "result_json": "experimental_results\\large_scale_test\\result_20260420_205651.json",
+        "comparison_report": "experimental_results\\large_scale_test\\ids_comparison_report.md",
+        "input_text": "experimental_results\\large_scale_test\\ids_input_text.txt"
+      },
+      "key_findings": [
+        "Successfully processed 45 specifications in 287s",
+        "Generated 29 specifications (64.4% coverage)",
+        "Peak memory: 2837.9MB",
+        "Stage C (KB Mapping) took 59.6% of total time"
+      ]
+    },
+    "ids_comparison": {
+      "description": "原始IDS与生成IDS的对比分析",
+      "comparison_results": {
+        "original_specs": 45,
+        "generated_specs": 29,
+        "coverage_rate": "64.4%",
+        "match_rate": "24/45 (53.3%)"
+      },
+      "data_files": {
+        "comparison_json": "experimental_results\\large_scale_test\\ids_comparison_report.json",
+        "comparison_markdown": "experimental_results\\large_scale_test\\ids_comparison_report.md"
+      },
+      "key_findings": [
+        "24/45 specifications matched (53.3%)",
+        "System intelligently merged similar specifications",
+        "21 specifications not matched (mostly detailed sub-components)"
+      ]
+    }
+  }
+}

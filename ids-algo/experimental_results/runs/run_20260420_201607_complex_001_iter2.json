@@ -1,0 +1,103 @@
+{
+  "sample_id": "complex_001",
+  "complexity": "complex",
+  "iteration": 2,
+  "timestamp": "2026-04-20T20:15:37.801982",
+  "success": true,
+  "timing": {
+    "stage_a": 3.739000900000974,
+    "stage_b": 3.8929747000001953,
+    "stage_c": 10.878202899999451,
+    "stage_d": 0.0006290000001172302,
+    "stage_e_merge": 4.800000169780105e-06,
+    "stage_e_build": 11.37416740000117,
+    "total": 29.88572159999967
+  },
+  "num_specifications": 1,
+  "output": {
+    "specifications": [
+      {
+        "name": "Basement Structural Columns - Material and Strength Compliance",
+        "ifcVersion": [
+          "IFC4"
+        ],
+        "description": "Validates that all structural columns in the basement are constructed from reinforced concrete with minimum compressive strength of 40MPa",
+        "instructions": null,
+        "applicability": {
+          "minOccurs": "1",
+          "maxOccurs": "unbounded",
+          "entity": {
+            "name": "IfcStructuralCurveMember",
+            "predefinedType": null
+          },
+          "partOf": null,
+          "classification": null,
+          "attribute": null,
+          "property": null,
+          "material": [
+            {
+              "value": "Reinforced Concrete",
+              "uri": null,
+              "cardinality": "required",
+              "instructions": null
+            }
+          ]
+        },
+        "requirements": {
+          "description": null,
+          "entity": null,
+          "partOf": null,
+          "classification": null,
+          "attribute": null,
+          "property": [
+            {
+              "propertySet": "Pset_ConcreteElementGeneral",
+              "baseName": "CompressiveStrength",
+              "value": {
+                "simpleValue": "compressive strength greater than 40MPa",
+                "restriction": null
+              },
+              "dataType": "IfcPressureMeasure",
+              "uri": null,
+              "cardinality": "required",
+              "instructions": null
+            }
+          ],
+          "material": null
+        }
+      }
+    ]
+  },
+  "error": null,
+  "stage_c_mappings": [
+    {
+      "original_text": "structural columns",
+      "facet_type": "entity"
+    },
+    {
+      "original_text": "foundation elements",
+      "facet_type": "entity"
+    },
+    {
+      "original_text": "compressive strength greater than 40MPa",
+      "facet_type": "property"
+    },
+    {
+      "original_text": "reinforced concrete with compressive strength greater than 40MPa",
+      "facet_type": "material"
+    }
+  ],
+  "full_stage_outputs": {
+    "stage_a": {
+      "objects": [],
+      "properties": [],
+      "materials": []
+    },
+    "stage_b": {
+      "facets": []
+    },
+    "stage_d": {
+      "constraints": []
+    }
+  }
+}

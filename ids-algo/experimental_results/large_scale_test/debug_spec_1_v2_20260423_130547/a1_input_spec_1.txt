@@ -1,0 +1,1 @@
+The model must contain exactly one IfcProject entity that provides default units for length (meters), angle (degrees), mass (kilograms), and temperature (Celsius), with imperial alternatives of inches, pounds, and Fahrenheit respectively if needed. IFC version: IFC4X3_ADD2.

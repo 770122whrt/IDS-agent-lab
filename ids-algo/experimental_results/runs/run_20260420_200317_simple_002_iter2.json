@@ -1,0 +1,81 @@
+{
+  "sample_id": "simple_002",
+  "complexity": "simple",
+  "iteration": 2,
+  "timestamp": "2026-04-20T20:02:52.148794",
+  "success": true,
+  "timing": {
+    "stage_a": 3.1492835999997624,
+    "stage_b": 2.917164400000729,
+    "stage_c": 11.915452899999764,
+    "stage_d": 0.0005118999997648643,
+    "stage_e_merge": 9.999999747378752e-06,
+    "stage_e_build": 7.4323427999997875,
+    "total": 25.416140799999994
+  },
+  "num_specifications": 1,
+  "output": {
+    "specifications": [
+      {
+        "name": "IfcDoor Minimum Height Requirement",
+        "ifcVersion": [
+          "IFC4"
+        ],
+        "description": "Validates that all IfcDoor elements meet the minimum height requirement of 2000mm",
+        "instructions": null,
+        "applicability": {
+          "minOccurs": "1",
+          "maxOccurs": "unbounded",
+          "entity": {
+            "name": "IfcDoor",
+            "predefinedType": null
+          },
+          "partOf": null,
+          "classification": null,
+          "attribute": null,
+          "property": null,
+          "material": null
+        },
+        "requirements": {
+          "description": null,
+          "entity": null,
+          "partOf": null,
+          "classification": null,
+          "attribute": null,
+          "property": [
+            {
+              "propertySet": "Pset_DoorCommon",
+              "baseName": "Height",
+              "value": {
+                "simpleValue": "IfcDo, should",
+                "restriction": {
+                  "base": "string",
+                  "enumeration": [
+                    "IfcDo",
+                    "should"
+                  ]
+                }
+              },
+              "dataType": "IfcPositiveLengthMeasure",
+              "uri": null,
+              "cardinality": "required",
+              "instructions": null
+            }
+          ],
+          "material": null
+        }
+      }
+    ]
+  },
+  "error": null,
+  "stage_c_mappings": [
+    {
+      "original_text": "IfcDoor",
+      "facet_type": "entity"
+    },
+    {
+      "original_text": "Height of IfcDoor should be greater than 2000mm",
+      "facet_type": "property"
+    }
+  ]
+}

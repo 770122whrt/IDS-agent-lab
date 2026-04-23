@@ -1,0 +1,17 @@
+[
+  {
+    "id": "1",
+    "text": "**IFC4X3_ADD2 Project Specification**\n\nThis specification applies to all IfcProject entities in the model.\n\n**Requirements:**\n\n- The model MUST contain exactly one IfcProject instance that serves as the root entity identifying the overall project.\n\n- The IfcProject MUST provide default units for the following measurements:\n  - **Length Unit**: Defaults to meters (SI). For imperial systems, inches are recommended.\n  - **Angle Unit**: Defaults to degrees. Degrees are the recommended standard unit.\n  - **Mass Unit**: Defaults to kilograms (SI). For imperial systems, pounds are recommended.\n  - **Temperature Unit**: Defaults to Celsius (SI). For imperial systems, Fahrenheit is recommended.\n\n- The IfcProject MUST maintain a graph of references that connects to all data within the project scope.\n\n- The IfcProject serves as the primary container that establishes project-wide defaults and organizational structure for all model data.",
+    "language": "en"
+  },
+  {
+    "id": "2",
+    "text": "**Specification 2: Site (IFC4X3_ADD2)**\n\nThis specification applies to all IfcSite entities in the model.\n\nThe model MAY contain zero or more sites. Each site that is included in the model MUST satisfy the following requirements:\n\n1. The site MUST be aggregated as part of an IfcProject entity through an IfcRelAggregates relationship.\n\n2. The site MUST have a Name attribute assigned. This name serves as an identifier for referencing the site.\n\n**Context:** While the RAR (Requirements and Recommendations) specifies a mandatory site, this specification makes it optional. Additionally, although the RAR requires a reference elevation, this should be provided through the CRS (Coordinate Reference System) reference instead. Sites may define existing and proposed terrain in the vicinity of the bridge project and can contain alignments, bridges, and other structures such as roads or rails supported by the bridge. Boring points may also be included as objects contained within the site.",
+    "language": "en"
+  },
+  {
+    "id": "3",
+    "text": "**Bridge Specification (IFC4X3_ADD2)**\n\nThis specification applies to all IfcBridge type entities in the model. One or more bridge structures must be present.\n\nEach bridge structure must be captured within a definition that describes the span location of the bridge relative to an alignment. The extents of the bridge are defined using an Axis curve, where IfcOffsetCurveByDistances is the recommended approach – this references an IfcAlignmentCurve with specified starting and ending distances along the curve, and typically includes no lateral or vertical offsets.\n\nAll IfcBridge entities MUST:\n- Be part of an aggregation relationship (IfcRelAggregates) with either an IfcBridge or IfcProject entity\n- Have a Name attribute assigned",
+    "language": "en"
+  }
+]

@@ -1,0 +1,406 @@
+All files are already correct
+================================================================================
+Reference Verification Test
+================================================================================
+
+[*] Reading requirements from: E:\code for project\IDS_practise\backend\ids-agent\ids-algo\reference_requirements_bridge.txt
+[OK] Loaded 15 requirements
+
+[*] Parsing reference IDS: 20250317023029_IFCBridge-IDS-xml.ids
+[OK] Parsed 45 reference specifications
+
+[*] Running IDS generation pipeline...
+2026-04-21 00:34:31,168 - ids_pipeline - INFO - [Step A] Running Structured Parser...
+2026-04-21 00:34:33,373 - openrouter.client - INFO - Initialize Anthropic client, model: claude-3-5-sonnet-20241022
+2026-04-21 00:34:33,373 - a_structured_parser.structured_parser - INFO - Starting structured parsing for text: 
+================================================================
+
+1. All bridge projects must conta...
+2026-04-21 00:34:47,373 - httpx - INFO - HTTP Request: POST https://cc-vibe.com/v1/messages "HTTP/1.1 200 OK"
+2026-04-21 00:34:47,408 - openrouter.llm_response_handler - WARNING - Initial JSON parsing failed for structured parsing, attempting to clean response
+2026-04-21 00:34:47,408 - openrouter.llm_response_handler - INFO - Successfully parsed structured parsing using _clean_markdown_blocks
+2026-04-21 00:34:47,408 - a_structured_parser.structured_parser - INFO - Structured parsing completed: 15 objects, 3 properties, 2 materials, 15 relationships
+2026-04-21 00:34:47,408 - ids_pipeline - INFO - [Step B] Running Facet Classifier...
+2026-04-21 00:34:48,246 - openrouter.client - INFO - Initialize Anthropic client, model: claude-3-5-sonnet-20241022
+2026-04-21 00:34:48,246 - b_facet_classifier.facet_classifier - INFO - Starting facet classification
+2026-04-21 00:34:53,280 - anthropic._base_client - INFO - Retrying request to /v1/messages in 0.410986 seconds
+2026-04-21 00:35:07,206 - httpx - INFO - HTTP Request: POST https://cc-vibe.com/v1/messages "HTTP/1.1 200 OK"
+2026-04-21 00:35:07,208 - openrouter.llm_response_handler - WARNING - Initial JSON parsing failed for facet classification, attempting to clean response
+2026-04-21 00:35:07,209 - openrouter.llm_response_handler - INFO - Successfully parsed facet classification using _clean_markdown_blocks
+2026-04-21 00:35:07,209 - b_facet_classifier.facet_classifier - INFO - Facet classification completed: 34 candidates classified
+2026-04-21 00:35:07,209 - ids_pipeline - INFO - [Step C] Running Knowledge Base Mapping...
+2026-04-21 00:35:07,231 - c_knowledge_base_mapping.database_manager - INFO - 开始预加载向量数据库...
+2026-04-21 00:35:07,232 - c_knowledge_base_mapping.database_manager - INFO - 加载主要数据库: E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\entity_db.json
+2026-04-21 00:35:07,232 - c_knowledge_base_mapping.vector_database.core.model_manager - INFO - 模型名称改变，从 None 切换到 BAAI/bge-m3
+2026-04-21 00:35:07,232 - c_knowledge_base_mapping.vector_database.core.model_manager - INFO - 加载向量模型: BAAI/bge-m3
+2026-04-21 00:35:07,238 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2026-04-21 00:35:07,238 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2026-04-21 00:35:25,928 - c_knowledge_base_mapping.vector_database.core.model_manager - INFO - 向量模型加载成功: BAAI/bge-m3
+2026-04-21 00:35:25,931 - c_knowledge_base_mapping.vector_database.core.vector_cache_manager - INFO - VectorCacheManager initialized: model=BAAI/bge-m3, max_memory=10000, persistence=True
+2026-04-21 00:35:25,931 - c_knowledge_base_mapping.vector_database.unified_db - INFO - Loading DB from E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\entity_db.json...
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00,  2.21it/s]Batches: 100%|██████████| 1/1 [00:00<00:00,  2.20it/s]
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00,  4.42it/s]Batches: 100%|██████████| 1/1 [00:00<00:00,  4.42it/s]
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00,  3.33it/s]Batches: 100%|██████████| 1/1 [00:00<00:00,  3.32it/s]
+2026-04-21 00:35:29,008 - c_knowledge_base_mapping.vector_database.unified_db - INFO - Loaded 2291 items from E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\entity_db.json
+2026-04-21 00:35:29,008 - c_knowledge_base_mapping.database_manager - INFO - 主要数据库加载成功，包含 2291 个项目
+2026-04-21 00:35:29,009 - c_knowledge_base_mapping.database_manager - INFO - 加载 property 数据库: E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\property_db.json
+2026-04-21 00:35:29,009 - c_knowledge_base_mapping.vector_database.unified_db - INFO - Loading DB from E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\property_db.json...
+2026-04-21 00:35:29,022 - c_knowledge_base_mapping.vector_database.unified_db - INFO - Loaded 15 items from E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\property_db.json
+2026-04-21 00:35:29,022 - c_knowledge_base_mapping.database_manager - INFO - property 数据库加载成功，包含 15 个项目
+2026-04-21 00:35:29,022 - c_knowledge_base_mapping.database_manager - INFO - 加载 material 数据库: E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\material_db.json
+2026-04-21 00:35:29,023 - c_knowledge_base_mapping.vector_database.unified_db - INFO - Loading DB from E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\material_db.json...
+2026-04-21 00:35:29,034 - c_knowledge_base_mapping.vector_database.unified_db - INFO - Loaded 12 items from E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\material_db.json
+2026-04-21 00:35:29,034 - c_knowledge_base_mapping.database_manager - INFO - material 数据库加载成功，包含 12 个项目
+2026-04-21 00:35:29,034 - c_knowledge_base_mapping.database_manager - INFO - 加载 attribute 数据库: E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\attribute_db.json
+2026-04-21 00:35:29,035 - c_knowledge_base_mapping.vector_database.unified_db - INFO - Loading DB from E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\attribute_db.json...
+2026-04-21 00:35:29,042 - c_knowledge_base_mapping.vector_database.unified_db - INFO - Loaded 10 items from E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\attribute_db.json
+2026-04-21 00:35:29,043 - c_knowledge_base_mapping.database_manager - INFO - attribute 数据库加载成功，包含 10 个项目
+2026-04-21 00:35:29,043 - c_knowledge_base_mapping.database_manager - INFO - 加载 partOf 数据库: E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\partOf_db.json
+2026-04-21 00:35:29,043 - c_knowledge_base_mapping.vector_database.unified_db - INFO - Loading DB from E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\partOf_db.json...
+2026-04-21 00:35:29,048 - c_knowledge_base_mapping.vector_database.unified_db - INFO - Loaded 8 items from E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\partOf_db.json
+2026-04-21 00:35:29,049 - c_knowledge_base_mapping.database_manager - INFO - partOf 数据库加载成功，包含 8 个项目
+2026-04-21 00:35:29,049 - c_knowledge_base_mapping.database_manager - INFO - 加载 classification 数据库: E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\classification_db.json
+2026-04-21 00:35:29,050 - c_knowledge_base_mapping.vector_database.unified_db - INFO - Loading DB from E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\classification_db.json...
+2026-04-21 00:35:29,056 - c_knowledge_base_mapping.vector_database.unified_db - INFO - Loaded 10 items from E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\classification_db.json
+2026-04-21 00:35:29,056 - c_knowledge_base_mapping.database_manager - INFO - classification 数据库加载成功，包含 10 个项目
+2026-04-21 00:35:29,056 - c_knowledge_base_mapping.database_manager - INFO - 所有数据库预加载完成
+2026-04-21 00:35:29,956 - openrouter.client - INFO - Initialize Anthropic client, model: claude-3-5-sonnet-20241022
+2026-04-21 00:35:29,957 - c_knowledge_base_mapping.resolvers.resolver_factory - INFO - Created 6 resolvers
+2026-04-21 00:35:29,957 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - KnowledgeBaseMappingOrchestrator initialized with clean resolvers
+2026-04-21 00:35:29,957 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Starting clean facet mapping
+2026-04-21 00:35:33,592 - httpx - INFO - HTTP Request: POST https://cc-vibe.com/v1/messages "HTTP/1.1 200 OK"
+2026-04-21 00:35:33,593 - openrouter.llm_response_handler - WARNING - Initial JSON parsing failed for entity selection, attempting to clean response
+2026-04-21 00:35:33,593 - openrouter.llm_response_handler - INFO - Successfully parsed entity selection using _clean_markdown_blocks
+2026-04-21 00:35:33,593 - c_knowledge_base_mapping.resolvers.entity_resolver - INFO - LLM selected entity: All bridge projects must contain exactly one IfcProject instance -> IfcProject
+2026-04-21 00:35:33,594 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped entity: 'All bridge projects must contain exactly one IfcProject instance' -> 'IfcProject' (confidence: 0.636, source: static_kb_llm_selected)
+2026-04-21 00:35:36,664 - httpx - INFO - HTTP Request: POST https://cc-vibe.com/v1/messages "HTTP/1.1 200 OK"
+2026-04-21 00:35:36,666 - openrouter.llm_response_handler - WARNING - Initial JSON parsing failed for entity selection, attempting to clean response
+2026-04-21 00:35:36,666 - openrouter.llm_response_handler - INFO - Successfully parsed entity selection using _clean_markdown_blocks
+2026-04-21 00:35:36,667 - c_knowledge_base_mapping.resolvers.entity_resolver - INFO - LLM selected entity: at least one IfcSite that defines the terrain -> IfcSite
+2026-04-21 00:35:36,667 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped entity: 'at least one IfcSite that defines the terrain' -> 'IfcSite' (confidence: 0.626, source: static_kb_llm_selected)
+2026-04-21 00:35:39,225 - httpx - INFO - HTTP Request: POST https://cc-vibe.com/v1/messages "HTTP/1.1 200 OK"
+2026-04-21 00:35:39,226 - openrouter.llm_response_handler - WARNING - Initial JSON parsing failed for entity selection, attempting to clean response
+2026-04-21 00:35:39,227 - openrouter.llm_response_handler - INFO - Successfully parsed entity selection using _clean_markdown_blocks
+2026-04-21 00:35:39,227 - c_knowledge_base_mapping.resolvers.entity_resolver - INFO - LLM selected entity: Every bridge structure must be represented by an IfcBridge entity -> IfcCivilElement
+2026-04-21 00:35:39,227 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped entity: 'Every bridge structure must be represented by an IfcBridge entity' -> 'IfcCivilElement' (confidence: 0.641, source: static_kb_llm_selected)
+2026-04-21 00:35:42,837 - httpx - INFO - HTTP Request: POST https://cc-vibe.com/v1/messages "HTTP/1.1 200 OK"
+2026-04-21 00:35:42,839 - openrouter.llm_response_handler - WARNING - Initial JSON parsing failed for entity selection, attempting to clean response
+2026-04-21 00:35:42,839 - openrouter.llm_response_handler - INFO - Successfully parsed entity selection using _clean_markdown_blocks
+2026-04-21 00:35:42,839 - c_knowledge_base_mapping.resolvers.entity_resolver - INFO - LLM selected entity: Horizontal and vertical alignment curves must be defined using IfcAlignment entities -> IfcGridAxis
+2026-04-21 00:35:42,839 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped entity: 'Horizontal and vertical alignment curves must be defined using IfcAlignment entities' -> 'IfcGridAxis' (confidence: 0.631, source: static_kb_llm_selected)
+2026-04-21 00:35:45,981 - httpx - INFO - HTTP Request: POST https://cc-vibe.com/v1/messages "HTTP/1.1 200 OK"
+2026-04-21 00:35:45,983 - openrouter.llm_response_handler - WARNING - Initial JSON parsing failed for entity selection, attempting to clean response
+2026-04-21 00:35:45,983 - openrouter.llm_response_handler - INFO - Successfully parsed entity selection using _clean_markdown_blocks
+2026-04-21 00:35:45,983 - c_knowledge_base_mapping.resolvers.entity_resolver - INFO - LLM selected entity: substructure of the bridge must be modeled as IfcBridgePart with predefined type SUBSTRUCTURE -> IfcBuildingElementPart
+2026-04-21 00:35:45,983 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped entity: 'substructure of the bridge must be modeled as IfcBridgePart with predefined type SUBSTRUCTURE' -> 'IfcBuildingElementPart' (confidence: 0.622, source: static_kb_llm_selected)
+2026-04-21 00:35:49,107 - httpx - INFO - HTTP Request: POST https://cc-vibe.com/v1/messages "HTTP/1.1 200 OK"
+2026-04-21 00:35:49,111 - openrouter.llm_response_handler - WARNING - Initial JSON parsing failed for entity selection, attempting to clean response
+2026-04-21 00:35:49,111 - openrouter.llm_response_handler - INFO - Successfully parsed entity selection using _clean_markdown_blocks
+2026-04-21 00:35:49,111 - c_knowledge_base_mapping.resolvers.entity_resolver - INFO - LLM selected entity: superstructure of the bridge must be modeled as IfcBridgePart with predefined type SUPERSTRUCTURE -> IfcBuildingElementPart
+2026-04-21 00:35:49,111 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped entity: 'superstructure of the bridge must be modeled as IfcBridgePart with predefined type SUPERSTRUCTURE' -> 'IfcBuildingElementPart' (confidence: 0.621, source: static_kb_llm_selected)
+2026-04-21 00:35:52,120 - httpx - INFO - HTTP Request: POST https://cc-vibe.com/v1/messages "HTTP/1.1 200 OK"
+2026-04-21 00:35:52,120 - openrouter.llm_response_handler - WARNING - Initial JSON parsing failed for entity selection, attempting to clean response
+2026-04-21 00:35:52,121 - openrouter.llm_response_handler - INFO - Successfully parsed entity selection using _clean_markdown_blocks
+2026-04-21 00:35:52,121 - c_knowledge_base_mapping.resolvers.entity_resolver - INFO - LLM selected entity: Bridge girders should be modeled as IfcElementAssembly with predefined type GIRDER -> IfcElementAssembly
+2026-04-21 00:35:52,121 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped entity: 'Bridge girders should be modeled as IfcElementAssembly with predefined type GIRDER' -> 'IfcElementAssembly' (confidence: 0.621, source: static_kb_llm_selected)
+2026-04-21 00:35:54,994 - httpx - INFO - HTTP Request: POST https://cc-vibe.com/v1/messages "HTTP/1.1 200 OK"
+2026-04-21 00:35:54,995 - openrouter.llm_response_handler - WARNING - Initial JSON parsing failed for entity selection, attempting to clean response
+2026-04-21 00:35:54,996 - openrouter.llm_response_handler - INFO - Successfully parsed entity selection using _clean_markdown_blocks
+2026-04-21 00:35:54,996 - c_knowledge_base_mapping.resolvers.entity_resolver - INFO - LLM selected entity: bridge deck must be modeled as IfcBridgePart with predefined type DECK -> IfcBlock
+2026-04-21 00:35:54,996 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped entity: 'bridge deck must be modeled as IfcBridgePart with predefined type DECK' -> 'IfcBlock' (confidence: 0.642, source: static_kb_llm_selected)
+2026-04-21 00:35:57,862 - httpx - INFO - HTTP Request: POST https://cc-vibe.com/v1/messages "HTTP/1.1 200 OK"
+2026-04-21 00:35:57,864 - openrouter.llm_response_handler - WARNING - Initial JSON parsing failed for entity selection, attempting to clean response
+2026-04-21 00:35:57,864 - openrouter.llm_response_handler - INFO - Successfully parsed entity selection using _clean_markdown_blocks
+2026-04-21 00:35:57,864 - c_knowledge_base_mapping.resolvers.entity_resolver - INFO - LLM selected entity: Deck segments should be modeled as IfcBridgePart with predefined type DECK_SEGMENT -> IfcBuildingElementPart
+2026-04-21 00:35:57,864 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped entity: 'Deck segments should be modeled as IfcBridgePart with predefined type DECK_SEGMENT' -> 'IfcBuildingElementPart' (confidence: 0.609, source: static_kb_llm_selected)
+2026-04-21 00:36:00,522 - httpx - INFO - HTTP Request: POST https://cc-vibe.com/v1/messages "HTTP/1.1 200 OK"
+2026-04-21 00:36:00,523 - openrouter.llm_response_handler - WARNING - Initial JSON parsing failed for entity selection, attempting to clean response
+2026-04-21 00:36:00,523 - openrouter.llm_response_handler - INFO - Successfully parsed entity selection using _clean_markdown_blocks
+2026-04-21 00:36:00,523 - c_knowledge_base_mapping.resolvers.entity_resolver - INFO - LLM selected entity: Abutments at the ends of the bridge must be modeled as IfcBridgePart with predefined type ABUTMENT -> IfcBuildingElementType
+2026-04-21 00:36:00,523 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped entity: 'Abutments at the ends of the bridge must be modeled as IfcBridgePart with predefined type ABUTMENT' -> 'IfcBuildingElementType' (confidence: 0.634, source: static_kb_llm_selected)
+2026-04-21 00:36:03,697 - httpx - INFO - HTTP Request: POST https://cc-vibe.com/v1/messages "HTTP/1.1 200 OK"
+2026-04-21 00:36:03,698 - openrouter.llm_response_handler - WARNING - Initial JSON parsing failed for entity selection, attempting to clean response
+2026-04-21 00:36:03,698 - openrouter.llm_response_handler - INFO - Successfully parsed entity selection using _clean_markdown_blocks
+2026-04-21 00:36:03,698 - c_knowledge_base_mapping.resolvers.entity_resolver - INFO - LLM selected entity: Bridge piers must be modeled as IfcBridgePart with predefined type PIER -> IfcInterceptorType
+2026-04-21 00:36:03,698 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped entity: 'Bridge piers must be modeled as IfcBridgePart with predefined type PIER' -> 'IfcInterceptorType' (confidence: 0.636, source: static_kb_llm_selected)
+2026-04-21 00:36:07,093 - httpx - INFO - HTTP Request: POST https://cc-vibe.com/v1/messages "HTTP/1.1 200 OK"
+2026-04-21 00:36:07,094 - openrouter.llm_response_handler - WARNING - Initial JSON parsing failed for entity selection, attempting to clean response
+2026-04-21 00:36:07,094 - openrouter.llm_response_handler - INFO - Successfully parsed entity selection using _clean_markdown_blocks
+2026-04-21 00:36:07,094 - c_knowledge_base_mapping.resolvers.entity_resolver - INFO - LLM selected entity: Foundation piles must be modeled as IfcPile entities -> IfcPile
+2026-04-21 00:36:07,094 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped entity: 'Foundation piles must be modeled as IfcPile entities' -> 'IfcPile' (confidence: 0.621, source: static_kb_llm_selected)
+2026-04-21 00:36:09,641 - httpx - INFO - HTTP Request: POST https://cc-vibe.com/v1/messages "HTTP/1.1 200 OK"
+2026-04-21 00:36:09,643 - openrouter.llm_response_handler - WARNING - Initial JSON parsing failed for entity selection, attempting to clean response
+2026-04-21 00:36:09,643 - openrouter.llm_response_handler - INFO - Successfully parsed entity selection using _clean_markdown_blocks
+2026-04-21 00:36:09,643 - c_knowledge_base_mapping.resolvers.entity_resolver - INFO - LLM selected entity: proposed ground surface must be modeled as IfcGeographicElement with predefined type TERRAIN -> IfcGeographicElement
+2026-04-21 00:36:09,643 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped entity: 'proposed ground surface must be modeled as IfcGeographicElement with predefined type TERRAIN' -> 'IfcGeographicElement' (confidence: 0.628, source: static_kb_llm_selected)
+2026-04-21 00:36:12,102 - httpx - INFO - HTTP Request: POST https://cc-vibe.com/v1/messages "HTTP/1.1 200 OK"
+2026-04-21 00:36:12,103 - openrouter.llm_response_handler - WARNING - Initial JSON parsing failed for entity selection, attempting to clean response
+2026-04-21 00:36:12,104 - openrouter.llm_response_handler - INFO - Successfully parsed entity selection using _clean_markdown_blocks
+2026-04-21 00:36:12,104 - c_knowledge_base_mapping.resolvers.entity_resolver - INFO - LLM selected entity: existing ground surface must be modeled as IfcGeographicElement with predefined type TERRAIN -> IfcGeographicElement
+2026-04-21 00:36:12,104 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped entity: 'existing ground surface must be modeled as IfcGeographicElement with predefined type TERRAIN' -> 'IfcGeographicElement' (confidence: 0.629, source: static_kb_llm_selected)
+2026-04-21 00:36:15,268 - httpx - INFO - HTTP Request: POST https://cc-vibe.com/v1/messages "HTTP/1.1 200 OK"
+2026-04-21 00:36:15,269 - openrouter.llm_response_handler - WARNING - Initial JSON parsing failed for entity selection, attempting to clean response
+2026-04-21 00:36:15,270 - openrouter.llm_response_handler - INFO - Successfully parsed entity selection using _clean_markdown_blocks
+2026-04-21 00:36:15,270 - c_knowledge_base_mapping.resolvers.entity_resolver - INFO - LLM selected entity: Boring points indicating soil layers and properties must be modeled as IfcGeographicElement -> IfcGeographicElement
+2026-04-21 00:36:15,270 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped entity: 'Boring points indicating soil layers and properties must be modeled as IfcGeographicElement' -> 'IfcGeographicElement' (confidence: 0.626, source: static_kb_llm_selected)
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00,  3.52it/s]Batches: 100%|██████████| 1/1 [00:00<00:00,  3.51it/s]
+2026-04-21 00:36:15,565 - c_knowledge_base_mapping.resolvers.property_resolver - INFO - 获取实体 'IfcProject' 的属性集和属性，版本: ['IFC4']
+2026-04-21 00:36:20,575 - c_knowledge_base_mapping.resolvers.property_resolver - WARNING - API请求超时: http://36.103.199.7:5000/api/property/entity-psets
+2026-04-21 00:36:20,577 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped property: 'IfcProject instance that identifies the overall project and provides defaults for units' -> 'ConstructionToleranceClass' (confidence: 0.707, source: static_kb)
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00,  6.51it/s]Batches: 100%|██████████| 1/1 [00:00<00:00,  6.51it/s]
+2026-04-21 00:36:20,740 - c_knowledge_base_mapping.resolvers.property_resolver - INFO - 获取实体 'IfcProject' 的属性集和属性，版本: ['IFC4']
+2026-04-21 00:36:25,768 - c_knowledge_base_mapping.resolvers.property_resolver - WARNING - API请求超时: http://36.103.199.7:5000/api/property/entity-psets
+2026-04-21 00:36:25,770 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped property: 'IfcSite that defines the terrain within vicinity of the bridge project' -> 'Area' (confidence: 0.681, source: static_kb)
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00,  6.91it/s]Batches: 100%|██████████| 1/1 [00:00<00:00,  6.91it/s]
+2026-04-21 00:36:25,923 - c_knowledge_base_mapping.resolvers.property_resolver - INFO - 获取实体 'IfcProject' 的属性集和属性，版本: ['IFC4']
+2026-04-21 00:36:26,547 - c_knowledge_base_mapping.resolvers.property_resolver - ERROR - 发送API请求时出错: 502 Server Error: Bad Gateway for url: http://36.103.199.7:5000/api/property/entity-psets
+2026-04-21 00:36:26,549 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped property: 'Boring points must include the property Depth in the property set Pset_GeographicElementCommon' -> 'Area' (confidence: 0.704, source: static_kb)
+2026-04-21 00:36:26,550 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped material: 'Bridge girders must specify material information' -> 'Timber' (confidence: 0.693, source: static_kb)
+2026-04-21 00:36:26,552 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped material: 'Foundation piles must specify material information' -> 'Concrete' (confidence: 0.701, source: static_kb)
+2026-04-21 00:36:26,552 - c_knowledge_base_mapping.resolvers.partof_resolver - INFO - PartOf match: 'The site must be aggregated under the IfcProject' -> 'IfcSite' (IFCRELCONTAINEDINSPATIALSTRUCTURE)
+2026-04-21 00:36:26,552 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped partof: 'The site must be aggregated under the IfcProject' -> 'IfcSite' (confidence: 1.000, source: rule_engine)
+2026-04-21 00:36:26,552 - c_knowledge_base_mapping.knowledge_mapping_strategy - WARNING - Failed to map partof: 'The bridge must be aggregated under either another IfcBridge or the IfcProject'
+2026-04-21 00:36:26,552 - c_knowledge_base_mapping.knowledge_mapping_strategy - WARNING - Failed to map partof: 'Each alignment must be aggregated under the IfcProject'
+2026-04-21 00:36:26,552 - c_knowledge_base_mapping.knowledge_mapping_strategy - WARNING - Failed to map partof: 'It must be aggregated under the IfcBridge'
+2026-04-21 00:36:26,553 - c_knowledge_base_mapping.knowledge_mapping_strategy - WARNING - Failed to map partof: 'It must be aggregated under the IfcBridge'
+2026-04-21 00:36:26,553 - c_knowledge_base_mapping.knowledge_mapping_strategy - WARNING - Failed to map partof: 'They must be contained within the SUPERSTRUCTURE bridge part'
+2026-04-21 00:36:26,553 - c_knowledge_base_mapping.knowledge_mapping_strategy - WARNING - Failed to map partof: 'It must be aggregated under the IfcBridge'
+2026-04-21 00:36:26,553 - c_knowledge_base_mapping.knowledge_mapping_strategy - WARNING - Failed to map partof: 'They must be aggregated under the DECK bridge part'
+2026-04-21 00:36:26,553 - c_knowledge_base_mapping.knowledge_mapping_strategy - WARNING - Failed to map partof: 'They must be aggregated under the SUBSTRUCTURE bridge part'
+2026-04-21 00:36:26,553 - c_knowledge_base_mapping.knowledge_mapping_strategy - WARNING - Failed to map partof: 'They must be aggregated under the SUBSTRUCTURE bridge part'
+2026-04-21 00:36:26,553 - c_knowledge_base_mapping.knowledge_mapping_strategy - WARNING - Failed to map partof: 'They must be contained within the SUBSTRUCTURE bridge part'
+2026-04-21 00:36:26,553 - c_knowledge_base_mapping.resolvers.partof_resolver - INFO - PartOf match: 'It must be contained within the IfcSite' -> 'IfcSite' (IFCRELCONTAINEDINSPATIALSTRUCTURE)
+2026-04-21 00:36:26,553 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped partof: 'It must be contained within the IfcSite' -> 'IfcSite' (confidence: 1.000, source: rule_engine)
+2026-04-21 00:36:26,553 - c_knowledge_base_mapping.resolvers.partof_resolver - INFO - PartOf match: 'It must be contained within the IfcSite' -> 'IfcSite' (IFCRELCONTAINEDINSPATIALSTRUCTURE)
+2026-04-21 00:36:26,553 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped partof: 'It must be contained within the IfcSite' -> 'IfcSite' (confidence: 1.000, source: rule_engine)
+2026-04-21 00:36:26,553 - c_knowledge_base_mapping.resolvers.partof_resolver - INFO - PartOf match: 'They must be contained within the IfcSite' -> 'IfcSite' (IFCRELCONTAINEDINSPATIALSTRUCTURE)
+2026-04-21 00:36:26,553 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped partof: 'They must be contained within the IfcSite' -> 'IfcSite' (confidence: 1.000, source: rule_engine)
+2026-04-21 00:36:26,553 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Clean mapping completed: 24 facets mapped
+2026-04-21 00:36:26,553 - ids_pipeline - INFO -    Generated 24 facets.
+2026-04-21 00:36:26,553 - ids_pipeline - INFO - [Step D] Running Constraint Extraction...
+
+Extracting constraints from: "All bridge projects must contain exactly one IfcProject instance"
+No constraints extracted from this text.
+
+Extracting constraints from: "at least one IfcSite that defines the terrain"
+No constraints extracted from this text.
+
+Extracting constraints from: "Every bridge structure must be represented by an IfcBridge entity"
+Found 1 constraint(s).
+ must be represented by an IfcBridge entity → ['represented by an IfcBridge entity']
+
+Extracting constraints from: "Horizontal and vertical alignment curves must be defined using IfcAlignment entities"
+Found 1 constraint(s).
+ must be defined using IfcAlignment entities → ['defined using IfcAlignment entities']
+
+Extracting constraints from: "substructure of the bridge must be modeled as IfcBridgePart with predefined type SUBSTRUCTURE"
+Found 1 constraint(s).
+ must be modeled as IfcBridgePart with predefined type SUBSTRUCTURE → ['modeled as IfcBridgePart with predefined type SUBSTRUCTURE']
+
+Extracting constraints from: "superstructure of the bridge must be modeled as IfcBridgePart with predefined type SUPERSTRUCTURE"
+Found 1 constraint(s).
+ must be modeled as IfcBridgePart with predefined type SUPERSTRUCTURE → ['modeled as IfcBridgePart with predefined type SUPERSTRUCTURE']
+
+Extracting constraints from: "Bridge girders should be modeled as IfcElementAssembly with predefined type GIRDER"
+No constraints extracted from this text.
+
+Extracting constraints from: "bridge deck must be modeled as IfcBridgePart with predefined type DECK"
+Found 1 constraint(s).
+ must be modeled as IfcBridgePart with predefined type DECK → ['modeled as IfcBridgePart with predefined type DECK']
+
+Extracting constraints from: "Deck segments should be modeled as IfcBridgePart with predefined type DECK_SEGMENT"
+No constraints extracted from this text.
+
+Extracting constraints from: "Abutments at the ends of the bridge must be modeled as IfcBridgePart with predefined type ABUTMENT"
+Found 1 constraint(s).
+ must be modeled as IfcBridgePart with predefined type ABUTMENT → ['modeled as IfcBridgePart with predefined type ABUTMENT']
+
+Extracting constraints from: "Bridge piers must be modeled as IfcBridgePart with predefined type PIER"
+Found 1 constraint(s).
+ must be modeled as IfcBridgePart with predefined type PIER → ['modeled as IfcBridgePart with predefined type PIER']
+
+Extracting constraints from: "Foundation piles must be modeled as IfcPile entities"
+Found 1 constraint(s).
+ must be modeled as IfcPile entities → ['modeled as IfcPile entities']
+
+Extracting constraints from: "proposed ground surface must be modeled as IfcGeographicElement with predefined type TERRAIN"
+Found 1 constraint(s).
+ must be modeled as IfcGeographicElement with predefined type TERRAIN → ['modeled as IfcGeographicElement with predefined type TERRAIN']
+
+Extracting constraints from: "existing ground surface must be modeled as IfcGeographicElement with predefined type TERRAIN"
+Found 1 constraint(s).
+ must be modeled as IfcGeographicElement with predefined type TERRAIN → ['modeled as IfcGeographicElement with predefined type TERRAIN']
+
+Extracting constraints from: "Boring points indicating soil layers and properties must be modeled as IfcGeographicElement"
+Found 1 constraint(s).
+ must be modeled as IfcGeographicElement → ['modeled as IfcGeographicElement']
+
+Extracting constraints from: "IfcProject instance that identifies the overall project and provides defaults for units"
+Found 1 constraint(s).
+ for units → ['f', 'units']
+
+Extracting constraints from: "IfcSite that defines the terrain within vicinity of the bridge project"
+No constraints extracted from this text.
+
+Extracting constraints from: "Boring points must include the property Depth in the property set Pset_GeographicElementCommon"
+No constraints extracted from this text.
+
+Extracting constraints from: "Bridge girders must specify material information"
+No constraints extracted from this text.
+
+Extracting constraints from: "Foundation piles must specify material information"
+No constraints extracted from this text.
+
+Extracting constraints from: "The site must be aggregated under the IfcProject"
+Found 1 constraint(s).
+ must be aggregated under the IfcProject → ['aggregated under the IfcProject']
+
+Extracting constraints from: "It must be contained within the IfcSite"
+Found 1 constraint(s).
+ must be contained within the IfcSite → ['contained within the IfcSite']
+
+Extracting constraints from: "It must be contained within the IfcSite"
+Found 1 constraint(s).
+ must be contained within the IfcSite → ['contained within the IfcSite']
+
+Extracting constraints from: "They must be contained within the IfcSite"
+Found 1 constraint(s).
+ must be contained within the IfcSite → ['contained within the IfcSite']
+2026-04-21 00:36:26,561 - ids_pipeline - INFO -    Extracted 16 constraints.
+2026-04-21 00:36:26,561 - ids_pipeline - INFO - [Step E-1] Merging Constraints into Facets...
+2026-04-21 00:36:26,562 - ids_pipeline - INFO -    Merged 26 constraints.
+2026-04-21 00:36:26,562 - ids_pipeline - INFO - [Step E-2] Building Final IDS JSON...
+2026-04-21 00:36:27,382 - openrouter.client - INFO - Initialize Anthropic client, model: claude-3-5-sonnet-20241022
+2026-04-21 00:36:27,382 - e_ids_builder.ids_builder - INFO - Building IDS specifications for 24 mapped facets
+2026-04-21 00:36:27,382 - e_ids_builder.ids_builder - INFO - Stage E LLM Prompt length: 14741 characters (~3685 tokens)
+2026-04-21 00:36:34,475 - httpx - INFO - HTTP Request: POST https://cc-vibe.com/v1/messages "HTTP/1.1 200 OK"
+2026-04-21 00:36:34,477 - e_ids_builder.ids_builder - INFO - Stage E LLM Response length: 2128 characters
+2026-04-21 00:36:34,477 - e_ids_builder.ids_builder - INFO - Stage E LLM Response FULL CONTENT:
+================================================================================
+I appreciate the detailed framework, but I need to flag a critical issue with the pre-mapped facets before proceeding with the IDS specification generation.
+
+**MAPPING QUALITY ASSESSMENT:**
+
+The pre-mapped facets contain significant accuracy problems that will compromise the IDS output:
+
+| Facet ID | Original Requirement | Pre-Mapped Term | Issue | Correct Mapping |
+|----------|----------------------|-----------------|-------|-----------------|
+| facet_2 | "IfcBridge entity" | IfcCivilElement | Wrong entity class | IfcBridge |
+| facet_3 | "IfcAlignment entities" | IfcGridAxis | Wrong entity class | IfcAlignment |
+| facet_4 | "IfcBridgePart SUBSTRUCTURE" | IfcBuildingElementPart | Wrong entity class | IfcBridgePart |
+| facet_5 | "IfcBridgePart SUPERSTRUCTURE" | IfcBuildingElementPart | Wrong entity class | IfcBridgePart |
+| facet_7 | "IfcBridgePart DECK" | IfcBlock | Wrong entity class | IfcBridgePart |
+| facet_8 | "IfcBridgePart DECK_SEGMENT" | IfcBuildingElementPart | Wrong entity class | IfcBridgePart |
+| facet_9 | "IfcBridgePart ABUTMENT" | IfcBuildingElementType | Wrong entity class | IfcBridgePart |
+| facet_10 | "IfcBridgePart PIER" | IfcInterceptorType | Wrong entity class | IfcBridgePart |
+| facet_15 | "units" property | ConstructionToleranceClass | Wrong property | UnitsInContext |
+| facet_16 | "terrain vicinity" | Area | Vague/incorrect | Name, ObjectPlacement |
+| facet_17 | "Depth property" | Area | Wrong property | Depth (in Pset_GeographicElementCommon) |
+| facet_18 | "material information" | Timber | Overly specific | Material (generic) |
+| facet_19 | "material information" | Concrete | Overly specific | Material (generic) |
+
+**RECOMMENDATION:**
+
+I can generate the complete IDS specification with corrected mappings, but I need confirmation:
+
+1. Should I proceed with **corrected entity and property mappings** aligned with actual IFC4 schema?
+2. Should I flag these mapping errors in the output for your review?
+3. Do you want me to generate specifications using the pre-mapped terms as-is (which will produce invalid IDS rules)?
+
+Which approach would be most useful for your workflow?
+================================================================================
+2026-04-21 00:36:34,478 - e_ids_builder.ids_builder - WARNING - No specification blocks found in LLM response
+2026-04-21 00:36:34,478 - e_ids_builder.ids_builder - INFO - Validated 0 out of 0 slots
+2026-04-21 00:36:34,478 - e_ids_builder.ids_builder - INFO - Successfully built 0 IDS specifications from 0 slots
+2026-04-21 00:36:34,478 - ids_pipeline - INFO - [OK] Pipeline completed successfully.
+
+[OK] Pipeline completed in 123.31s
+   Generated 0 specifications
+
+[TIMING] Stage Timing:
+   stage_a: 16.23s
+   stage_b: 19.80s
+   stage_c: 79.34s
+   stage_d: 0.01s
+   stage_e_merge: 0.00s
+   stage_e_build: 7.92s
+   total: 123.31s
+
+[SAVE] Generated IDS saved to: E:\code for project\IDS_practise\backend\ids-agent\ids-algo\experimental_results\reference_verification\generated_20260421_003431.json
+[SAVE] Stage C mappings saved to: E:\code for project\IDS_practise\backend\ids-agent\ids-algo\experimental_results\reference_verification\stage_c_mappings_20260421_003431.json
+       Total facets mapped: 24
+
+[*] Comparing generated vs reference specifications...
+================================================================================
+
+[ERROR] NOT FOUND Req 1: Project
+   Reference: IFCPROJECT
+   Generated: None
+
+[ERROR] NOT FOUND Req 2: Site
+   Reference: IFCSITE
+   Generated: None
+
+[ERROR] NOT FOUND Req 3: Bridge
+   Reference: IFCBRIDGE
+   Generated: None
+
+[ERROR] NOT FOUND Req 4: Alignment
+   Reference: IFCALIGNMENT
+   Generated: None
+
+[ERROR] NOT FOUND Req 5: Substructure
+   Reference: IFCBRIDGEPART (SUBSTRUCTURE)
+   Generated: None
+
+[ERROR] NOT FOUND Req 6: Superstructure
+   Reference: IFCBRIDGEPART (SUPERSTRUCTURE)
+   Generated: None
+
+[ERROR] NOT FOUND Req 7: Girders
+   Reference: IFCELEMENTASSEMBLY (GIRDER)
+   Generated: None
+
+[ERROR] NOT FOUND Req 8: Deck
+   Reference: IFCBRIDGEPART (DECK)
+   Generated: None
+
+[ERROR] NOT FOUND Req 9: Deck segments
+   Reference: IFCBRIDGEPART (DECK_SEGMENT)
+   Generated: None
+
+[ERROR] NOT FOUND Req 10: Abutments
+   Reference: IFCELEMENTASSEMBLY (ABUTMENT)
+   Generated: None
+
+[ERROR] NOT FOUND Req 11: Piers
+   Reference: IFCELEMENTASSEMBLY (PIER)
+   Generated: None
+
+[ERROR] NOT FOUND Req 12: Piles
+   Reference: IFCPILE
+   Generated: None
+
+[ERROR] NOT FOUND Req 13: Surface Proposed
+   Reference: None
+   Generated: None
+
+[ERROR] NOT FOUND Req 14: Surface Existing
+   Reference: None
+   Generated: None
+
+[ERROR] NOT FOUND Req 15: Boring Points (IfcGeographicElement)
+   Reference: IFCGEOGRAPHICELEMENT (SOIL_BORING_POINT)
+   Generated: None
+
+================================================================================
+VERIFICATION SUMMARY
+================================================================================
+Total Requirements: 15
+Fully Matched: 0 (0.0%)
+Partially Matched: 0 (0.0%)
+Not Found: 15 (100.0%)
+Overall Accuracy: 0.0%
+================================================================================
+
+[SAVE] Comparison results saved to: E:\code for project\IDS_practise\backend\ids-agent\ids-algo\experimental_results\reference_verification\comparison_20260421_003431.json

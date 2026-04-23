@@ -1,0 +1,124 @@
+[
+  {
+    "facet_type": "entity",
+    "original_text": "IfcProject entity",
+    "mapped_name": "IfcPersonAndOrganization",
+    "confidence": 0.6018280386924744,
+    "property_set": null,
+    "entity_name": null,
+    "constraints": [],
+    "additional_data": null,
+    "ifc_item": {
+      "name": "IfcPersonAndOrganization",
+      "definition": "This entity represents a person acting on behalf of an organization.",
+      "ifc_version": "IFC4",
+      "item_type": "entity",
+      "predefined_types": []
+    }
+  },
+  {
+    "facet_type": "property",
+    "original_text": "provides default units for length (meters)",
+    "mapped_name": "Width",
+    "confidence": 0.5275493264198303,
+    "property_set": null,
+    "entity_name": "IfcPersonAndOrganization",
+    "constraints": [
+      {
+        "restriction_type": {
+          "_value_": "enumeration",
+          "_name_": "ENUMERATION",
+          "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x0000027144391440>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFA21108310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x0000027144391300>}",
+          "_sort_order_": 1
+        },
+        "restriction": {
+          "values": [
+            "f",
+            "length"
+          ]
+        },
+        "confidence": 0.8,
+        "original_text": "for length"
+      }
+    ],
+    "additional_data": null,
+    "ifc_item": {
+      "name": "Width",
+      "definition": "Width of the door opening.",
+      "ifc_version": "IFC4",
+      "item_type": "property",
+      "property_set": "Pset_DoorCommon",
+      "data_type": "IfcPositiveLengthMeasure"
+    }
+  },
+  {
+    "facet_type": "property",
+    "original_text": "provides default units for angle (degrees)",
+    "mapped_name": "Height",
+    "confidence": 0.5057526230812073,
+    "property_set": null,
+    "entity_name": "IfcPersonAndOrganization",
+    "constraints": [
+      {
+        "restriction_type": {
+          "_value_": "enumeration",
+          "_name_": "ENUMERATION",
+          "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x0000027144391440>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFA21108310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x0000027144391300>}",
+          "_sort_order_": 1
+        },
+        "restriction": {
+          "values": [
+            "f",
+            "angle"
+          ]
+        },
+        "confidence": 0.8,
+        "original_text": "for angle"
+      }
+    ],
+    "additional_data": null,
+    "ifc_item": {
+      "name": "Height",
+      "definition": "Height of the door opening.",
+      "ifc_version": "IFC4",
+      "item_type": "property",
+      "property_set": "Pset_DoorCommon",
+      "data_type": "IfcPositiveLengthMeasure"
+    }
+  },
+  {
+    "facet_type": "property",
+    "original_text": "provides default units for temperature (Celsius)",
+    "mapped_name": "ThermalTransmittance",
+    "confidence": 0.5093210935592651,
+    "property_set": null,
+    "entity_name": "IfcPersonAndOrganization",
+    "constraints": [
+      {
+        "restriction_type": {
+          "_value_": "enumeration",
+          "_name_": "ENUMERATION",
+          "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x0000027144391440>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFA21108310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x0000027144391300>}",
+          "_sort_order_": 1
+        },
+        "restriction": {
+          "values": [
+            "f",
+            "temperature"
+          ]
+        },
+        "confidence": 0.8,
+        "original_text": "for temperature"
+      }
+    ],
+    "additional_data": null,
+    "ifc_item": {
+      "name": "ThermalTransmittance",
+      "definition": "Thermal transmittance coefficient (U-Value) of the element.",
+      "ifc_version": "IFC4",
+      "item_type": "property",
+      "property_set": "Pset_WallCommon",
+      "data_type": "IfcThermalTransmittanceMeasure"
+    }
+  }
+]

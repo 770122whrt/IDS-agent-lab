@@ -1,0 +1,75 @@
+{
+  "sample_id": "simple_004",
+  "complexity": "simple",
+  "iteration": 3,
+  "timestamp": "2026-04-20T20:05:26.460162",
+  "success": true,
+  "timing": {
+    "stage_a": 2.5703544999996666,
+    "stage_b": 6.960125399999924,
+    "stage_c": 9.323358399999961,
+    "stage_d": 0.00035230000048613874,
+    "stage_e_merge": 4.600000465870835e-06,
+    "stage_e_build": 8.558491599999797,
+    "total": 27.413703199999873
+  },
+  "num_specifications": 1,
+  "output": {
+    "specifications": [
+      {
+        "name": "Structural Beams Load-Bearing Compliance",
+        "ifcVersion": [
+          "IFC4"
+        ],
+        "description": "Validates that all structural beams in the model have the LoadBearing property explicitly set to true, ensuring proper identification of load-bearing structural elements.",
+        "instructions": null,
+        "applicability": {
+          "minOccurs": "1",
+          "maxOccurs": "unbounded",
+          "entity": {
+            "name": "IfcBeam",
+            "predefinedType": null
+          },
+          "partOf": null,
+          "classification": null,
+          "attribute": null,
+          "property": null,
+          "material": null
+        },
+        "requirements": {
+          "description": null,
+          "entity": null,
+          "partOf": null,
+          "classification": null,
+          "attribute": null,
+          "property": [
+            {
+              "propertySet": "Pset_WallCommon",
+              "baseName": "LoadBearing",
+              "value": {
+                "simpleValue": "LoadBearing property set to true",
+                "restriction": null
+              },
+              "dataType": "IfcBoolean",
+              "uri": null,
+              "cardinality": "required",
+              "instructions": null
+            }
+          ],
+          "material": null
+        }
+      }
+    ]
+  },
+  "error": null,
+  "stage_c_mappings": [
+    {
+      "original_text": "structural beams",
+      "facet_type": "entity"
+    },
+    {
+      "original_text": "LoadBearing property set to true",
+      "facet_type": "property"
+    }
+  ]
+}

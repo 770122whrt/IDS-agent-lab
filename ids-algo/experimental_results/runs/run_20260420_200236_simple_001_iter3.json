@@ -1,0 +1,88 @@
+{
+  "sample_id": "simple_001",
+  "complexity": "simple",
+  "iteration": 3,
+  "timestamp": "2026-04-20T20:02:01.877956",
+  "success": true,
+  "timing": {
+    "stage_a": 11.383235800000875,
+    "stage_b": 3.2417930999999953,
+    "stage_c": 9.81802979999975,
+    "stage_d": 0.00041899999996530823,
+    "stage_e_merge": 5.599999894911889e-06,
+    "stage_e_build": 10.159817900000235,
+    "total": 34.60458450000078
+  },
+  "num_specifications": 1,
+  "output": {
+    "specifications": [
+      {
+        "name": "IfcWall FireRating Compliance",
+        "ifcVersion": [
+          "IFC4"
+        ],
+        "description": "All IfcWall elements must have a FireRating property defined to ensure fire safety compliance documentation.",
+        "instructions": null,
+        "applicability": {
+          "minOccurs": "1",
+          "maxOccurs": "unbounded",
+          "entity": {
+            "name": "IfcWallType",
+            "predefinedType": null
+          },
+          "partOf": null,
+          "classification": null,
+          "attribute": null,
+          "property": null,
+          "material": null
+        },
+        "requirements": {
+          "description": null,
+          "entity": null,
+          "partOf": null,
+          "classification": null,
+          "attribute": null,
+          "property": [
+            {
+              "propertySet": "Pset_WallCommon",
+              "baseName": "FireRating",
+              "value": {
+                "simpleValue": "must have a FireRating property",
+                "restriction": null
+              },
+              "dataType": "IfcLabel",
+              "uri": null,
+              "cardinality": "required",
+              "instructions": null
+            }
+          ],
+          "material": null
+        }
+      }
+    ]
+  },
+  "error": null,
+  "stage_c_mappings": [
+    {
+      "original_text": "All IfcWall elements",
+      "facet_type": "entity"
+    },
+    {
+      "original_text": "must have a FireRating property",
+      "facet_type": "property"
+    }
+  ],
+  "full_stage_outputs": {
+    "stage_a": {
+      "objects": [],
+      "properties": [],
+      "materials": []
+    },
+    "stage_b": {
+      "facets": []
+    },
+    "stage_d": {
+      "constraints": []
+    }
+  }
+}

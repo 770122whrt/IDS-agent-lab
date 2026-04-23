@@ -1,0 +1,69 @@
+{
+  "sample_id": "simple_003",
+  "complexity": "simple",
+  "iteration": 3,
+  "timestamp": "2026-04-20T20:04:19.322769",
+  "success": true,
+  "timing": {
+    "stage_a": 2.859862399999656,
+    "stage_b": 5.74483489999966,
+    "stage_c": 3.4240071999993233,
+    "stage_d": 0.00025240000013582176,
+    "stage_e_merge": 3.899999683198985e-06,
+    "stage_e_build": 7.3826966000006,
+    "total": 19.41274280000016
+  },
+  "num_specifications": 1,
+  "output": {
+    "specifications": [
+      {
+        "name": "Concrete Material Requirement for Columns",
+        "ifcVersion": [
+          "IFC4"
+        ],
+        "description": "Validates that all IfcColumn elements are constructed from Concrete material",
+        "instructions": null,
+        "applicability": {
+          "minOccurs": "1",
+          "maxOccurs": "unbounded",
+          "entity": {
+            "name": "IfcColumn",
+            "predefinedType": null
+          },
+          "partOf": null,
+          "classification": null,
+          "attribute": null,
+          "property": null,
+          "material": null
+        },
+        "requirements": {
+          "description": null,
+          "entity": null,
+          "partOf": null,
+          "classification": null,
+          "attribute": null,
+          "property": null,
+          "material": [
+            {
+              "value": "Concrete",
+              "uri": null,
+              "cardinality": "required",
+              "instructions": null
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "error": null,
+  "stage_c_mappings": [
+    {
+      "original_text": "IfcColumn elements",
+      "facet_type": "entity"
+    },
+    {
+      "original_text": "Concrete material",
+      "facet_type": "material"
+    }
+  ]
+}

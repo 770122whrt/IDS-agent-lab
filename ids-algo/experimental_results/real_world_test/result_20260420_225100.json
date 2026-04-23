@@ -1,0 +1,41 @@
+{
+  "specification": [
+    {
+      "name": "Basic Requirements",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "Fallback specification",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "Building Element",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": "Basic requirements extracted from facets",
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      }
+    }
+  ],
+  "metadata": {
+    "total_extracted": 1,
+    "total_normalized": 61,
+    "ifc_version": "IFC4",
+    "is_fallback": true
+  },
+  "error": "IDS generation failed, using basic fallback"
+}

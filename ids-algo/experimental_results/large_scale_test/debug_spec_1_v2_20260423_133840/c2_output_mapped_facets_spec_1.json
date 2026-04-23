@@ -1,0 +1,159 @@
+[
+  {
+    "facet_type": "entity",
+    "original_text": "IfcProject",
+    "mapped_name": "IfcProject",
+    "confidence": 0.6464775800704956,
+    "property_set": null,
+    "entity_name": null,
+    "constraints": [],
+    "additional_data": null,
+    "ifc_item": {
+      "name": "IfcProject",
+      "definition": "IfcProjectindicates the undertaking of some design, engineering, construction, or maintenance activities leading towards a product. The project establishes the context for information to be exchanged or shared, and it may represent a construction project but does not have to. TheIfcProject's main purpose in an exchange structure is to provide the root instance and the context for all other information items included.",
+      "ifc_version": "IFC4",
+      "item_type": "entity",
+      "predefined_types": []
+    }
+  },
+  {
+    "facet_type": "property",
+    "original_text": "provides default units for length (meters)",
+    "mapped_name": "LengthUnit",
+    "confidence": 0.6554722785949707,
+    "property_set": null,
+    "entity_name": "IfcProject",
+    "constraints": [
+      {
+        "restriction_type": {
+          "_value_": "enumeration",
+          "_name_": "ENUMERATION",
+          "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x0000018A81B21440>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFA21108310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x0000018A81B21300>}",
+          "_sort_order_": 1
+        },
+        "restriction": {
+          "values": [
+            "f",
+            "length"
+          ]
+        },
+        "confidence": 0.8,
+        "original_text": "for length"
+      }
+    ],
+    "additional_data": null,
+    "ifc_item": {
+      "name": "LengthUnit",
+      "definition": "The length unit assigned to the project for all length measures.",
+      "ifc_version": "IFC4",
+      "item_type": "property",
+      "property_set": "IfcProject",
+      "data_type": "IfcSIUnit"
+    }
+  },
+  {
+    "facet_type": "property",
+    "original_text": "provides default units for angle (degrees)",
+    "mapped_name": "AngleUnit",
+    "confidence": 0.6469697952270508,
+    "property_set": null,
+    "entity_name": "IfcProject",
+    "constraints": [
+      {
+        "restriction_type": {
+          "_value_": "enumeration",
+          "_name_": "ENUMERATION",
+          "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x0000018A81B21440>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFA21108310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x0000018A81B21300>}",
+          "_sort_order_": 1
+        },
+        "restriction": {
+          "values": [
+            "f",
+            "angle"
+          ]
+        },
+        "confidence": 0.8,
+        "original_text": "for angle"
+      }
+    ],
+    "additional_data": null,
+    "ifc_item": {
+      "name": "AngleUnit",
+      "definition": "The angle unit assigned to the project for all angle measures.",
+      "ifc_version": "IFC4",
+      "item_type": "property",
+      "property_set": "IfcProject",
+      "data_type": "IfcSIUnit"
+    }
+  },
+  {
+    "facet_type": "property",
+    "original_text": "provides default units for mass (kilograms)",
+    "mapped_name": "UnitsInContext",
+    "confidence": 0.5783333778381348,
+    "property_set": null,
+    "entity_name": "IfcProject",
+    "constraints": [
+      {
+        "restriction_type": {
+          "_value_": "enumeration",
+          "_name_": "ENUMERATION",
+          "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x0000018A81B21440>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFA21108310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x0000018A81B21300>}",
+          "_sort_order_": 1
+        },
+        "restriction": {
+          "values": [
+            "f",
+            "mass"
+          ]
+        },
+        "confidence": 0.8,
+        "original_text": "for mass"
+      }
+    ],
+    "additional_data": null,
+    "ifc_item": {
+      "name": "UnitsInContext",
+      "definition": "Units globally assigned to the project. These are the default units for all measures used in the project.",
+      "ifc_version": "IFC4",
+      "item_type": "property",
+      "property_set": "IfcProject",
+      "data_type": "IfcUnitAssignment"
+    }
+  },
+  {
+    "facet_type": "property",
+    "original_text": "provides default units for temperature (Celsius)",
+    "mapped_name": "TemperatureUnit",
+    "confidence": 0.6399368643760681,
+    "property_set": null,
+    "entity_name": "IfcProject",
+    "constraints": [
+      {
+        "restriction_type": {
+          "_value_": "enumeration",
+          "_name_": "ENUMERATION",
+          "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x0000018A81B21440>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFA21108310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x0000018A81B21300>}",
+          "_sort_order_": 1
+        },
+        "restriction": {
+          "values": [
+            "f",
+            "temperature"
+          ]
+        },
+        "confidence": 0.8,
+        "original_text": "for temperature"
+      }
+    ],
+    "additional_data": null,
+    "ifc_item": {
+      "name": "TemperatureUnit",
+      "definition": "The temperature unit assigned to the project for all temperature measures.",
+      "ifc_version": "IFC4",
+      "item_type": "property",
+      "property_set": "IfcProject",
+      "data_type": "IfcSIUnit"
+    }
+  }
+]

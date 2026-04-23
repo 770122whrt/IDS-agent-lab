@@ -1,0 +1,35 @@
+{
+  "spec_id": "1",
+  "timestamp": "2026-04-23T12:56:37.064717",
+  "input_text": "The model must contain exactly one IfcProject entity that provides default units for length (meters), angle (degrees), mass (kilograms), and temperature (Celsius), with imperial alternatives of inches, pounds, and Fahrenheit respectively if needed. IFC version: IFC4X3_ADD2.",
+  "timing": {
+    "stage_a": 5.363398400000733,
+    "stage_b": 4.3434319000007235,
+    "stage_c": 33.133751700001085,
+    "stage_d": 0.006610999998883926,
+    "stage_e_merge": 1.759999940986745e-05,
+    "stage_e_build": 8.991790799998853,
+    "total": 51.83991689999857
+  },
+  "total_time": 103.67891829999826,
+  "stage_summary": {
+    "stage_a": {
+      "objects": 1,
+      "properties": 4,
+      "materials": 0
+    },
+    "stage_b": {
+      "facets": 0
+    },
+    "stage_c": {
+      "mapped_facets": 4
+    },
+    "stage_d": {
+      "constraints": 3
+    },
+    "stage_e": {
+      "specifications": 0
+    }
+  },
+  "success": false
+}

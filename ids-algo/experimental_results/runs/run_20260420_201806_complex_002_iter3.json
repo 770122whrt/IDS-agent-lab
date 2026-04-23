@@ -1,0 +1,105 @@
+{
+  "sample_id": "complex_002",
+  "complexity": "complex",
+  "iteration": 3,
+  "timestamp": "2026-04-20T20:17:33.468426",
+  "success": true,
+  "timing": {
+    "stage_a": 5.968459499999881,
+    "stage_b": 4.1297051000001375,
+    "stage_c": 14.513404399998763,
+    "stage_d": 0.0008923000004870119,
+    "stage_e_merge": 1.5699999494245276e-05,
+    "stage_e_build": 8.370049200000722,
+    "total": 32.983654800000295
+  },
+  "num_specifications": 1,
+  "output": {
+    "specifications": [
+      {
+        "name": "Load-Bearing Wall Structural and Fire Safety Compliance",
+        "ifcVersion": [
+          "IFC4"
+        ],
+        "description": "Validates that load-bearing walls within the primary structural system meet minimum thickness and fire rating requirements for structural integrity and life safety.",
+        "instructions": null,
+        "applicability": {
+          "minOccurs": "1",
+          "maxOccurs": "unbounded",
+          "entity": {
+            "name": "IfcWall",
+            "predefinedType": null
+          },
+          "partOf": [
+            {
+              "entity": "IfcSystem",
+              "relation": "IFCRELASSIGNSTOGROUP",
+              "cardinality": "required",
+              "instructions": "PartOf relationship: part of the primary structural system"
+            }
+          ],
+          "classification": null,
+          "attribute": null,
+          "property": null,
+          "material": null
+        },
+        "requirements": {
+          "description": null,
+          "entity": null,
+          "partOf": null,
+          "classification": null,
+          "attribute": null,
+          "property": [
+            {
+              "propertySet": "Pset_WallCommon",
+              "baseName": "Thickness",
+              "value": {
+                "simpleValue": "thickness between 200mm and 400mm",
+                "restriction": null
+              },
+              "dataType": "IfcPositiveLengthMeasure",
+              "uri": null,
+              "cardinality": "required",
+              "instructions": null
+            },
+            {
+              "propertySet": "Pset_WallCommon",
+              "baseName": "FireRating",
+              "value": {
+                "simpleValue": ">= 2.0 hours",
+                "restriction": {
+                  "base": "string",
+                  "minInclusive": 2.0
+                }
+              },
+              "dataType": "IfcLabel",
+              "uri": null,
+              "cardinality": "required",
+              "instructions": null
+            }
+          ],
+          "material": null
+        }
+      }
+    ]
+  },
+  "error": null,
+  "stage_c_mappings": [
+    {
+      "original_text": "Load-bearing walls",
+      "facet_type": "entity"
+    },
+    {
+      "original_text": "thickness between 200mm and 400mm",
+      "facet_type": "property"
+    },
+    {
+      "original_text": "fire rating must be at least 2 hours",
+      "facet_type": "property"
+    },
+    {
+      "original_text": "part of the primary structural system",
+      "facet_type": "partof"
+    }
+  ]
+}

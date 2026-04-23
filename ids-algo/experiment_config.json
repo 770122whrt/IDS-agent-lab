@@ -1,0 +1,103 @@
+{
+  "experiment_name": "IDS Pipeline Performance Evaluation",
+  "description": "Batch experiment for thesis Chapter 5 data collection",
+  "test_samples": [
+    {
+      "id": "simple_001",
+      "complexity": "simple",
+      "text": "All IfcWall elements must have a FireRating property.",
+      "expected_entity": "IfcWall",
+      "expected_property": "FireRating"
+    },
+    {
+      "id": "simple_002",
+      "complexity": "simple",
+      "text": "The Height of IfcDoor should be greater than 2000mm.",
+      "expected_entity": "IfcDoor",
+      "expected_property": "Height"
+    },
+    {
+      "id": "simple_003",
+      "complexity": "simple",
+      "text": "IfcColumn elements must be made of Concrete material.",
+      "expected_entity": "IfcColumn",
+      "expected_material": "Concrete"
+    },
+    {
+      "id": "simple_004",
+      "complexity": "simple",
+      "text": "All structural beams must have a LoadBearing property set to true.",
+      "expected_entity": "IfcBeam",
+      "expected_property": "LoadBearing"
+    },
+    {
+      "id": "medium_001",
+      "complexity": "medium",
+      "text": "All load-bearing walls must have a thickness greater than 200mm and a fire rating of at least 120 minutes.",
+      "expected_entity": "IfcWall",
+      "expected_properties": ["Thickness", "FireRating"]
+    },
+    {
+      "id": "medium_002",
+      "complexity": "medium",
+      "text": "Doors and windows in fire compartments must have fire resistance ratings.",
+      "expected_entities": ["IfcDoor", "IfcWindow"],
+      "expected_property": "FireRating"
+    },
+    {
+      "id": "medium_003",
+      "complexity": "medium",
+      "text": "All concrete columns must have a compressive strength greater than 30MPa and a cross-sectional area greater than 0.1 square meters.",
+      "expected_entity": "IfcColumn",
+      "expected_material": "Concrete",
+      "expected_properties": ["CompressiveStrength", "CrossSectionArea"]
+    },
+    {
+      "id": "medium_004",
+      "complexity": "medium",
+      "text": "Structural slabs must be made of reinforced concrete with a minimum thickness of 150mm.",
+      "expected_entity": "IfcSlab",
+      "expected_material": "Reinforced Concrete",
+      "expected_property": "Thickness"
+    },
+    {
+      "id": "medium_005",
+      "complexity": "medium",
+      "text": "All external walls must have thermal transmittance U-value less than 0.3 W per square meter Kelvin.",
+      "expected_entity": "IfcWall",
+      "expected_property": "ThermalTransmittance"
+    },
+    {
+      "id": "medium_006",
+      "complexity": "medium",
+      "text": "Escape doors must have a minimum clear width of 900mm and open in the direction of egress.",
+      "expected_entity": "IfcDoor",
+      "expected_properties": ["ClearWidth", "OpeningDirection"]
+    },
+    {
+      "id": "complex_001",
+      "complexity": "complex",
+      "text": "All structural columns located in the basement must be made of reinforced concrete with compressive strength greater than 40MPa and must be connected to foundation elements.",
+      "expected_entity": "IfcColumn",
+      "expected_material": "Reinforced Concrete",
+      "expected_property": "CompressiveStrength",
+      "expected_relationship": "connected to foundation"
+    },
+    {
+      "id": "complex_002",
+      "complexity": "complex",
+      "text": "Load-bearing walls that are part of the primary structural system must have a thickness between 200mm and 400mm, and their fire rating must be at least 2 hours.",
+      "expected_entity": "IfcWall",
+      "expected_properties": ["Thickness", "FireRating"],
+      "expected_classification": "LoadBearing"
+    },
+    {
+      "id": "complex_003",
+      "complexity": "complex",
+      "text": "All doors in fire escape routes must have a fire rating of at least 60 minutes, a clear width of at least 900mm, and must be equipped with panic hardware.",
+      "expected_entity": "IfcDoor",
+      "expected_properties": ["FireRating", "ClearWidth"],
+      "expected_classification": "FireEscape"
+    }
+  ]
+}

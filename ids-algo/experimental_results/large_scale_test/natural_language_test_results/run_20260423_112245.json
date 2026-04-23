@@ -1,0 +1,48 @@
+{
+  "timestamp": "2026-04-23T11:22:45.817363",
+  "input_file": "experimental_results/large_scale_test/ids_input_natural_language.json",
+  "total_time": 189.2692444999998,
+  "results": [
+    {
+      "spec_id": "1",
+      "spec_index": 1,
+      "success": true,
+      "elapsed_time": 78.91212930000029,
+      "timing": {
+        "stage_a": 17.786071799999718,
+        "stage_b": 5.759316200000285,
+        "stage_c": 46.66199360000019,
+        "stage_d": 0.0032593000000815664,
+        "stage_e_merge": 1.0400000064691994e-05,
+        "stage_e_build": 8.700615399999606,
+        "total": 78.91208340000003
+      },
+      "num_specifications": 0,
+      "num_requirements": 4,
+      "stage_c_mappings": [
+        {
+          "facet_type": "entity",
+          "original_text": "IfcProject entities",
+          "mapped_name": "IfcRelDeclares",
+          "confidence": 0.5826115608215332,
+          "property_set": null,
+          "entity_name": null,
+          "constraints": [],
+          "additional_data": null,
+          "ifc_item": {
+            "name": "IfcRelDeclares",
+            "definition": "The objectified relationshipIfcRelDeclareshandles the declaration of objects (subtypes ofIfcObject) or properties (subtypes ofIfcPropertyDefinition) to a project or project library (represented byIfcProject, orIfcProjectLibrary).",
+            "ifc_version": "IFC4",
+            "item_type": "entity",
+            "predefined_types": []
+          }
+        },
+        {
+          "facet_type": "property",
+          "original_text": "Length Unit: Defaults to meters (SI). For imperial systems, inches are recommended.",
+          "mapped_name": "Width",
+          "confidence": 0.5791027545928955,
+          "property_set": null,
+          "entity_name": "IfcRelDeclares",
+          "constraints": [
+            

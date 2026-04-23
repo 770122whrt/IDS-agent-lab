@@ -36,7 +36,7 @@ class EntityResolver:
         try:
             db = self.database_manager.get_database("entity")
             if db:
-                ifc_version = context.get("ifc_version", "IFC4") if context else "IFC4"
+                ifc_version = context.get("ifc_version") if context else None
 
                 # 从context中获取pipeline memory
                 pipeline_memory = context.get("pipeline_memory")
@@ -44,8 +44,9 @@ class EntityResolver:
                 if pipeline_memory:
                     original_text = pipeline_memory.user_input
 
-                # 向量搜索TopK
-                results = db.search(query_text, top_k=5, ifc_versions=[ifc_version])
+                # 向量搜索TopK - 默认搜索所有IFC版本
+                ifc_versions_filter = [ifc_version] if ifc_version else None
+                results = db.search(query_text, top_k=5, ifc_versions=ifc_versions_filter)
                 if not results:
                     return None
 
@@ -92,8 +93,8 @@ class EntityResolver:
         try:
             # 构建候选实体信息
             candidate_info = []
-            for ifc_item, distance in candidates:
-                similarity = 1.0 / (1.0 + distance)
+            for ifc_item, similarity in candidates:
+                # Note: search() returns similarity (dot product), not distance
                 candidate_info.append(
                     {
                         "name": ifc_item.name,
@@ -136,9 +137,8 @@ class EntityResolver:
                     selected_name = result.get("selected_entity")
                     if selected_name:
                         # 找到对应的候选实体
-                        for ifc_item, distance in candidates:
+                        for ifc_item, similarity in candidates:
                             if ifc_item.name == selected_name:
-                                similarity = 1.0 / (1.0 + distance)
                                 logger.info(
                                     f"LLM selected entity: {query_text} -> {selected_name}"
                                 )

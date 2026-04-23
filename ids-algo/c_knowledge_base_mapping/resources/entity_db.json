@@ -1,20 +1,20 @@
 {
   "metadata": {
-    "name": "迁移数据库 (BAAI/bge-base-zh-v1.5)",
-    "description": "从 all-MiniLM-L6-v2 迁移到 BAAI/bge-base-zh-v1.5",
+    "name": "IFC Entity Knowledge Base",
+    "description": "IFC实体向量知识库（重建版）",
     "version": "1.0.0",
     "ifc_versions": [
-      "IFC2X3",
       "IFC4",
-      "IFC4X3"
+      "IFC4X3",
+      "IFC2X3"
     ],
     "item_types": [
       "entity"
     ],
-    "vector_dim": 768,
-    "model_name": "BAAI/bge-base-zh-v1.5",
-    "created_at": "2025-07-23T13:58:06.211994",
-    "updated_at": "2025-07-23T13:59:03.466031",
+    "vector_dim": 1024,
+    "model_name": "BAAI/bge-m3",
+    "created_at": "2026-04-21T10:16:29.661555",
+    "updated_at": "2026-04-21T10:16:41.219863",
     "item_counts": {
       "entity": 2291
     }
@@ -10368,10 +10368,13 @@
     },
     {
       "name": "IfcAlignment",
-      "definition": "For the purposes of IFC the English term \"alignment\" defines three separate but closely interconnected concepts.",
+      "definition": "An alignment is a positioning and layout representation of a linear infrastructure facility, such as a road, railway, or bridge. The alignment is defined by a horizontal alignment, a vertical alignment, and optionally a cant alignment.",
       "ifc_version": "IFC4X3",
       "item_type": "entity",
-      "predefined_types": []
+      "predefined_types": [
+        "USERDEFINED",
+        "NOTDEFINED"
+      ]
     },
     {
       "name": "IfcAlignmentCant",
@@ -10410,17 +10413,41 @@
     },
     {
       "name": "IfcBridge",
-      "definition": "A Bridge is a civil engineering work that affords passage to pedestrians, animals, vehicles, and services above obstacles or between two points at a height above ground.",
+      "definition": "A bridge is a civil engineering works that affords passage to pedestrians, animals, vehicles, and services above obstacles or between two points at a height above ground. IfcBridge defines the occurrence of a bridge.",
       "ifc_version": "IFC4X3",
       "item_type": "entity",
-      "predefined_types": []
+      "predefined_types": [
+        "ARCHED",
+        "CABLE_STAYED",
+        "CANTILEVER",
+        "CULVERT",
+        "FRAMEWORK",
+        "GIRDER",
+        "SUSPENSION",
+        "TRUSS",
+        "USERDEFINED",
+        "NOTDEFINED"
+      ]
     },
     {
       "name": "IfcBridgePart",
-      "definition": "Part of a bridge.",
+      "definition": "A bridge part is a major functional part of a bridge which can be used to provide a specific kind of bridge construction information. IfcBridgePart is used to represent the major parts of a bridge, such as abutment, deck, foundation, pier, pylon, substructure, and superstructure.",
       "ifc_version": "IFC4X3",
       "item_type": "entity",
-      "predefined_types": []
+      "predefined_types": [
+        "ABUTMENT",
+        "DECK",
+        "DECK_SEGMENT",
+        "FOUNDATION",
+        "PIER",
+        "PIER_SEGMENT",
+        "PYLON",
+        "SUBSTRUCTURE",
+        "SUPERSTRUCTURE",
+        "SURFACESTRUCTURE",
+        "USERDEFINED",
+        "NOTDEFINED"
+      ]
     },
     {
       "name": "IfcBuilding",

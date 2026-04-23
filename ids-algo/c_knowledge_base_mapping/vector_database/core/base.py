@@ -205,7 +205,7 @@ class IFCVectorKnowledgeBase:
         self,
         query: str,
         top_k: Optional[int] = None,
-        ifc_versions: Optional[List[str]] = ["IFC4"],
+        ifc_versions: Optional[List[str]] = None,
         item_types: Optional[List[str]] = None,
     ) -> List[Tuple[IFCItem, float]]:
         """搜索与查询最相似的IFC项目

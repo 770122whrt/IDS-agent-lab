@@ -1,0 +1,227 @@
+[
+  {
+    "id": "1",
+    "text": "**IFC4X3_ADD2 Project Specification**\n\nThis specification applies to all IfcProject entities in the model.\n\n**Requirements:**\n\n- The model MUST contain exactly one IfcProject instance that serves as the root entity identifying the overall project.\n\n- The IfcProject MUST provide default units for the following measurements:\n  - **Length Unit**: Defaults to meters (SI). For imperial systems, inches are recommended.\n  - **Angle Unit**: Defaults to degrees. Degrees are the recommended standard unit.\n  - **Mass Unit**: Defaults to kilograms (SI). For imperial systems, pounds are recommended.\n  - **Temperature Unit**: Defaults to Celsius (SI). For imperial systems, Fahrenheit is recommended.\n\n- The IfcProject MUST maintain a graph of references that connects to all data within the project scope.\n\n- The IfcProject serves as the primary container that establishes project-wide defaults and organizational structure for all model data.",
+    "language": "en"
+  },
+  {
+    "id": "2",
+    "text": "**Specification 2: Site (IFC4X3_ADD2)**\n\nThis specification applies to all IfcSite entities in the model.\n\nThe model MAY contain zero or more sites. Each site that is included in the model MUST satisfy the following requirements:\n\n1. The site MUST be aggregated as part of an IfcProject entity through an IfcRelAggregates relationship.\n\n2. The site MUST have a Name attribute assigned. This name serves as an identifier for referencing the site.\n\n**Context:** While the RAR (Requirements and Recommendations) specifies a mandatory site, this specification makes it optional. Additionally, although the RAR requires a reference elevation, this should be provided through the CRS (Coordinate Reference System) reference instead. Sites may define existing and proposed terrain in the vicinity of the bridge project and can contain alignments, bridges, and other structures such as roads or rails supported by the bridge. Boring points may also be included as objects contained within the site.",
+    "language": "en"
+  },
+  {
+    "id": "3",
+    "text": "**Bridge Specification (IFC4X3_ADD2)**\n\nThis specification applies to all IfcBridge type entities in the model. One or more bridge structures must be present.\n\nEach bridge structure must be captured within a definition that describes the span location of the bridge relative to an alignment. The extents of the bridge are defined using an Axis curve, where IfcOffsetCurveByDistances is the recommended approach – this references an IfcAlignmentCurve with specified starting and ending distances along the curve, and typically includes no lateral or vertical offsets.\n\nAll IfcBridge entities MUST:\n- Be part of an aggregation relationship (IfcRelAggregates) with either an IfcBridge or IfcProject entity\n- Have a Name attribute assigned",
+    "language": "en"
+  },
+  {
+    "id": "4",
+    "text": "**Specification 4: Alignment**\n\nThis specification applies to IFC4X3_ADD2 and covers all IFCALIGNMENT entities in a bridge model (cardinality: 0 or more instances).\n\nAll alignment entities MUST satisfy the following requirements:\n\n1. Each alignment MUST be part of an IFCPROJECT through an IFCRELAGGREGATES relationship (required cardinality).\n2. Each alignment MUST have a Name attribute with a value assigned (required).\n\nHorizontal and vertical alignment curves serve as the underlying placement foundation for all bridge components in the plan. Note that Axis and Placement properties cannot be validated through IDS specifications.",
+    "language": "en"
+  },
+  {
+    "id": "5",
+    "text": "**Specification 5: Substructure**\n\nThis specification applies to IFC4X3_ADD2 and defines requirements for substructure elements in bridge models.\n\n**Scope:** All entities of type IFCBRIDGEPART that represent substructure components (elements that transfer loads into the ground). A bridge model must contain at least one such substructure element.\n\n**Requirements:**\n- Each substructure element MUST be aggregated as part of an IFCBRIDGE entity through an IFCRELAGGREGATES relationship. This relationship is mandatory and establishes the hierarchical connection between the substructure component and its parent bridge.",
+    "language": "en"
+  },
+  {
+    "id": "6",
+    "text": "**Specification 6: Superstructure**\n\nThis specification applies to IFC4X3_ADD2 and governs all entities of type IFCBRIDGEPART that represent the superstructure of a bridge—the elements that span horizontally to carry loads onto substructures.\n\n**Requirements:**\n\n- The model MUST contain one or more superstructure entities (cardinality: 1 to unbounded).\n- Each superstructure entity MUST be part of an IFCBRIDGE through an IFCRELAGGREGATES relationship.\n- Each superstructure entity MUST have a Name attribute assigned.\n\n**Note:** Alignments are not included in this specification.",
+    "language": "en"
+  },
+  {
+    "id": "7",
+    "text": "**Specification 7: Girders**\n\nThis specification applies to IFC4X3_ADD2 and governs all IFCELEMENTASSEMBLY entities representing girders in bridge models.\n\nAll girder assemblies MUST satisfy the following requirements:\n\n1. **Spatial Containment**: Each girder assembly MUST be contained within an IFCBRIDGEPART entity with the predefined type SUPERSTRUCTURE through an IFCRELCONTAINEDINSPATIALSTRUCTURE relationship.\n\n2. **Naming**: Each girder assembly MUST have a Name attribute assigned.\n\n3. **Material Definition**: Each girder assembly MUST have material properties defined.\n\nA model may contain zero or more girder assemblies conforming to this specification.",
+    "language": "en"
+  },
+  {
+    "id": "8",
+    "text": "**Specification 8: Deck**\n\nThis specification applies to IFC4X3_ADD2 and governs bridge deck elements.\n\nA bridge deck comprises those elements used for conveying traffic but do not perform structural functions of the superstructure. The specification applies to one or more IFCBRIDGEPART type entities.\n\nAll bridge deck entities MUST satisfy the following requirements:\n\n1. Each deck element MUST be part of an IFCBRIDGE entity through an IFCRELAGGREGATES relationship.\n2. Each deck element MUST have a Name attribute assigned.",
+    "language": "en"
+  },
+  {
+    "id": "9",
+    "text": "**Specification 9: Deck Segments**\n\nThis specification applies to IFC4X3_ADD2 and governs deck segment components in bridge models.\n\n**Applicability:**\nAll IFCBRIDGEPART entities representing deck segments (zero or more instances may be present in a model).\n\n**Requirements:**\n\n1. **Aggregation Requirement:** Each deck segment MUST be part of a parent IFCBRIDGEPART entity with predefined type DECK through an IFCRELAGGREGATES relationship. This relationship is mandatory.\n\n2. **Naming Requirement:** Each deck segment MUST have a Name attribute assigned. This attribute is required and cannot be omitted.",
+    "language": "en"
+  },
+  {
+    "id": "10",
+    "text": "**Abutments Specification (IFC4X3_ADD2)**\n\nThis specification applies to bridge abutments, which are substructures located at the ends of a bridge. Abutments may be composed of wing walls (one on each side), a head wall, a stem wall, and a cone.\n\nThe specification governs zero or more abutment elements within a model. All abutments MUST be represented as IFCELEMENTASSEMBLY type entities. Each abutment MUST be part of an IFCBRIDGEPART and MUST be contained within the spatial structure through the IFCRELCONTAINEDINSPATIALSTRUCTURE relationship.",
+    "language": "en"
+  },
+  {
+    "id": "11",
+    "text": "Specification 11: Piers (IFC4X3_ADD2)\n\nThis specification applies to all IFCELEMENTASSEMBLY entities representing piers in bridge structures (0 to unlimited instances per model).\n\nAll piers MUST satisfy the following requirements:\n\n1. Containment: Each pier MUST be contained within an IFCBRIDGEPART entity with predefined type SUBSTRUCTURE via the IFCRELCONTAINEDINSPATIALSTRUCTURE relationship.\n\n2. Naming: Each pier MUST have a Name attribute assigned.\n\nAdditionally, piers should be decomposed into constituent elements (such as footings, columns, members, and walls) according to their connectivity, with construction joints clearly indicated. Reinforcement within these inner elements should reflect actual construction placement, including rebar projections between connected elements. Piers and their components must be positioned relative to the horizontal alignment curve using Cartesian placement, consistent with typical construction plan conventions where all dimensions are based on Cartesian positioning relative to the station location and orientation along the horizontal alignment curve.\n\nNote: Alignment and precise location information cannot be fully specified within IDS constraints.",
+    "language": "en"
+  },
+  {
+    "id": "12",
+    "text": "**Specification 12: Piles (IFC4X3_ADD2)**\n\nThis specification applies to all pile entities (IFCPILE) in the model. Any number of piles (0 or more) may be present.\n\nAll piles MUST satisfy the following requirements:\n\n1. Each pile MUST be part of a bridge part entity (IFCBRIDGEPART).\n2. Each pile MUST have a Name attribute assigned.\n3. Each pile MUST have material information assigned.",
+    "language": "en"
+  },
+  {
+    "id": "13",
+    "text": "**Specification 13: Surface Proposed**\n\nThis specification applies to IFC4X3_ADD2 and defines requirements for representing the ground surface of a site indicating final conditions.\n\nThe model must contain one or more entities (cardinality 1..unbounded) that represent proposed surfaces. Each surface entity must be contained within a spatial structure, specifically either an IFCSITE or IFCBRIDGE, using the IFCRELCONTAINEDINSPATIALSTRUCTURE relationship. This containment relationship is required for every surface entity in the model.",
+    "language": "en"
+  },
+  {
+    "id": "14",
+    "text": "**Specification 14: Surface Existing**\n\nThis specification applies to IFC4X3_ADD2 and defines requirements for representing the ground surface of a site under existing conditions.\n\nThe model must contain one or more entities (cardinality 1..unbounded) that represent existing ground surfaces. These entities must be contained within a spatial structure using the IFCRELCONTAINEDINSPATIALSTRUCTURE relationship. Specifically, each surface entity must be part of either an IFCSITE or IFCBRIDGE entity. This containment relationship is required and must be present for all applicable entities.",
+    "language": "en"
+  },
+  {
+    "id": "15",
+    "text": "**Boring Points Specification (IFC4X3_ADD2)**\n\nThis specification applies to all IfcGeographicElement entities used to represent boring points that indicate soil layers and properties at discrete locations. Any number of boring points (0 or more) may be present in a model.\n\nAll boring points MUST satisfy the following requirements:\n\n1. **Containment**: Each boring point MUST be contained within either an IfcSite or IfcBridge entity via an IfcRelContainedInSpatialStructure relationship. This containment is mandatory.\n\n2. **Naming**: Each boring point MUST have a Name attribute assigned. This attribute is required.\n\n3. **Material Assignment**: Each boring point MUST have material properties assigned. Material assignment is mandatory.\n\nNote: The precise geographic location of boring points cannot be specified within the IDS format, though this information is relevant to the specification.",
+    "language": "en"
+  },
+  {
+    "id": "16",
+    "text": "**Specification 16: Material**\n\nThis specification applies to IFC4X3_ADD2 and governs all IFCMATERIAL type entities. One or more material definitions MUST be present in the model.\n\nMaterials represent substances used in construction (such as concrete), fabrication (such as steel girders), or existing on site (such as soil). Each material definition MUST include its classification, category, and relevant structural properties.\n\n**Required Attributes:**\n\nAll materials MUST have a Name attribute that classifies the material according to the relevant authority standard (e.g., ASTM).\n\nAll materials MUST have a Category attribute set to one of the following values: Concrete, Steel, Wood, Plastic, Glass, or Earth.\n\n**Optional Properties:**\n\nMaterials MAY include the following optional properties:\n\n- MassDensity (IFCMASSDENSITYMEASURE) in the Pset_MaterialCommon property set, indicating the material's mass density.\n- YoungModulus (IFCMODULUSOFELASTICITYMEASURE) in the Pset_MaterialMechanical property set, indicating the Young's modulus of elasticity.\n- ShearModulus (IFCMODULUSOFELASTICITYMEASURE) in the Pset_MaterialMechanical property set, indicating the shear modulus of elasticity.\n- ThermalExpansionCoefficient (IFCTHERMALEXPANSIONCOEFFICIENTMEASURE) in the Pset_MaterialMechanical property set, indicating the expansion coefficient per Kelvin.\n\n**Category-Specific Properties:**\n\n- If the Category is \"Concrete\", the material MAY include CompressiveStrength (IFCPRESSUREMEASURE) in the Pset_MaterialConcrete property set.\n- If the Category is \"Steel\", the material MAY include YieldStress (IFCPRESSUREMEASURE) in the Pset_MaterialSteel property set, representing the yield stress or characteristic 0.2 percent proof stress.",
+    "language": "en"
+  },
+  {
+    "id": "17",
+    "text": "**Specification 17: Pier Stems**\n\nThis specification applies to IFC4X3_ADD2 and governs the modeling of pier stems in structural designs.\n\nA pier may be composed of one or more stems that are laterally separated from each other. All IFCCOLUMN entities representing pier stems must be aggregated as parts of an IFCELEMENTASSEMBLY with a predefined type of PIER. Each pier stem (IFCCOLUMN) must have exactly one parent IFCELEMENTASSEMBLY of type PIER that contains it through an IFCRELAGGREGATES relationship. A single pier can contain zero to an unlimited number of stem columns.",
+    "language": "en"
+  },
+  {
+    "id": "18",
+    "text": "**Specification 18: Pier Segments**\n\nThis specification applies to IFC4X3_ADD2 and governs the composition of pier stem columns.\n\nAll IFCCOLUMN entities with the predefined type PIERSTEM must be decomposed into one or more segments using the IFCRELAGGREGATES relationship. Each segment represents a distinct portion of the pier stem separated by a construction joint. The number of segments is unbounded, allowing for any number of construction joints within a single pier stem.",
+    "language": "en"
+  },
+  {
+    "id": "19",
+    "text": "Pier Caps (IFC4X3_ADD2)\n\nThis specification applies to all IFCBEAM entities that represent pier caps. A pier cap is an optional structural element that may span across one or more pier stems. When a pier cap is positioned above a bearing, it should be modeled as part of the superstructure rather than the substructure.\n\nRequirements:\n\n- Each pier cap BEAM must be contained within an IFCBRIDGEPART entity\n- The IFCBRIDGEPART must have a predefined type of either SUBSTRUCTURE or SUPERSTRUCTURE\n- The containment relationship must be established using IFCRELCONTAINEDINSPATIALSTRUCTURE\n- A model may contain zero or more pier cap beams (0..unbounded cardinality)",
+    "language": "en"
+  },
+  {
+    "id": "20",
+    "text": "Specification 20: Retaining Walls (IFC4X3_ADD2)\n\nThis specification applies to all wall entities (IFCWALL) in the model, with zero or more instances expected.\n\nRetaining walls are wall structures designed to retain soil. All retaining walls in the model MUST be contained within an IFCBRIDGEPART entity that has a predefined type of SUBSTRUCTURE. This containment relationship MUST be established using the IFCRELCONTAINEDINSPATIALSTRUCTURE relation, and exactly one such relationship is required for each retaining wall.",
+    "language": "en"
+  },
+  {
+    "id": "21",
+    "text": "**Specification 21: Apron (IFC4X3_ADD2)**\n\nA bridge apron is a protective device designed to shield a river bank or river bed against scour erosion.\n\nThis specification applies to all entities of type IFCBUILDINGELEMENTPART. Any number of such entities (0 or more) may be designated as aprons within a model.\n\nAll apron entities MUST be contained within an IFCBRIDGEPART entity that has a predefined type of SUBSTRUCTURE. This containment relationship MUST be established using the IFCRELCONTAINEDINSPATIALSTRUCTURE relation, and this requirement is mandatory for each apron.",
+    "language": "en"
+  },
+  {
+    "id": "22",
+    "text": "**Specification 22: Arch**\n\nThis specification applies to IFC4X3_ADD2 and describes arch elements in bridge structures.\n\nAn arch is a hyperbolic structural member designed to support vertical loads distributed at intervals along its span. The specification applies to zero or more IFCELEMENTASSEMBLY type entities.\n\nAll arch elements MUST be contained within an IFCBRIDGEPART entity with a predefined type of SUBSTRUCTURE through an IFCRELCONTAINEDINSPATIALSTRUCTURE relationship. This containment relationship is required and must be present for each arch element.",
+    "language": "en"
+  },
+  {
+    "id": "23",
+    "text": "**Specification 23: Footing (IFC4X3_ADD2)**\n\nThis specification applies to all IFCFOOTING type entities in bridge models.\n\n**Geometric Description:**\nFootings are typically represented as enclosed polygonal areas extruded vertically according to footing depth. For stepped footings, multiple extruded solids may be used, provided they do not intersect.\n\n**Requirements:**\n\n1. **Spatial Containment (Required):** All footings MUST be contained within an IFCBRIDGEPART entity using the IFCRELCONTAINEDINSPATIALSTRUCTURE relationship. The parent IFCBRIDGEPART MUST have a predefined type of either SUBSTRUCTURE or FOUNDATION.\n\n2. **Name Attribute (Required):** All footings MUST have a Name attribute populated with the footing identifier as it appears on construction plans, for referencing purposes.\n\n3. **Material Properties (Required):** All footings MUST have associated material properties that indicate concrete strength.\n\n**Related Elements:**\n\n- Piles supporting the footing are linked through a connection relationship.\n- Reinforcing is typically modeled as an aggregation within the footing, using a Footing/Reinforcement structure.\n\n**Note:** The specification identifies geometry, connection to piles, and reinforcing as areas requiring further definition in the model.",
+    "language": "en"
+  },
+  {
+    "id": "24",
+    "text": "Specification 24: Pile (IFC4X3_ADD2)\n\nThis specification applies to all IFCPILE type entities in the model, with zero to unlimited instances allowed.\n\nPiles are geometrically represented by a circular profile extruded vertically according to pile depth. For multiple piles of similar dimensions, mapped representation may be used for efficient placement in multiple locations. Note that cross section and batter specifications are not currently defined in this specification.\n\nAll piles supporting footings must be linked according to a connection relationship.\n\nRequirements:\n\n1. All piles MUST BE contained within an IFCBRIDGEPART entity with predefined type SUBSTRUCTURE through an IFCRELCONTAINEDINSPATIALSTRUCTURE relationship.\n\n2. All piles MUST HAVE a Name attribute. This name should reference the pile arrangement as found on construction plans and serve as an identifier for referencing purposes.\n\n3. All piles MUST HAVE an associated material specified, indicating the material composition of the piles.",
+    "language": "en"
+  },
+  {
+    "id": "25",
+    "text": "# Hat Stone Specification (IFC4X3_ADD2)\n\nHat Stone refers to a top course on an abutment or culvert.\n\nThis specification applies to IFCBEAM type entities. Zero or more beams in a model may represent hat stones.\n\nRequirements:\n- All IFCBEAM entities representing hat stones MUST be identified as top courses positioned on abutments or culverts\n- Hat stones are optional elements; a model may contain zero or more instances",
+    "language": "en"
+  },
+  {
+    "id": "26",
+    "text": "Specification 26 defines requirements for bridge girders in IFC4X3_ADD2.\n\nBridge girders are horizontal support beams that span along a bridge's alignment. For steel girders, each girder line is decomposed into beam segments. For concrete box girders, the specification refers to the overall box girder, typically connected to the bridge deck via a keyed construction joint with adjoining reinforcing.\n\nThis specification applies to all IFCELEMENTASSEMBLY type entities, with cardinality of 0 to unbounded instances.\n\nAll girders MUST satisfy the following requirements:\n\n1. Each girder MUST be contained within an IFCBRIDGEPART entity with predefined type SUPERSTRUCTURE via an IFCRELCONTAINEDINSPATIALSTRUCTURE relation.\n\n2. Each girder MUST have a Name attribute. This name should reference the girder line as it appears on construction plans and is used for identification purposes.\n\n3. Each girder MUST have an associated material definition.\n\nNote: The specification currently lacks definitions for Alignment, Axis, and IfcRelDefinesByType associations.",
+    "language": "en"
+  },
+  {
+    "id": "27",
+    "text": "**Boring Points 2 Specification (IFC4X3_ADD2)**\n\nThis specification applies to all IfcBorehole entities and defines requirements for representing soil boring points that indicate soil layers and properties at discrete locations within a site grading model.\n\nRequirements:\n\n- Each IfcBorehole entity MUST be contained within either an IfcSite or IfcBridge spatial structure using the IfcRelContainedInSpatialStructure relationship. This containment is mandatory.\n\n- Each IfcBorehole entity MUST have a Name attribute assigned. This attribute is required and cannot be omitted.\n\n- Multiple IfcBorehole entities (0 to unlimited) may be present in a model to represent soil borings at various discrete locations across the site.",
+    "language": "en"
+  },
+  {
+    "id": "28",
+    "text": "**Specification 28: Girder Type**\n\nThis specification applies to IFC4X3_ADD2 and defines a template for general construction that may be reused across projects.\n\n**Applicability:**\nThe specification applies to one or more (1..unbounded) IfcElementAssemblyType entities.\n\n**Requirements:**\nAll IfcElementAssemblyType entities covered by this specification MUST have a Name attribute. The Name attribute is required and must be populated for each entity.",
+    "language": "en"
+  },
+  {
+    "id": "29",
+    "text": "Specification 29: Girder Segment (IFC4X3_ADD2)\n\nThis specification applies to all IFCBEAM type entities representing girder segments—discrete sections along a girder line. Each girder segment may be modeled as a single object encapsulating the overall cross section (such as I-shaped steel or arbitrary precast profiles) or as separate objects (such as individual steel flange plates or web plates). Segments may have constant cross sections, tapered cross sections (linearly interpolated from start to end), variable cross sections (linearly interpolated at multiple points), or free-form geometry.\n\nBetween one and an unlimited number of girder segments must be present in the model.\n\nAll girder segments MUST:\n- Be part of an IFCELEMENTASSEMBLY or IFCELEMENTASSEMBLYTYPE with a predefined type of GIRDER (required cardinality)\n- Have a Name attribute that identifies the girder segment for referencing purposes as it would appear on construction plans (required)\n- Have an associated material (required)\n\nThe following aspects are not currently specified: solid geometry, connections, reinforcing, tendons, camber, stiffeners, and shear studs.",
+    "language": "en"
+  },
+  {
+    "id": "30",
+    "text": "**Specification 30: Plates**\n\nThis specification applies to IFC4X3_ADD2 and covers all entities of type IFCPLATE.\n\nBuilt-up girders may be decomposed into plates or members that serve specific structural functions, including webs, flanges, cover plates, longitudinal stiffeners, and vertical stiffeners. A model may contain zero or more plate entities.\n\nNo part-of relationship requirements are imposed, as plates and members can exist within various assemblies beyond girders, such as railings or other structural systems.",
+    "language": "en"
+  },
+  {
+    "id": "31",
+    "text": "**Specification 31: Cross Frame**\n\nThis specification applies to IFC4X3_ADD2 and governs the representation of bridge cross frames in structural models.\n\n**Applicability:**\nAll IfcElementAssembly entities representing cross frames (one or more instances per model).\n\n**Requirements:**\n\nThe model MUST contain one or more cross frame components, each represented as an IfcElementAssembly. Each cross frame MUST have a Name attribute that identifies the cross frame occurrence as it would appear on construction plans.\n\n**Context:**\nCross frames connect two bridge girders laterally. They may be described using standard member configuration templates (such as AISC shapes in the U.S.). For curved bridge alignments where girders are positioned at different elevations, cross frame members must be positioned relative to the girders on each side, with positioning defined relative to alignment curves.\n\nNote: Precise 3D positioning and explicit left/right girder segment relationships cannot be fully captured within IDS constraints and should be represented through the geometric properties and relationships of the IfcElementAssembly and its constituent members.",
+    "language": "en"
+  },
+  {
+    "id": "32",
+    "text": "**Specification 32: Diaphragm (IFC4X3_ADD2)**\n\nDiaphragms are sections of bridge girders positioned immediately above supporting structures to provide additional lateral and vertical support. They are modeled as concrete girder segments but distinguished by a predefined type designation (IfcBeamTypeEnum.DIAPHRAGM) and include connections to underlying supports.\n\nThis specification applies to all IfcBeam type entities with a cardinality of 0 to unbounded occurrences.\n\n**Requirements:**\n\n1. All diaphragms MUST be contained within an IfcBridgePart entity with predefined type SUPERSTRUCTURE via an IfcRelContainedInSpatialStructure relationship.\n\n2. All diaphragms MUST have a Name attribute populated with the diaphragm identifier as it appears on construction plans for referencing purposes.\n\n3. All diaphragms MUST have an associated material specification.\n\n**Note:** The following elements are not included in this specification: solid geometry, connections, reinforcing, and tendons.",
+    "language": "en"
+  },
+  {
+    "id": "33",
+    "text": "**Specification 33: Truss (IFC4X3_ADD2)**\n\nThis specification applies to all IfcElementAssembly entities representing trusses, which are frameworks of linear structural elements designed to work in tension and compression for supporting bridge superstructures. Within a truss, struts represent compression elements and ties represent tension elements.\n\nRequirements:\n\n- Each truss IfcElementAssembly MUST have a Name attribute. The Name is required and must be provided.\n\n- Zero or more truss assemblies may be present in the model (cardinality 0..unbounded).\n\nKnown Limitations:\n\n- Connections between truss elements are not currently specified in this requirement.\n- IfcPlate entities may be included as part of a truss assembly, but gusset plates (GUSSET_PLATE product data type) are not explicitly defined.",
+    "language": "en"
+  },
+  {
+    "id": "34",
+    "text": "**Specification 34: Deck Span**\n\nThis specification applies to IFC4X3_ADD2 and governs bridge deck spans, which represent the surface of a bridge and may be decomposed into segments and components.\n\n**Applicability:**\nAll IFCELEMENTASSEMBLY type entities may have zero or more deck span instances.\n\n**Requirements:**\n\n1. Each deck span MUST be part of an IFCBRIDGEPART entity with a predefined type of either DECK or DECK_SEGMENT.\n\n2. Each deck span MUST have a Name attribute assigned.\n\n3. Each deck span MUST have material information assigned.",
+    "language": "en"
+  },
+  {
+    "id": "35",
+    "text": "Specification 35: Deck Segment (IFC4X3_ADD2)\n\nThis specification applies to all IFCBRIDGEPART entities of type DECK and defines requirements for modeling bridge deck segments that are separated by construction or expansion joints. Geometry should be represented using IfcSectionedSolidHorizontal to define cross sections that may vary along an alignment.\n\nRequirements:\n\n- The deck segment MUST be part of an IFCBRIDGEPART entity through an IFCRELAGGREGATES relationship.\n- The deck segment MUST have a Name attribute that identifies the segment for referencing purposes, matching designations found on construction plans.\n- The deck segment MUST have an associated material specified.\n\nAdditional considerations include geometric requirements, connection requirements, reinforcing, and drainage specifications.",
+    "language": "en"
+  },
+  {
+    "id": "36",
+    "text": "**Specification 36: Parapet (IFC4X3_ADD2)**\n\nThis specification applies to all IFCWALL entities that model barriers with constant cross-sections or architectural railings. Parapets may be defined as constant cross-section elements placed along the alignment at either edge of a bridge deck or anywhere in between.\n\nRequirements:\n\n- All parapet walls MUST be contained within an IFCBRIDGEPART entity whose predefined type is either DECK or DECK_SEGMENT. This containment relationship is required.\n\n- Each parapet wall MUST have a Name attribute that is required. The name should identify the parapet segment for referencing purposes as it would appear on construction plans.\n\n- Each parapet wall MUST have an associated material defined. The material specification is required.\n\nApplicability: This specification applies to zero or more (0..unbounded) IFCWALL type entities within a model.",
+    "language": "en"
+  },
+  {
+    "id": "37",
+    "text": "This specification applies to IFC4X3_ADD2 and covers all IFCRAILING entities used to model barriers with constant cross-sections or architectural railings on bridge structures.\n\nAll railings must meet the following requirements:\n\n1. Each railing must be contained within an IFCBRIDGEPART entity (via IFCRELCONTAINEDINSPATIALSTRUCTURE relationship). The bridge part must have a predefined type of either DECK or DECK_SEGMENT.\n\n2. Each railing must have a Name attribute populated. This name should identify the railing segment for referencing purposes, matching designations found on construction plans.\n\n3. Each railing must have an associated material defined. The material specification is required to document what the railing is made of.\n\nAny number of railings (0 to unbounded) may be present in a model, and they may be positioned along either edge of a bridge deck or anywhere in between as barriers of constant cross-section.",
+    "language": "en"
+  },
+  {
+    "id": "38",
+    "text": "An approach slab specification applies to IFC4X3_ADD2 models.\n\nThe specification applies to all IFCSLAB entities that function as approach slabs—slabs providing transition between a bridge and road pavement, where an expansion joint accommodates differential settlement, temperature changes, and freeze/thaw effects.\n\nRequirements:\n- Each approach slab MUST be contained within an IFCBRIDGEPART entity through an IFCRELCONTAINEDINSPATIALSTRUCTURE relationship\n- The parent IFCBRIDGEPART MUST have a predefined type of either DECK or DECK_SEGMENT\n- A model MAY contain zero or more approach slabs",
+    "language": "en"
+  },
+  {
+    "id": "39",
+    "text": "A cornice is a structural element that develops along the sides of a bridge to protect the deck. This specification applies to IFC4X3_ADD2.\n\nAll IFCBEAM entities representing cornices must be contained within an IFCBRIDGEPART through an IFCRELCONTAINEDINSPATIALSTRUCTURE relationship. The parent IFCBRIDGEPART must have a predefined type of either DECK or DECK_SEGMENT. Each cornice beam must have exactly one such containment relationship to satisfy this requirement.",
+    "language": "en"
+  },
+  {
+    "id": "40",
+    "text": "Waterproofing membranes in IFC4X3_ADD2 models are represented as IFCCOVERING entities that must be applied to bridge deck structures. All waterproofing coverings must be contained within an IFCBRIDGEPART entity whose predefined type is either DECK or DECK_SEGMENT. Each waterproofing covering requires exactly one such containment relationship. Multiple waterproofing membranes (0 to unlimited) may be present in a model, and they should be spatially organized within the appropriate bridge deck components using the IFCRELCONTAINEDINSPATIALSTRUCTURE relationship.",
+    "language": "en"
+  },
+  {
+    "id": "41",
+    "text": "Bearings in IFC4X3_ADD2 are structural elements that connect substructure to superstructure components while permitting movement along one or more degrees of freedom.\n\nThis specification applies to all IFCBEARING type entities (0 to unlimited instances may be present in a model).\n\nRequirements:\n\n- All bearing entities MUST have a Name attribute. This name should correspond to the bearing designation as it appears on construction plans and serves as the reference identifier for the bearing.",
+    "language": "en"
+  },
+  {
+    "id": "42",
+    "text": "**Specification 42: Bearing Type**\n\nThis specification applies to IFC4X3_ADD2 and governs all IFCBEARINGTYPE entities in a model.\n\nA bearing type represents a category of bearing where common geometry and properties may be defined. The specification establishes an occurrence relationship with mechanical constraint implications.\n\nRequirements:\n- The bearing type MUST have a Name attribute. This attribute is required and cannot be omitted.\n- Zero or more bearing type instances may be present in the model (cardinality 0..unbounded).",
+    "language": "en"
+  },
+  {
+    "id": "43",
+    "text": "**Specification 43: Joint**\n\nThis specification applies to IFC4X3_ADD2 and governs expansion joints, which are assembly connections between construction elements designed to accommodate thermal differential expansions.\n\nAny number of entities of type IFCDISCRETEACCESSORY may be designated as expansion joints within a model (0 to unbounded cardinality).\n\nAll expansion joint entities MUST have a Name attribute. This name should correspond to the joint designation as it appears on construction plans and serves as the primary reference identifier for the joint.\n\nThe specification addresses three key aspects: type relationships, expansion extent, and connections between construction elements.",
+    "language": "en"
+  },
+  {
+    "id": "44",
+    "text": "**Specification 44: Joint Type**\n\nThis specification applies to IFC4X3_ADD2 and defines requirements for joint type entities.\n\nAll entities of type IFCDISCRETEACCESSORYTYPE must include a Name attribute. The Name attribute is required and must be present on every instance.\n\nThe specification addresses joint types where common geometry and properties may be defined, with particular focus on occurrence relationships, expansion extent, and connections. Multiple joint type instances (0 to unbounded cardinality) may be present in a model.",
+    "language": "en"
+  },
+  {
+    "id": "45",
+    "text": "**Specification 45: Members**\n\nThis specification applies to IFC4X3_ADD2 and describes the decomposition of built-up girders.\n\nBuilt-up girders may be decomposed into zero or more plates or members that serve the following functions: web components, flanges, cover plates, longitudinal stiffeners, and vertical stiffeners.\n\nNo part-of relationship requirements are imposed, as plates and members can be reused across different assemblies (such as railings) and should not be constrained to a single parent structure.",
+    "language": "en"
+  }
+]

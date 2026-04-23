@@ -1,0 +1,82 @@
+{
+  "sample_id": "complex_003",
+  "complexity": "complex",
+  "iteration": 2,
+  "timestamp": "2026-04-20T20:18:46.246528",
+  "success": true,
+  "timing": {
+    "stage_a": 2.9753770000006625,
+    "stage_b": 3.6147517999997945,
+    "stage_c": 9.86016329999984,
+    "stage_d": 0.0007468000003427733,
+    "stage_e_merge": 1.4400000509340316e-05,
+    "stage_e_build": 12.052438299999267,
+    "total": 28.504842100001042
+  },
+  "num_specifications": 1,
+  "output": {
+    "specifications": [
+      {
+        "name": "Fire Escape Route Door Fire Rating Compliance",
+        "ifcVersion": [
+          "IFC4"
+        ],
+        "description": "Validates that all doors located in fire escape routes meet the minimum fire rating requirement of 60 minutes to ensure occupant safety during emergency evacuation.",
+        "instructions": null,
+        "applicability": {
+          "minOccurs": "1",
+          "maxOccurs": "unbounded",
+          "entity": {
+            "name": "IfcDoor",
+            "predefinedType": null
+          },
+          "partOf": null,
+          "classification": null,
+          "attribute": null,
+          "property": null,
+          "material": null
+        },
+        "requirements": {
+          "description": null,
+          "entity": null,
+          "partOf": null,
+          "classification": null,
+          "attribute": null,
+          "property": [
+            {
+              "propertySet": "Pset_WallCommon",
+              "baseName": "FireRating",
+              "value": {
+                "simpleValue": ">= 60.0 minutes",
+                "restriction": {
+                  "base": "string",
+                  "minInclusive": 60.0
+                }
+              },
+              "dataType": "IfcLabel",
+              "uri": null,
+              "cardinality": "required",
+              "instructions": null
+            }
+          ],
+          "material": null
+        }
+      }
+    ]
+  },
+  "error": null,
+  "stage_c_mappings": [
+    {
+      "original_text": "doors in fire escape routes",
+      "facet_type": "entity"
+    },
+    {
+      "original_text": "fire rating of at least 60 minutes",
+      "facet_type": "property"
+    },
+    {
+      "original_text": "clear width of at least 900mm",
+      "facet_type": "property"
+    }
+  ]
+}

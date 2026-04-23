@@ -1,0 +1,621 @@
+{
+  "metadata": {
+    "experiment_name": "IDS Pipeline Performance Evaluation",
+    "total_samples": 13,
+    "total_runs": 39,
+    "successful_runs": 39,
+    "failed_runs": 0,
+    "num_iterations": 3,
+    "timestamp": "2026-04-20T20:19:45.951495",
+    "duration_minutes": 18.713223961989083
+  },
+  "success_rate": {
+    "overall": 100.0,
+    "by_complexity": {
+      "simple": 100.0,
+      "medium": 100.0,
+      "complex": 100.0
+    },
+    "failed_samples": []
+  },
+  "timing_statistics": {
+    "stage_a": {
+      "mean": 3.8748657589743836,
+      "std": 1.6378807708880034,
+      "min": 2.489396499999202,
+      "max": 11.383235800000875
+    },
+    "stage_b": {
+      "mean": 4.287684356410234,
+      "std": 0.9757305965767514,
+      "min": 2.917164400000729,
+      "max": 6.960125399999924
+    },
+    "stage_c": {
+      "mean": 10.649139679487211,
+      "std": 4.395005080270238,
+      "min": 2.669026500000655,
+      "max": 21.91715480000039
+    },
+    "stage_d": {
+      "mean": 0.0004723512820652477,
+      "std": 0.00043871097773159266,
+      "min": 5.000001692678779e-07,
+      "max": 0.002674200000001292
+    },
+    "stage_e_merge": {
+      "mean": 5.676923161118817e-06,
+      "std": 3.5451997279401586e-06,
+      "min": 5.000001692678779e-07,
+      "max": 1.5699999494245276e-05
+    },
+    "stage_e_build": {
+      "mean": 9.460489810256359,
+      "std": 2.4425388491781552,
+      "min": 4.237930699999197,
+      "max": 15.82513629999994
+    },
+    "total": {
+      "mean": 28.273732474359093,
+      "std": 6.194404453263421,
+      "min": 14.630825100000038,
+      "max": 39.69723319999957
+    }
+  },
+  "stage_percentage": {
+    "stage_a": 13.70482571584217,
+    "stage_b": 15.164903891973418,
+    "stage_c": 37.664428243227924,
+    "stage_d": 0.0016706364555638842,
+    "stage_e_merge": 2.007843558068292e-05,
+    "stage_e_build": 33.460349880709586
+  },
+  "mapping_analysis": {
+    "total_mappings": 107,
+    "entity_mappings": 0,
+    "property_mappings": 0,
+    "material_mappings": 0,
+    "average_confidence": {
+      "entity": 0.0,
+      "property": 0.0,
+      "material": 0.0
+    },
+    "detailed_mappings": [
+      {
+        "sample_id": "simple_001",
+        "original_text": "All IfcWall elements",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "simple_001",
+        "original_text": "must have a FireRating property",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "simple_001",
+        "original_text": "All IfcWall elements",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "simple_001",
+        "original_text": "must have a FireRating property",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "simple_001",
+        "original_text": "All IfcWall elements",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "simple_001",
+        "original_text": "must have a FireRating property",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "simple_002",
+        "original_text": "IfcDoor",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "simple_002",
+        "original_text": "Height of IfcDoor should be greater than 2000mm",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "simple_002",
+        "original_text": "IfcDoor",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "simple_002",
+        "original_text": "Height of IfcDoor should be greater than 2000mm",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "simple_002",
+        "original_text": "IfcDoor",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "simple_002",
+        "original_text": "Height of IfcDoor should be greater than 2000mm",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "simple_003",
+        "original_text": "IfcColumn elements",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "simple_003",
+        "original_text": "Concrete material",
+        "facet_type": "material"
+      },
+      {
+        "sample_id": "simple_003",
+        "original_text": "IfcColumn elements",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "simple_003",
+        "original_text": "Concrete material",
+        "facet_type": "material"
+      },
+      {
+        "sample_id": "simple_003",
+        "original_text": "IfcColumn elements",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "simple_003",
+        "original_text": "Concrete material",
+        "facet_type": "material"
+      },
+      {
+        "sample_id": "simple_004",
+        "original_text": "structural beams",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "simple_004",
+        "original_text": "LoadBearing property set to true",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "simple_004",
+        "original_text": "structural beams",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "simple_004",
+        "original_text": "LoadBearing property set to true",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "simple_004",
+        "original_text": "structural beams",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "simple_004",
+        "original_text": "LoadBearing property set to true",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "medium_001",
+        "original_text": "load-bearing walls",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "medium_001",
+        "original_text": "thickness greater than 200mm",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "medium_001",
+        "original_text": "fire rating of at least 120 minutes",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "medium_001",
+        "original_text": "load-bearing walls",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "medium_001",
+        "original_text": "thickness greater than 200mm",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "medium_001",
+        "original_text": "fire rating of at least 120 minutes",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "medium_002",
+        "original_text": "windows",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "medium_002",
+        "original_text": "fire compartments",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "medium_002",
+        "original_text": "fire resistance ratings",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "medium_002",
+        "original_text": "Doors",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "medium_002",
+        "original_text": "windows",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "medium_002",
+        "original_text": "fire compartments",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "medium_002",
+        "original_text": "fire resistance ratings",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "medium_002",
+        "original_text": "Doors",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "medium_002",
+        "original_text": "windows",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "medium_002",
+        "original_text": "fire compartments",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "medium_002",
+        "original_text": "fire resistance ratings",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "medium_003",
+        "original_text": "concrete columns",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "medium_003",
+        "original_text": "compressive strength greater than 30MPa",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "medium_003",
+        "original_text": "cross-sectional area greater than 0.1 square meters",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "medium_003",
+        "original_text": "concrete",
+        "facet_type": "material"
+      },
+      {
+        "sample_id": "medium_003",
+        "original_text": "concrete columns",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "medium_003",
+        "original_text": "compressive strength greater than 30MPa",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "medium_003",
+        "original_text": "cross-sectional area greater than 0.1 square meters",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "medium_003",
+        "original_text": "concrete",
+        "facet_type": "material"
+      },
+      {
+        "sample_id": "medium_003",
+        "original_text": "concrete columns",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "medium_003",
+        "original_text": "compressive strength greater than 30MPa",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "medium_003",
+        "original_text": "cross-sectional area greater than 0.1 square meters",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "medium_003",
+        "original_text": "concrete",
+        "facet_type": "material"
+      },
+      {
+        "sample_id": "medium_004",
+        "original_text": "Structural slabs",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "medium_004",
+        "original_text": "minimum thickness of 150mm",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "medium_004",
+        "original_text": "reinforced concrete",
+        "facet_type": "material"
+      },
+      {
+        "sample_id": "medium_004",
+        "original_text": "Structural slabs",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "medium_004",
+        "original_text": "minimum thickness of 150mm",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "medium_004",
+        "original_text": "reinforced concrete",
+        "facet_type": "material"
+      },
+      {
+        "sample_id": "medium_004",
+        "original_text": "Structural slabs",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "medium_004",
+        "original_text": "minimum thickness of 150mm",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "medium_004",
+        "original_text": "reinforced concrete",
+        "facet_type": "material"
+      },
+      {
+        "sample_id": "medium_005",
+        "original_text": "external walls",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "medium_005",
+        "original_text": "thermal transmittance U-value less than 0.3 W per square meter Kelvin",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "medium_005",
+        "original_text": "external walls",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "medium_005",
+        "original_text": "thermal transmittance U-value less than 0.3 W per square meter Kelvin",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "medium_005",
+        "original_text": "external walls",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "medium_005",
+        "original_text": "thermal transmittance U-value less than 0.3 W per square meter Kelvin",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "medium_006",
+        "original_text": "Escape doors",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "medium_006",
+        "original_text": "minimum clear width of 900mm",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "medium_006",
+        "original_text": "Escape doors",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "medium_006",
+        "original_text": "minimum clear width of 900mm",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "medium_006",
+        "original_text": "Escape doors",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "medium_006",
+        "original_text": "minimum clear width of 900mm",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "complex_001",
+        "original_text": "structural columns",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "complex_001",
+        "original_text": "foundation elements",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "complex_001",
+        "original_text": "compressive strength greater than 40MPa",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "complex_001",
+        "original_text": "reinforced concrete with compressive strength greater than 40MPa",
+        "facet_type": "material"
+      },
+      {
+        "sample_id": "complex_001",
+        "original_text": "structural columns",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "complex_001",
+        "original_text": "foundation elements",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "complex_001",
+        "original_text": "compressive strength greater than 40MPa",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "complex_001",
+        "original_text": "reinforced concrete with compressive strength greater than 40MPa",
+        "facet_type": "material"
+      },
+      {
+        "sample_id": "complex_001",
+        "original_text": "structural columns",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "complex_001",
+        "original_text": "foundation elements",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "complex_001",
+        "original_text": "compressive strength greater than 40MPa",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "complex_001",
+        "original_text": "reinforced concrete with compressive strength greater than 40MPa",
+        "facet_type": "material"
+      },
+      {
+        "sample_id": "complex_002",
+        "original_text": "Load-bearing walls",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "complex_002",
+        "original_text": "thickness between 200mm and 400mm",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "complex_002",
+        "original_text": "fire rating must be at least 2 hours",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "complex_002",
+        "original_text": "part of the primary structural system",
+        "facet_type": "partof"
+      },
+      {
+        "sample_id": "complex_002",
+        "original_text": "Load-bearing walls",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "complex_002",
+        "original_text": "thickness between 200mm and 400mm",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "complex_002",
+        "original_text": "fire rating must be at least 2 hours",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "complex_002",
+        "original_text": "part of the primary structural system",
+        "facet_type": "partof"
+      },
+      {
+        "sample_id": "complex_002",
+        "original_text": "Load-bearing walls",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "complex_002",
+        "original_text": "thickness between 200mm and 400mm",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "complex_002",
+        "original_text": "fire rating must be at least 2 hours",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "complex_002",
+        "original_text": "part of the primary structural system",
+        "facet_type": "partof"
+      },
+      {
+        "sample_id": "complex_003",
+        "original_text": "doors in fire escape routes",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "complex_003",
+        "original_text": "fire rating of at least 60 minutes",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "complex_003",
+        "original_text": "clear width of at least 900mm",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "complex_003",
+        "original_text": "doors in fire escape routes",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "complex_003",
+        "original_text": "fire rating of at least 60 minutes",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "complex_003",
+        "original_text": "clear width of at least 900mm",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "complex_003",
+        "original_text": "doors in fire escape routes",
+        "facet_type": "entity"
+      },
+      {
+        "sample_id": "complex_003",
+        "original_text": "fire rating of at least 60 minutes",
+        "facet_type": "property"
+      },
+      {
+        "sample_id": "complex_003",
+        "original_text": "clear width of at least 900mm",
+        "facet_type": "property"
+      }
+    ]
+  }
+}

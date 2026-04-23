@@ -1,0 +1,75 @@
+{
+  "sample_id": "medium_005",
+  "complexity": "medium",
+  "iteration": 1,
+  "timestamp": "2026-04-20T20:12:19.161388",
+  "success": true,
+  "timing": {
+    "stage_a": 8.018767199999274,
+    "stage_b": 5.080692800000179,
+    "stage_c": 9.473457300000518,
+    "stage_d": 0.00015549999989161734,
+    "stage_e_merge": 2.5000008463393897e-06,
+    "stage_e_build": 8.627901300000303,
+    "total": 31.20223900000019
+  },
+  "num_specifications": 1,
+  "output": {
+    "specifications": [
+      {
+        "name": "External Walls Thermal Transmittance Compliance",
+        "ifcVersion": [
+          "IFC4"
+        ],
+        "description": "Validates that all external walls meet the maximum thermal transmittance requirement of U-value ≤ 0.3 W/(m²·K) to ensure building envelope thermal performance and energy efficiency compliance.",
+        "instructions": null,
+        "applicability": {
+          "minOccurs": "1",
+          "maxOccurs": "unbounded",
+          "entity": {
+            "name": "IfcWall",
+            "predefinedType": null
+          },
+          "partOf": null,
+          "classification": null,
+          "attribute": null,
+          "property": null,
+          "material": null
+        },
+        "requirements": {
+          "description": null,
+          "entity": null,
+          "partOf": null,
+          "classification": null,
+          "attribute": null,
+          "property": [
+            {
+              "propertySet": "Pset_WallCommon",
+              "baseName": "ThermalTransmittance",
+              "value": {
+                "simpleValue": "thermal transmittance U-value less than 0.3 W per square meter Kelvin",
+                "restriction": null
+              },
+              "dataType": "IfcThermalTransmittanceMeasure",
+              "uri": null,
+              "cardinality": "required",
+              "instructions": null
+            }
+          ],
+          "material": null
+        }
+      }
+    ]
+  },
+  "error": null,
+  "stage_c_mappings": [
+    {
+      "original_text": "external walls",
+      "facet_type": "entity"
+    },
+    {
+      "original_text": "thermal transmittance U-value less than 0.3 W per square meter Kelvin",
+      "facet_type": "property"
+    }
+  ]
+}

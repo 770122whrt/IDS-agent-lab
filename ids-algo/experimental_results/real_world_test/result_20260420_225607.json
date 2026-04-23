@@ -1,0 +1,1194 @@
+{
+  "specifications": [
+    {
+      "name": "Load-Bearing Concrete Walls - Structural Requirements",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "Validates that all load-bearing walls meet minimum concrete strength specifications",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcWall",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": [
+          {
+            "propertySet": "Pset_WallCommon",
+            "baseName": "LoadBearing",
+            "value": {
+              "simpleValue": "Pset_WallCommon.LoadBearing set to true",
+              "restriction": null
+            },
+            "dataType": "IfcBoolean",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "material": [
+          {
+            "value": "Reinforced Concrete",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ]
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": [
+          {
+            "propertySet": "Pset_ConcreteElementGeneral",
+            "baseName": "CompressiveStrength",
+            "value": {
+              "simpleValue": ">= 30.0 mpa",
+              "restriction": {
+                "base": "string",
+                "minInclusive": 30.0
+              }
+            },
+            "dataType": "IfcPressureMeasure",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "material": null
+      }
+    },
+    {
+      "name": "Structural Columns - Dimensional Requirements",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "Validates that all structural columns meet minimum cross-sectional area specifications",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcColumn",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": [
+          {
+            "propertySet": "Pset_SpaceCommon",
+            "baseName": "Area",
+            "value": {
+              "simpleValue": "minimum cross-sectional area of 0.25 square meters",
+              "restriction": null
+            },
+            "dataType": "IfcAreaMeasure",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "material": null
+      }
+    },
+    {
+      "name": "Long-Span Beams - Material and Span Requirements",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "Validates that beams exceeding 6-meter span use appropriate structural materials",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcBeam",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": [
+          {
+            "propertySet": "Pset_DoorCommon",
+            "baseName": "Height",
+            "value": {
+              "simpleValue": "span greater than 6 meters",
+              "restriction": null
+            },
+            "dataType": "IfcPositiveLengthMeasure",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": [
+          {
+            "value": "Reinforced Concrete",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ]
+      }
+    },
+    {
+      "name": "Foundation Elements - Concrete Strength Classification",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "Validates that all foundation elements have specified concrete strength class properties",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcFooting",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": [
+          {
+            "propertySet": "Pset_ConcreteElementGeneral",
+            "baseName": "CompressiveStrength",
+            "value": {
+              "simpleValue": "Pset_ConcreteElementGeneral.StrengthClass specified",
+              "restriction": null
+            },
+            "dataType": "IfcPressureMeasure",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "material": null
+      }
+    },
+    {
+      "name": "Structural Frames - Seismic Design Category",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "Validates that all structural frames have seismic design category specified",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcStructuralAnalysisModel",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": [
+          {
+            "propertySet": "Pset_ConcreteElementGeneral",
+            "baseName": "ConstructionToleranceClass",
+            "value": {
+              "simpleValue": "Pset_BuildingCommon.SeismicDesignCategory specified",
+              "restriction": null
+            },
+            "dataType": "IfcLabel",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "material": null
+      }
+    },
+    {
+      "name": "Post-Tensioned Concrete Elements - Tendon Classification",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "Validates that all post-tensioned concrete elements are properly classified with PostTensioned property",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcTendon",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": [
+          {
+            "propertySet": "Pset_ConcreteElementGeneral",
+            "baseName": "CompressiveStrength",
+            "value": {
+              "simpleValue": "Pset_ConcreteElementGeneral.PostTensioned set to true",
+              "restriction": null
+            },
+            "dataType": "IfcPressureMeasure",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "material": null
+      }
+    },
+    {
+      "name": "Structural Connections - Uniclass 2015 Classification",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "Validates that all structural connections are classified by connection type using Uniclass 2015",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcStructuralConnection",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      }
+    },
+    {
+      "name": "Structural Members - Material Grade and Manufacturer Information",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "Validates that all structural members have material grade specified and include manufacturer information",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcStructuralMember",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": [
+          {
+            "propertySet": "Pset_SpaceCommon",
+            "baseName": "OccupancyType",
+            "value": {
+              "simpleValue": "Pset_ManufacturerTypeInformation",
+              "restriction": null
+            },
+            "dataType": "IfcLabel",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "material": null
+      }
+    },
+    {
+      "name": "Fire Doors - Fire Rating Requirements",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "Validates that all fire doors have minimum 60-minute fire rating specified",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcDoor",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": [
+          {
+            "propertySet": "Pset_WallCommon",
+            "baseName": "FireRating",
+            "value": {
+              "simpleValue": ">= 60.0 minutes",
+              "restriction": {
+                "base": "string",
+                "minInclusive": 60.0
+              }
+            },
+            "dataType": "IfcLabel",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "material": null
+      }
+    },
+    {
+      "name": "Fire-Rated Walls - Fire Rating and Material Requirements",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "Validates that all fire-rated walls have fire rating property specified and are constructed of fire-resistant materials",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcWall",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": [
+          {
+            "propertySet": "Pset_WallCommon",
+            "baseName": "FireRating",
+            "value": {
+              "simpleValue": "Pset_WallCommon.FireRating",
+              "restriction": null
+            },
+            "dataType": "IfcLabel",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "material": [
+          {
+            "value": "Aluminum",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ]
+      }
+    },
+    {
+      "name": "Escape Routes - Clear Width Requirements",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "Validates that all escape routes maintain minimum clear width of 1.2 meters",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcLightSource",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": [
+          {
+            "propertySet": "Pset_DoorCommon",
+            "baseName": "Width",
+            "value": {
+              "simpleValue": "minimum clear width of 1.2 meters",
+              "restriction": null
+            },
+            "dataType": "IfcPositiveLengthMeasure",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      }
+    },
+    {
+      "name": "Fire Compartment Boundaries - Compartmentation Classification",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "Validates that all fire compartment boundaries are clearly identified with compartmentation property",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcRelSpaceBoundary1stLevel",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": [
+          {
+            "propertySet": "Pset_WallCommon",
+            "baseName": "FireRating",
+            "value": {
+              "simpleValue": "Pset_SpaceFireSafetyRequirements.FireCompartmentation set to true",
+              "restriction": null
+            },
+            "dataType": "IfcLabel",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "material": null
+      }
+    },
+    {
+      "name": "Fire Protection Systems - Fire Safety Code Classification",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "Validates that all fire protection systems are classified according to fire safety code",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcFireSuppressionTerminal",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      }
+    },
+    {
+      "name": "HVAC Ducts - Nominal Diameter Specification",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "Validates that all HVAC ducts have nominal diameter property specified",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcDuctSegmentType",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": [
+          {
+            "propertySet": "Pset_DoorCommon",
+            "baseName": "Width",
+            "value": {
+              "simpleValue": "Pset_DuctSegmentTypeCommon.NominalDiameter specified",
+              "restriction": null
+            },
+            "dataType": "IfcPositiveLengthMeasure",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "material": null
+      }
+    },
+    {
+      "name": "Electrical Cables - Voltage Rating Classification",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "Validates that all electrical cables are classified by voltage rating with RatedVoltage property specified",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcCableSegment",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": [
+          {
+            "propertySet": "Pset_ConcreteElementGeneral",
+            "baseName": "ReinforcementVolumeRatio",
+            "value": {
+              "simpleValue": "Pset_CableSegmentTypeCommon.RatedVoltage",
+              "restriction": null
+            },
+            "dataType": "IfcNormalisedRatioMeasure",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "material": null
+      }
+    },
+    {
+      "name": "Plumbing Pipes - Material and Diameter Specification",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "Validates that all plumbing pipes have material specification and nominal diameter property specified",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcPipeSegment",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": [
+          {
+            "propertySet": "Pset_DoorCommon",
+            "baseName": "Width",
+            "value": {
+              "simpleValue": "Pset_PipeSegmentTypeCommon.NominalDiameter",
+              "restriction": null
+            },
+            "dataType": "IfcPositiveLengthMeasure",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "material": [
+          {
+            "value": "Insulation",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ]
+      }
+    },
+    {
+      "name": "Lighting Fixtures - Light Emitter Type Specification",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "Validates that all lighting fixtures have light emitter type property specified",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcLightFixture",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": [
+          {
+            "propertySet": "Pset_SpaceCommon",
+            "baseName": "OccupancyType",
+            "value": {
+              "simpleValue": "Pset_LightFixtureTypeCommon.LightEmitterType specified",
+              "restriction": null
+            },
+            "dataType": "IfcLabel",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "material": null
+      }
+    },
+    {
+      "name": "Ramps - Slope Requirements",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "Validates that all ramps have slope not exceeding 1:12 (8.33%)",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcRamp",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": [
+          {
+            "propertySet": "Pset_DoorCommon",
+            "baseName": "Height",
+            "value": {
+              "simpleValue": "<= 1.0",
+              "restriction": {
+                "base": "string",
+                "maxInclusive": 1.0
+              }
+            },
+            "dataType": "IfcPositiveLengthMeasure",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "material": null
+      }
+    },
+    {
+      "name": "Accessible Doors - Width and External Classification",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "Validates that all accessible doors have minimum clear width of 850mm and are properly classified as external",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcDoor",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": [
+          {
+            "propertySet": "Pset_DoorCommon",
+            "baseName": "Width",
+            "value": {
+              "simpleValue": ">= 850.0 mm",
+              "restriction": {
+                "base": "string",
+                "minInclusive": 850.0
+              }
+            },
+            "dataType": "IfcPositiveLengthMeasure",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          },
+          {
+            "propertySet": "Pset_DoorCommon",
+            "baseName": "Height",
+            "value": {
+              "simpleValue": "Pset_DoorCommon.IsExternal",
+              "restriction": null
+            },
+            "dataType": "IfcPositiveLengthMeasure",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "material": null
+      }
+    },
+    {
+      "name": "Accessible Toilets - Grab Bar Installation and Classification",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "Validates that all accessible toilets have grab bars installed and are classified as accessible facilities",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcSanitaryTerminal",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      }
+    },
+    {
+      "name": "Accessible Elevators - Wheelchair Accessibility and Dimensions",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "Validates that all elevators serving accessible routes are wheelchair accessible with minimum car dimensions specified",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcRamp",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      }
+    },
+    {
+      "name": "Accessible Parking Spaces - Marking and Width Requirements",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "Validates that all accessible parking spaces are clearly marked and meet minimum width of 3.6 meters",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcPlacement",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": [
+          {
+            "propertySet": "Pset_DoorCommon",
+            "baseName": "Width",
+            "value": {
+              "simpleValue": ">= 3.6 meters",
+              "restriction": {
+                "base": "string",
+                "minInclusive": 3.6
+              }
+            },
+            "dataType": "IfcPositiveLengthMeasure",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "material": null
+      }
+    },
+    {
+      "name": "External Walls - Thermal Transmittance Requirements",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "Validates that all external walls have thermal transmittance U-value not exceeding 0.3 W/m²K",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcWall",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": [
+          {
+            "propertySet": "Pset_WallCommon",
+            "baseName": "ThermalTransmittance",
+            "value": {
+              "simpleValue": "thermal transmittance U-value <= 0.3 W/m²K",
+              "restriction": null
+            },
+            "dataType": "IfcThermalTransmittanceMeasure",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "material": null
+      }
+    },
+    {
+      "name": "Windows - Thermal Transmittance Requirements",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "Validates that all windows have thermal transmittance U-value not exceeding 1.8 W/m²K",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcWindow",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": [
+          {
+            "propertySet": "Pset_WallCommon",
+            "baseName": "ThermalTransmittance",
+            "value": {
+              "simpleValue": "<= 1.0",
+              "restriction": {
+                "base": "string",
+                "maxInclusive": 1.0
+              }
+            },
+            "dataType": "IfcThermalTransmittanceMeasure",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "material": null
+      }
+    },
+    {
+      "name": "Roofs - Thermal Resistance Requirements",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "Validates that all roofs have insulation with thermal resistance R-value not less than 5.0 m²K/W",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcRoof",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": [
+          {
+            "propertySet": "Pset_WallCommon",
+            "baseName": "ThermalTransmittance",
+            "value": {
+              "simpleValue": "thermal resistance R-value >= 5.0 m²K/W",
+              "restriction": null
+            },
+            "dataType": "IfcThermalTransmittanceMeasure",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "material": null
+      }
+    },
+    {
+      "name": "HVAC Systems - Energy Efficiency Rating",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "Validates that all HVAC systems have energy efficiency rating specified",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcUnitaryEquipment",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": [
+          {
+            "propertySet": "Pset_ConcreteElementGeneral",
+            "baseName": "ReinforcementVolumeRatio",
+            "value": {
+              "simpleValue": "Pset_AirToAirHeatRecoveryTypeCommon.NominalEfficiency specified",
+              "restriction": null
+            },
+            "dataType": "IfcNormalisedRatioMeasure",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "material": null
+      }
+    },
+    {
+      "name": "Lighting Systems - LED Technology and Luminous Efficacy",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "Validates that all lighting systems use LED technology with luminous efficacy not less than 100 lumens per watt",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcLightFixture",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": [
+          {
+            "value": "Insulation",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ]
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": [
+          {
+            "propertySet": "Pset_SpaceCommon",
+            "baseName": "Volume",
+            "value": {
+              "simpleValue": ">= 100.0 lumens",
+              "restriction": {
+                "base": "string",
+                "minInclusive": 100.0
+              }
+            },
+            "dataType": "IfcVolumeMeasure",
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "material": null
+      }
+    }
+  ]
+}

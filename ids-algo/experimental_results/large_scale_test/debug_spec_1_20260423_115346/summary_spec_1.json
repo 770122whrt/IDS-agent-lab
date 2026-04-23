@@ -1,0 +1,35 @@
+{
+  "spec_id": "1",
+  "timestamp": "2026-04-23T11:54:42.559143",
+  "success": true,
+  "timing": {
+    "stage_a": 6.564378500000203,
+    "stage_b": 5.777303599999868,
+    "stage_c": 36.6266813000002,
+    "stage_d": 0.004642099999728089,
+    "stage_e_merge": 1.4299999747890979e-05,
+    "stage_e_build": 7.005776699999842,
+    "total": 55.9794437999999
+  },
+  "total_time": 55.97879649999959,
+  "num_specifications": 0,
+  "stage_summary": {
+    "stage_a": {
+      "objects": 0,
+      "properties": 0,
+      "materials": 0
+    },
+    "stage_b": {
+      "facets": 0
+    },
+    "stage_c": {
+      "mapped_facets": 5
+    },
+    "stage_d": {
+      "constraints": 3
+    },
+    "stage_e": {
+      "specifications": 0
+    }
+  }
+}
