@@ -155,10 +155,6 @@ export async function POST(request: NextRequest, context: ContextType) {
         { status: 409 }
       );
     }
-        ifcFileName: ifcFile.name,
-        status: "checking"
-      }
-    });
 
     // 调用 Python 后端进行审查
     const PYTHON_BACKEND_URL = process.env.PYTHON_BACKEND_URL || "http://localhost:8000";
