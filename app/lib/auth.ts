@@ -32,11 +32,12 @@ export const auth = betterAuth({
     autoSignIn: true, //auto sign in users after they sign up
 
     async sendResetPassword(data, request) {
-      const resetUrl = `${NEXT_PUBLIC_APP_URL}/reset-password?token=${data.token}&email=${encodeURIComponent(data.email)}`;
+      const email = data.user.email;
+      const resetUrl = `${NEXT_PUBLIC_APP_URL}/reset-password?token=${data.token}&email=${encodeURIComponent(email)}`;
 
       await resend.emails.send({
         from: "noreply@yourdomain.com",
-        to: data.email,
+        to: email,
         subject: "重置您的密码",
         html: `
           <h1>密码重置请求</h1>
@@ -47,7 +48,7 @@ export const auth = betterAuth({
           <p>如果您没有请求重置密码，请忽略此邮件。</p>
         `
       });
-      console.log("Password reset email sent to:", data.email);
+      console.log("Password reset email sent to:", email);
     },
   },
   socialProviders: {

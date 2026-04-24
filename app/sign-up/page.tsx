@@ -56,7 +56,9 @@ export default function SignUp() {
       fetchOptions: {
         onRequest: () => setLoading(true),
         onResponse: () => setLoading(false),
-        onError: (ctx) => toast.error(ctx.error.message),
+        onError: (ctx) => {
+          toast.error(ctx.error.message);
+        },
         onSuccess: async () => {
           toast.success("Account created successfully!");
           router.push("/dashboard");

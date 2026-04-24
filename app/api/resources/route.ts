@@ -64,8 +64,8 @@ export async function POST(request: NextRequest) {
     // 这是一个 Promise 包装器，确保文件完全写完后再继续\
     // promise 会存在一个<mongoose.Types.ObjectId>的结果  resolve：”成功流完了，给你ID”  reject：等于说”管子爆了，报错”
     // 这是一个保险措施+获取ID的措施 重点在里面
-    let uploadStream: mongoose.mongo.GridFSUploadStream | null = null;
-    let readStream: NodeJS.ReadableStream | null = null;
+    let uploadStream: mongoose.mongo.GridFSBucketWriteStream | null = null;
+    let readStream: Readable | null = null;
 
     const fileId = await new Promise<mongoose.Types.ObjectId>((resolve, reject) => {
       // 创建一个写入流，文件名设为原始文件名 metadata为标签 为ID和类型
@@ -78,7 +78,7 @@ export async function POST(request: NextRequest) {
 
       readStream
         .pipe(uploadStream) // 把输入数据流接在进水口上
-        .on('error', (error) => {
+        .on('error', (error: Error) => {
           // 确保出错时关闭流
           readStream?.destroy();
           uploadStream?.destroy();

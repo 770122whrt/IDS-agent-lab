@@ -38,7 +38,9 @@ function RequestResetStep() {
         fetchOptions: {
           onRequest: () => setLoading(true),
           onResponse: () => setLoading(false),
-          onError: (ctx) => toast.error(ctx.error.message),
+          onError: (ctx) => {
+            toast.error(ctx.error.message);
+          },
           onSuccess: () => {
             toast.success("Password reset link sent! Check your email.");
           },
@@ -156,12 +158,13 @@ function ResetPasswordStep() {
     try {
       const { error } = await resetPassword({
         token: token!,
-        email: email!,
         newPassword: password,
         fetchOptions: {
           onRequest: () => setLoading(true),
           onResponse: () => setLoading(false),
-          onError: (ctx) => toast.error(ctx.error.message),
+          onError: (ctx) => {
+            toast.error(ctx.error.message);
+          },
           onSuccess: () => {
             toast.success("Password reset successfully!");
             router.push("/sign-in");

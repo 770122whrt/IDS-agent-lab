@@ -89,7 +89,7 @@ export default function SignIn() {
 
           {/* Remember Me */}
           <div className="flex items-center gap-2">
-            <Checkbox id="remember" checked={rememberMe} onCheckedChange={setRememberMe} />
+            <Checkbox id="remember" checked={rememberMe} onCheckedChange={(checked) => setRememberMe(checked === true)} />
             <Label htmlFor="remember" className="text-sm">
               Remember me
             </Label>
@@ -145,7 +145,9 @@ export default function SignIn() {
                   {
                     onRequest: () => setLoading(true),
                     onResponse: () => setLoading(false),
-                    onError: (ctx) => toast.error(ctx.error.message),
+                    onError: (ctx) => {
+                      toast.error(ctx.error.message);
+                    },
                   }
                 );
               }}
@@ -164,7 +166,9 @@ export default function SignIn() {
                   {
                     onRequest: () => setLoading(true),
                     onResponse: () => setLoading(false),
-                    onError: (ctx) => toast.error(ctx.error.message),
+                    onError: (ctx) => {
+                      toast.error(ctx.error.message);
+                    },
                   }
                 );
               }}
