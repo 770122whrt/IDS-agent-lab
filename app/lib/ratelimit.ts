@@ -34,7 +34,11 @@ export async function rateLimit(
     resource: resourceRateLimit,
   }[type];
 
-  const { success } = await limiter.limit(ip);
-
-  return success;
+  try {
+    const { success } = await limiter.limit(ip);
+    return success;
+  } catch (error) {
+    console.warn("Rate limit unavailable (Redis connection failed), allowing request");
+    return true;
+  }
 }

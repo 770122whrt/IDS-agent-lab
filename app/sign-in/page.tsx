@@ -117,9 +117,10 @@ export default function SignIn() {
                   onRequest: () => setLoading(true),
                   onResponse: () => setLoading(false),
                   onError: (ctx) => {
-                    console.error("❌ Login failed:", ctx.error.message);
-                    toast.error(ctx.error.message || "Login failed");
-                    setError(ctx.error.message || "Login failed");
+                    console.error("❌ Login failed:", ctx.error);
+                    const msg = ctx.error.message || ctx.error.statusText || "Login failed";
+                    toast.error(msg);
+                    setError(msg);
                   },
                   onSuccess: (ctx) => {
                     console.log(" Logged in as:", ctx.data?.user?.email);
