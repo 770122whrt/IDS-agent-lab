@@ -1,0 +1,27 @@
+{
+  "facets": [
+    {
+      "text": "IfcBridgePart",
+      "type": "entity",
+      "confidence": 0.95
+    },
+    {
+      "text": "IfcBridge",
+      "type": "entity",
+      "confidence": 0.95
+    },
+    {
+      "text": "Name",
+      "type": "attribute",
+      "confidence": 0.9
+    },
+    {
+      "text": "必须通过IFCRELAGGREGATES关系聚合在IfcBridge下",
+      "type": "partof",
+      "confidence": 0.95
+    }
+  ],
+  "entity_count": 2,
+  "property_count": 0,
+  "material_count": 0
+}

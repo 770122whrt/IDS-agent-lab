@@ -93,7 +93,6 @@ class IdsBuilder:
                 slots = await self._llm_slot_assignment(context)
             else:
                 logger.warning("No LLM client available, using fallback logic")
-                logger.exception(e)
                 slots = self._fallback_slot_assignment(mapped_facets)
 
             # 3. Mechanical conversion to IDS format
@@ -125,6 +124,8 @@ class IdsBuilder:
 
         except Exception as e:
             logger.error(f"IDS specification building failed: {str(e)}")
+            import traceback
+            logger.error(f"Full traceback:\n{traceback.format_exc()}")
             fallback_result = self._generate_basic_fallback(mapped_facets, ifc_version)
             # Simple fallback
             return fallback_result
@@ -245,6 +246,9 @@ class IdsBuilder:
 
             if facet_data.get("constraints"):
                 description += f"\nConstraints: {facet_data['constraints']}"
+
+            if facet_data.get("additional_data"):
+                description += f"\nAdditional Data: {facet_data['additional_data']}"
 
             facet_descriptions.append(description)
 
@@ -800,9 +804,12 @@ class IdsBuilder:
         self, facet: MappedFacet
     ) -> Optional[Dict[str, Any]]:
         """Build a material requirement from a mapped facet"""
+        # 如果mapped_name为None，表示要求任意材料（不指定具体材料名称）
+        value = None if facet.mapped_name is None else self._build_ids_value(facet.mapped_name, None)
+
         mat_req = {
             #用解包代替原来的强格式化结构
-            "value": self._build_ids_value(facet.mapped_name, None),
+            "value": value,
             "uri": None,
             "cardinality": "required",
             "instructions": None,
@@ -813,10 +820,19 @@ class IdsBuilder:
         self, facet: MappedFacet
     ) -> Optional[Dict[str, Any]]:
         """Build an attribute requirement from a mapped facet"""
+
+        # 构建value - 只有在有约束时才设置具体值
+        value_obj = self._build_value_with_constraints(facet)
+
+        # 如果没有约束（只是存在性要求），value应该为None
+        # 检查是否只有simpleValue且等于原文（表示没有实际约束）
+        if (value_obj.get("restriction") is None and
+            value_obj.get("simpleValue") == facet.original_text):
+            value_obj = None
+
         attr_req = {
-            #用解包代替原来的强格式化结构
             "name": self._build_ids_value(facet.mapped_name, None),
-            "value": self._build_value_with_constraints(facet),
+            "value": value_obj,
             "cardinality": "required",
             "instructions": None,
         }
@@ -860,11 +876,17 @@ class IdsBuilder:
         """Build a partOf requirement from a mapped facet"""
         # 从resolver获取relation信息，默认为IFCRELCONTAINEDINSPATIALSTRUCTURE
         relation_type = "IFCRELCONTAINEDINSPATIALSTRUCTURE"
+        predefined_type = None
+
         if hasattr(facet, "additional_data") and facet.additional_data:
             relation_type = facet.additional_data.get("relation", relation_type)
+            predefined_type = facet.additional_data.get("predefined_type", None)
 
         partof_req = {
-            "entity": self._build_ids_value(facet.mapped_name, None),
+            "entity": {
+                "name": self._build_ids_value(facet.mapped_name, None),
+                "predefinedType": predefined_type,
+            },
             "relation": relation_type,
             "cardinality": "required",
             "instructions": f"PartOf relationship: {facet.original_text}",

@@ -1,0 +1,28 @@
+{
+  "objects": [
+    {
+      "raw_text": "所有类型为DECK的IfcBridgePart构件",
+      "object_type": "IfcBridgePart",
+      "modifiers": [
+        "类型为DECK",
+        "所有"
+      ],
+      "confidence": 0.95
+    },
+    {
+      "raw_text": "IfcBridge",
+      "object_type": "IfcBridge",
+      "modifiers": [],
+      "confidence": 0.95
+    }
+  ],
+  "properties": [
+    {
+      "raw_text": "必须有Name属性",
+      "property_name": "Name",
+      "constraint_text": "必须有",
+      "confidence": 0.9
+    }
+  ],
+  "materials": []
+}

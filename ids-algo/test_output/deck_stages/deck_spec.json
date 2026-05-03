@@ -1,0 +1,51 @@
+{
+  "specifications": [
+    {
+      "name": "DECK type IfcBridgePart aggregation and naming requirements",
+      "ifcVersion": [
+        "IFC4X3_ADD2"
+      ],
+      "description": "Validates that all IfcBridgePart elements with PredefinedType DECK are properly aggregated under IfcBridge through IFCRELAGGREGATES relationship and have a Name attribute defined",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcBridgePart",
+          "predefinedType": "DECK"
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": [
+          {
+            "entity": {
+              "name": "IfcBridge",
+              "predefinedType": null
+            },
+            "relation": "IFCRELAGGREGATES",
+            "cardinality": "required",
+            "instructions": "PartOf relationship: 必须通过IFCRELAGGREGATES关系聚合在IfcBridge下"
+          }
+        ],
+        "classification": null,
+        "attribute": [
+          {
+            "name": "Name",
+            "value": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "property": null,
+        "material": null
+      }
+    }
+  ]
+}

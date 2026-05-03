@@ -1,0 +1,32 @@
+{
+  "facets": [
+    {
+      "text": "IfcElementAssembly",
+      "type": "entity",
+      "confidence": 0.95
+    },
+    {
+      "text": "IfcBridgePart",
+      "type": "entity",
+      "confidence": 0.95
+    },
+    {
+      "text": "必须有Name属性",
+      "type": "attribute",
+      "confidence": 0.9
+    },
+    {
+      "text": "必须定义材料",
+      "type": "material",
+      "confidence": 0.85
+    },
+    {
+      "text": "必须包含在IfcBridgePart（类型为SUPERSTRUCTURE）的上层结构中",
+      "type": "partof",
+      "confidence": 0.9
+    }
+  ],
+  "entity_count": 2,
+  "property_count": 0,
+  "material_count": 1
+}

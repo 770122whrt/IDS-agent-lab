@@ -1,0 +1,58 @@
+{
+  "specifications": [
+    {
+      "name": "GIRDER型主梁构件的空间位置、属性和材料要求",
+      "ifcVersion": [
+        "IFC4X3_ADD2"
+      ],
+      "description": "验证所有GIRDER类型的IfcElementAssembly构件必须位于SUPERSTRUCTURE类型的IfcBridgePart上层结构中，必须具有Name属性，且必须定义材料",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcElementAssembly",
+          "predefinedType": "GIRDER"
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": [
+          {
+            "entity": {
+              "name": "IfcBridgePart",
+              "predefinedType": "SUPERSTRUCTURE"
+            },
+            "relation": "IFCRELCONTAINEDINSPATIALSTRUCTURE",
+            "cardinality": "required",
+            "instructions": "PartOf relationship: 必须包含在IfcBridgePart（类型为SUPERSTRUCTURE）的上层结构中"
+          }
+        ],
+        "classification": null,
+        "attribute": [
+          {
+            "name": "Name",
+            "value": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "property": null,
+        "material": [
+          {
+            "value": null,
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ]
+      }
+    }
+  ]
+}
