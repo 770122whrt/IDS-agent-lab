@@ -1,0 +1,80 @@
+{
+  "specifications": [
+    {
+      "name": "GIRDER型IfcElementAssembly构件的桥梁上部结构合规性验证",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "验证所有PredefinedType为GIRDER的IfcElementAssembly构件是否包含在SUPERSTRUCTURE类型的IfcBridgePart中，是否具有Name属性，以及是否定义了材料",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcElementAssembly",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": [
+          {
+            "name": "PredefinedType",
+            "value": {
+              "simpleValue": "GIRDER",
+              "restriction": {
+                "base": "string",
+                "enumeration": [
+                  "GIRDER"
+                ]
+              }
+            },
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": [
+          {
+            "entity": {
+              "name": "IfcBridgePart",
+              "predefinedType": "SUPERSTRUCTURE"
+            },
+            "relation": "IFCRELCONTAINEDINSPATIALSTRUCTURE",
+            "cardinality": "required",
+            "instructions": "PartOf relationship: 必须包含在IfcBridgePart（类型为SUPERSTRUCTURE）的上层结构中"
+          }
+        ],
+        "classification": null,
+        "attribute": [
+          {
+            "name": "Name",
+            "value": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "property": null,
+        "material": [
+          {
+            "value": null,
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ]
+      }
+    }
+  ],
+  "metadata": {
+    "total_extracted": 1,
+    "total_normalized": 6,
+    "ifc_version": "IFC4",
+    "slot_count": 1
+  },
+  "error": null
+}

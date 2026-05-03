@@ -1,0 +1,32 @@
+[
+  {
+    "restriction_type": {
+      "_value_": "enumeration",
+      "_name_": "ENUMERATION",
+      "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x00000230978A14E0>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFD90968310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x00000230978A13A0>}",
+      "_sort_order_": 1
+    },
+    "restriction": {
+      "values": [
+        "GIRDER"
+      ]
+    },
+    "confidence": 0.8,
+    "original_text": "PredefinedType为GIRDER"
+  },
+  {
+    "restriction_type": {
+      "_value_": "enumeration",
+      "_name_": "ENUMERATION",
+      "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x00000230978A14E0>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFD90968310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x00000230978A13A0>}",
+      "_sort_order_": 1
+    },
+    "restriction": {
+      "values": [
+        "SUPERSTRUCTURE"
+      ]
+    },
+    "confidence": 0.8,
+    "original_text": "类型为SUPERSTRUCTURE"
+  }
+]

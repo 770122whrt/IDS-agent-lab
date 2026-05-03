@@ -14,7 +14,7 @@ interface TaskDetail {
   originalname: string;
   input_type: "text" | "ifc_file";
   inputText?: string;
-  status: "pending" | "processing" | "pending_conversion" | "completed" | "failed";
+  status: "pending" | "processing" | "pending_conversion" | "completed" | "checking" | "checked" | "check_failed" | "failed";
   uploadTime: string;
   resultJson?: object;
   idsFilePath?: string;
@@ -77,6 +77,12 @@ export default function TaskDetailPage() {
         return <Badge variant="processing">处理中</Badge>;
       case "pending_conversion":
         return <Badge variant="warning">待转换</Badge>;
+      case "checking":
+        return <Badge variant="processing">审查中</Badge>;
+      case "checked":
+        return <Badge variant="success">已审查</Badge>;
+      case "check_failed":
+        return <Badge variant="destructive">审查失败</Badge>;
       case "failed":
         return <Badge variant="destructive">失败</Badge>;
       default:
@@ -260,7 +266,7 @@ export default function TaskDetailPage() {
           </div>
 
           {/* Error Message */}
-          {task.status === "failed" && task.errorMessage && (
+          {(task.status === "failed" || task.status === "check_failed") && task.errorMessage && (
             <div className="mt-4 p-4 bg-red-50 dark:bg-red-900/20 rounded border border-red-200 dark:border-red-800">
               <p className="text-sm font-semibold text-red-700 dark:text-red-300 mb-2">
                 错误信息:
@@ -377,12 +383,12 @@ export default function TaskDetailPage() {
         )}
 
         {/* Processing Indicator */}
-        {task.status === "processing" && (
+        {(task.status === "processing" || task.status === "checking") && (
           <Card className="border-0 shadow-sm bg-blue-50 dark:bg-blue-900/20">
             <CardContent className="p-6 text-center">
               <Loader2 className="w-8 h-8 animate-spin text-blue-600 mx-auto mb-3" />
               <p className="text-blue-700 dark:text-blue-300 font-medium">
-                正在处理中，请稍候...
+                {task.status === "checking" ? "正在审查中，请稍候..." : "正在处理中，请稍候..."}
               </p>
             </CardContent>
           </Card>

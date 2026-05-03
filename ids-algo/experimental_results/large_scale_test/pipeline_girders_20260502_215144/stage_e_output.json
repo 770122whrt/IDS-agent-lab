@@ -1,0 +1,65 @@
+{
+  "specifications": [
+    {
+      "name": "GIRDER型桥梁主梁构件规范验证",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "验证所有GIRDER类型的IfcElementAssembly构件必须位于SUPERSTRUCTURE类型的IfcBridgePart上层结构中，必须具有Name属性，且必须定义材料信息",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcElementAssembly",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": [
+          {
+            "name": "PredefinedType",
+            "value": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": [
+          {
+            "entity": {
+              "name": "IfcBridgePart",
+              "predefinedType": null
+            },
+            "relation": "IFCRELCONTAINEDINSPATIALSTRUCTURE",
+            "cardinality": "required",
+            "instructions": "PartOf relationship: IfcBridgePart"
+          }
+        ],
+        "classification": null,
+        "attribute": [
+          {
+            "name": "Name",
+            "value": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "property": null,
+        "material": null
+      }
+    }
+  ],
+  "metadata": {
+    "total_extracted": 1,
+    "total_normalized": 4,
+    "ifc_version": "IFC4",
+    "slot_count": 1
+  },
+  "error": null
+}

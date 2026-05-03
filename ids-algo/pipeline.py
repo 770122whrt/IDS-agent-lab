@@ -94,6 +94,20 @@ async def run_ids_pipeline(text_content: str, return_timing: bool = False, retur
         # Always capture Stage C mapping results (for accuracy evaluation)
         stage_c_mappings = []
         for facet in facets:
+            # Serialize constraints list
+            constraints_list = getattr(facet, 'constraints', [])
+            serialized_constraints = []
+            for c in constraints_list:
+                if hasattr(c, 'to_dict'):
+                    serialized_constraints.append(c.to_dict())
+                else:
+                    # Fallback: extract basic fields
+                    serialized_constraints.append({
+                        "base_measure": getattr(c, 'base_measure', None),
+                        "value": getattr(c, 'value', None),
+                        "use": getattr(c, 'use', None)
+                    })
+
             mapping = {
                 "facet_type": getattr(facet, 'facet_type', ''),
                 "original_text": getattr(facet, 'original_text', ''),
@@ -101,7 +115,7 @@ async def run_ids_pipeline(text_content: str, return_timing: bool = False, retur
                 "confidence": getattr(facet, 'confidence', 0.0),
                 "property_set": getattr(facet, 'property_set', None),
                 "entity_name": getattr(facet, 'entity_name', None),
-                "constraints": getattr(facet, 'constraints', []),
+                "constraints": serialized_constraints,
                 "additional_data": getattr(facet, 'additional_data', None)
             }
 

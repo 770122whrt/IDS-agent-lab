@@ -1,0 +1,46 @@
+{
+  "building_objects": [
+    {
+      "raw_text": "所有IfcElementAssembly实体，且PredefinedType为GIRDER的构件",
+      "object_type": "IfcElementAssembly",
+      "modifiers": [
+        "PredefinedType为GIRDER"
+      ],
+      "confidence": 0.95
+    },
+    {
+      "raw_text": "IfcBridgePart（类型为SUPERSTRUCTURE）",
+      "object_type": "IfcBridgePart",
+      "modifiers": [
+        "类型为SUPERSTRUCTURE"
+      ],
+      "confidence": 0.95
+    }
+  ],
+  "property_descriptions": [
+    {
+      "raw_text": "必须有Name属性",
+      "property_name": "Name",
+      "constraint_text": "必须存在",
+      "confidence": 0.9
+    }
+  ],
+  "material_requirements": [
+    {
+      "raw_text": "必须定义材料",
+      "material_name": "未指定材料类型",
+      "specifications": "必须定义材料属性",
+      "confidence": 0.85
+    }
+  ],
+  "spatial_relationships": [
+    {
+      "raw_text": "必须包含在IfcBridgePart（类型为SUPERSTRUCTURE）的上层结构中",
+      "subject": "IfcElementAssembly(PredefinedType=GIRDER)",
+      "relation": "包含在",
+      "object": "IfcBridgePart(SUPERSTRUCTURE)的上层结构",
+      "confidence": 0.9
+    }
+  ],
+  "unmatched_fragments": []
+}

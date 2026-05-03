@@ -47,12 +47,14 @@ class ConstraintExtractor:
             r"(?:range:?\s*)?(\d+(?:\.\d+)?)\s*[-–]\s*(\d+(?:\.\d+)?)\s*(\w+)?",
         ]
 
-        # 枚举匹配（不变）
+        # 枚举匹配（增强：支持中文属性赋值）
         self.enumeration_patterns = [
             r'"([^"]+)"(?:\s*,\s*"([^"]+)")*(?:\s*,?\s*or\s+"([^"]+)")?',
             r"(\w+)(?:\s*,\s*(\w+))*(?:\s*,?\s*or\s+(\w+))",
             r"(?:one of|choose from|select from|must be):?\s*([^.;]+)",
             r"either\s+(\w+)\s+or\s+(\w+)",
+            # 中文属性赋值模式：PredefinedType为GIRDER, 类型为SUPERSTRUCTURE
+            r"(?:PredefinedType|类型|type)\s*[为=]\s*([A-Z_]+)",
         ]
 
         # 长度匹配（不变）

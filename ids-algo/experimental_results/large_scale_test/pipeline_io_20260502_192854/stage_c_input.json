@@ -1,0 +1,22 @@
+{
+  "entity_candidates": [
+    {
+      "source_text": "main girder",
+      "facet_type": "entity",
+      "confidence": 0.95,
+      "reasoning": "Concrete building element type identified as bridge main girder component"
+    }
+  ],
+  "property_candidates": [],
+  "attribute_candidates": [],
+  "material_candidates": [
+    {
+      "source_text": "混凝土",
+      "facet_type": "material",
+      "confidence": 0.95,
+      "reasoning": "Material requirement specifying concrete as mandatory material"
+    }
+  ],
+  "classification_candidates": [],
+  "partof_candidates": []
+}

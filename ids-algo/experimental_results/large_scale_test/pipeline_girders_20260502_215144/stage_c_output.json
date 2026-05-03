@@ -1,0 +1,77 @@
+[
+  {
+    "facet_type": "entity",
+    "original_text": "IfcElementAssembly",
+    "mapped_name": "IfcElementAssembly",
+    "confidence": 1.0,
+    "ifc_item": {
+      "name": "IfcElementAssembly",
+      "definition": "A container class that represents complex element assemblies aggregated from several elements, such as discrete elements, building elements, or other elements.",
+      "ifc_version": "IFC2X3",
+      "item_type": "entity",
+      "predefined_types": []
+    },
+    "property_set": null,
+    "entity_name": null,
+    "constraints": [],
+    "additional_data": null
+  },
+  {
+    "facet_type": "entity",
+    "original_text": "IfcBridgePart",
+    "mapped_name": "IfcBridgePart",
+    "confidence": 1.0,
+    "ifc_item": {
+      "name": "IfcBridgePart",
+      "definition": "A bridge part is a major functional part of a bridge which can be used to provide a specific kind of bridge construction information. IfcBridgePart is used to represent the major parts of a bridge, such as abutment, deck, foundation, pier, pylon, substructure, and superstructure.",
+      "ifc_version": "IFC4X3",
+      "item_type": "entity",
+      "predefined_types": [
+        "ABUTMENT",
+        "DECK",
+        "DECK_SEGMENT",
+        "FOUNDATION",
+        "PIER",
+        "PIER_SEGMENT",
+        "PYLON",
+        "SUBSTRUCTURE",
+        "SUPERSTRUCTURE",
+        "SURFACESTRUCTURE",
+        "USERDEFINED",
+        "NOTDEFINED"
+      ]
+    },
+    "property_set": null,
+    "entity_name": null,
+    "constraints": [],
+    "additional_data": null
+  },
+  {
+    "facet_type": "attribute",
+    "original_text": "PredefinedType为GIRDER",
+    "mapped_name": "PredefinedType",
+    "confidence": 0.8,
+    "ifc_item": {
+      "name": "PredefinedType",
+      "type": "IFC_ATTRIBUTE"
+    },
+    "property_set": null,
+    "entity_name": null,
+    "constraints": [],
+    "additional_data": null
+  },
+  {
+    "facet_type": "attribute",
+    "original_text": "必须有Name属性",
+    "mapped_name": "Name",
+    "confidence": 0.8,
+    "ifc_item": {
+      "name": "Name",
+      "type": "IFC_ATTRIBUTE"
+    },
+    "property_set": null,
+    "entity_name": null,
+    "constraints": [],
+    "additional_data": null
+  }
+]

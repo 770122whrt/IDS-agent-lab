@@ -1,0 +1,23 @@
+{
+  "building_objects": [
+    {
+      "raw_text": "桥梁结构",
+      "object_type": "IfcBridge",
+      "modifiers": [
+        "所有"
+      ],
+      "confidence": 0.95
+    }
+  ],
+  "property_descriptions": [
+    {
+      "raw_text": "必须有Name属性",
+      "property_name": "Name",
+      "constraint_text": "必须有",
+      "confidence": 0.9
+    }
+  ],
+  "material_requirements": [],
+  "spatial_relationships": [],
+  "unmatched_fragments": []
+}

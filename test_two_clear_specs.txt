@@ -1,0 +1,28 @@
+# 桥梁IDS测试用例 - 两条明确规格的自然语言描述
+
+## 规格1：桥梁主体（Bridge）
+
+所有桥梁结构必须使用IfcBridge实体表示。每个桥梁必须有名称用于标识，并且必须作为项目或另一个桥梁的子级存在。
+
+具体要求：
+- 实体类型：IfcBridge
+- 必须至少有1个桥梁实体
+- 必须有Name属性
+- 必须通过IFCRELAGGREGATES关系包含在IfcBridge或IfcProject中
+
+---
+
+## 规格2：桥梁主梁（Girders）
+
+桥梁的主梁使用IfcElementAssembly实体表示，预定义类型为GIRDER。每个主梁必须：
+- 有名称用于标识
+- 指定材料（钢材、混凝土等）
+- 包含在上部结构（Superstructure）的桥梁部分中
+
+具体要求：
+- 实体类型：IfcElementAssembly
+- 预定义类型：GIRDER
+- 可选（0次或多次）
+- 必须有Name属性
+- 必须有Material材料定义
+- 必须通过IFCRELCONTAINEDINSPATIALSTRUCTURE关系包含在预定义类型为SUPERSTRUCTURE的IfcBridgePart中

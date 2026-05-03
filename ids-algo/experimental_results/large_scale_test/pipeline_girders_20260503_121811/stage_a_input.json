@@ -1,0 +1,3 @@
+{
+  "text": "所有IfcElementAssembly实体，且PredefinedType为GIRDER的构件，必须包含在IfcBridgePart（类型为SUPERSTRUCTURE）的上层结构中，必须有Name属性，必须定义材料。"
+}

@@ -1,0 +1,295 @@
+2026-05-02 18:49:26,741 - ids_server - INFO - 📥 Received text analysis request for 69f5d6b68586e20272367d94
+INFO:     127.0.0.1:3336 - "POST /analyze-text HTTP/1.1" 200 OK
+2026-05-02 18:49:26,741 - ids_server - INFO - 🚀 Starting text processing task for Resource: 69f5d6b68586e20272367d94
+2026-05-02 18:49:27,115 - ids_server - INFO - 📖 Processing 292 chars of text.
+2026-05-02 18:49:27,115 - ids_pipeline - INFO - [Step A] Running Structured Parser...
+2026-05-02 18:49:27,837 - openrouter.client - INFO - Initialize Anthropic client, model: claude-sonnet-4-6
+2026-05-02 18:49:27,837 - a_structured_parser.structured_parser - INFO - Starting structured parsing for text:   - 所有IfcSlab实体必须定义材料（如concrete_reinforced_in-situ）
+  - 楼板必须包含Pset_SlabCommon属性集：
+    - Status（状态：NE...
+2026-05-02 18:49:37,819 - httpx - INFO - HTTP Request: POST https://cc-vibe.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-02 18:49:37,819 - openrouter.llm_response_handler - WARNING - Initial JSON parsing failed for structured parsing, attempting to clean response
+2026-05-02 18:49:37,820 - openrouter.llm_response_handler - INFO - Successfully parsed structured parsing using _clean_markdown_blocks
+2026-05-02 18:49:37,820 - a_structured_parser.structured_parser - INFO - Structured parsing completed: 3 objects, 7 properties, 1 materials, 2 relationships
+2026-05-02 18:49:37,820 - ids_pipeline - INFO - [Step B] Running Facet Classifier...
+2026-05-02 18:49:38,503 - openrouter.client - INFO - Initialize Anthropic client, model: claude-sonnet-4-6
+2026-05-02 18:49:38,503 - b_facet_classifier.facet_classifier - INFO - Starting facet classification
+2026-05-02 18:49:48,609 - httpx - INFO - HTTP Request: POST https://cc-vibe.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-02 18:49:48,610 - openrouter.llm_response_handler - WARNING - Initial JSON parsing failed for facet classification, attempting to clean response
+2026-05-02 18:49:48,610 - openrouter.llm_response_handler - INFO - Successfully parsed facet classification using _clean_markdown_blocks
+2026-05-02 18:49:48,610 - b_facet_classifier.facet_classifier - INFO - Facet classification completed: 13 candidates classified
+2026-05-02 18:49:48,610 - ids_pipeline - INFO - [Step C] Running Knowledge Base Mapping...
+2026-05-02 18:49:48,623 - c_knowledge_base_mapping.database_manager - INFO - 开始预加载向量数据库...
+2026-05-02 18:49:48,623 - c_knowledge_base_mapping.database_manager - INFO - 加载主要数据库: E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\entity_db.json
+2026-05-02 18:49:48,624 - c_knowledge_base_mapping.vector_database.unified_db - INFO - Loading DB from E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\entity_db.json...
+2026-05-02 18:49:49,290 - c_knowledge_base_mapping.vector_database.unified_db - INFO - Loaded 2291 items from E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\entity_db.json
+2026-05-02 18:49:49,293 - c_knowledge_base_mapping.database_manager - INFO - 主要数据库加载成功，包含 2291 个项目
+2026-05-02 18:49:49,293 - c_knowledge_base_mapping.database_manager - INFO - 加载 property 数据库: E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\property_db.json
+2026-05-02 18:49:49,293 - c_knowledge_base_mapping.vector_database.unified_db - INFO - Loading DB from E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\property_db.json...
+2026-05-02 18:49:49,295 - c_knowledge_base_mapping.vector_database.unified_db - INFO - Loaded 23 items from E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\property_db.json
+2026-05-02 18:49:49,295 - c_knowledge_base_mapping.database_manager - INFO - property 数据库加载成功，包含 23 个项目
+2026-05-02 18:49:49,296 - c_knowledge_base_mapping.database_manager - INFO - 加载 material 数据库: E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\material_db.json
+2026-05-02 18:49:49,296 - c_knowledge_base_mapping.vector_database.unified_db - INFO - Loading DB from E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\material_db.json...
+2026-05-02 18:49:49,298 - c_knowledge_base_mapping.vector_database.unified_db - INFO - Loaded 12 items from E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\material_db.json
+2026-05-02 18:49:49,298 - c_knowledge_base_mapping.database_manager - INFO - material 数据库加载成功，包含 12 个项目
+2026-05-02 18:49:49,299 - c_knowledge_base_mapping.database_manager - INFO - 加载 attribute 数据库: E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\attribute_db.json
+2026-05-02 18:49:49,299 - c_knowledge_base_mapping.vector_database.unified_db - INFO - Loading DB from E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\attribute_db.json...
+2026-05-02 18:49:49,300 - c_knowledge_base_mapping.vector_database.unified_db - INFO - Loaded 10 items from E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\attribute_db.json
+2026-05-02 18:49:49,300 - c_knowledge_base_mapping.database_manager - INFO - attribute 数据库加载成功，包含 10 个项目
+2026-05-02 18:49:49,300 - c_knowledge_base_mapping.database_manager - INFO - 加载 partOf 数据库: E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\partOf_db.json
+2026-05-02 18:49:49,301 - c_knowledge_base_mapping.vector_database.unified_db - INFO - Loading DB from E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\partOf_db.json...
+2026-05-02 18:49:49,302 - c_knowledge_base_mapping.vector_database.unified_db - INFO - Loaded 8 items from E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\partOf_db.json
+2026-05-02 18:49:49,302 - c_knowledge_base_mapping.database_manager - INFO - partOf 数据库加载成功，包含 8 个项目
+2026-05-02 18:49:49,302 - c_knowledge_base_mapping.database_manager - INFO - 加载 classification 数据库: E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\classification_db.json
+2026-05-02 18:49:49,303 - c_knowledge_base_mapping.vector_database.unified_db - INFO - Loading DB from E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\classification_db.json...
+2026-05-02 18:49:49,303 - c_knowledge_base_mapping.vector_database.unified_db - INFO - Loaded 10 items from E:\code for project\IDS_practise\backend\ids-agent\ids-algo\c_knowledge_base_mapping\resources\classification_db.json
+2026-05-02 18:49:49,304 - c_knowledge_base_mapping.database_manager - INFO - classification 数据库加载成功，包含 10 个项目
+2026-05-02 18:49:49,304 - c_knowledge_base_mapping.database_manager - INFO - 所有数据库预加载完成
+2026-05-02 18:49:49,988 - openrouter.client - INFO - Initialize Anthropic client, model: claude-sonnet-4-6
+2026-05-02 18:49:49,988 - c_knowledge_base_mapping.resolvers.resolver_factory - INFO - Created 6 resolvers
+2026-05-02 18:49:49,988 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - KnowledgeBaseMappingOrchestrator initialized with clean resolvers
+2026-05-02 18:49:49,988 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Starting clean facet mapping
+2026-05-02 18:49:55,135 - httpx - INFO - HTTP Request: POST https://cc-vibe.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-02 18:49:55,136 - openrouter.llm_response_handler - WARNING - Initial JSON parsing failed for entity selection, attempting to clean response
+2026-05-02 18:49:55,136 - openrouter.llm_response_handler - INFO - Successfully parsed entity selection using _clean_markdown_blocks
+2026-05-02 18:49:55,136 - c_knowledge_base_mapping.resolvers.entity_resolver - INFO - LLM selected entity: IfcSlab -> IfcSlab
+2026-05-02 18:49:55,136 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped entity: 'IfcSlab' -> 'IfcSlab' (confidence: 0.528, source: static_kb_llm_selected)
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 10.03it/s]
+2026-05-02 18:49:59,740 - httpx - INFO - HTTP Request: POST https://cc-vibe.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-02 18:49:59,741 - openrouter.llm_response_handler - WARNING - Initial JSON parsing failed for entity selection, attempting to clean response
+2026-05-02 18:49:59,741 - openrouter.llm_response_handler - INFO - Successfully parsed entity selection using _clean_markdown_blocks
+2026-05-02 18:49:59,741 - c_knowledge_base_mapping.resolvers.entity_resolver - INFO - LLM selected entity: slab -> IfcSlab
+2026-05-02 18:49:59,741 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped entity: 'slab' -> 'IfcSlab' (confidence: 0.594, source: static_kb_llm_selected)
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 13.05it/s]
+2026-05-02 18:50:33,913 - httpx - INFO - HTTP Request: POST https://cc-vibe.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-02 18:50:33,915 - openrouter.llm_response_handler - WARNING - Initial JSON parsing failed for entity selection, attempting to clean response
+2026-05-02 18:50:33,915 - openrouter.llm_response_handler - INFO - Successfully parsed entity selection using _clean_markdown_blocks
+2026-05-02 18:50:33,916 - c_knowledge_base_mapping.resolvers.entity_resolver - INFO - LLM selected entity: roof_slab -> IfcRoof
+2026-05-02 18:50:33,916 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped entity: 'roof_slab' -> 'IfcRoof' (confidence: 0.534, source: static_kb_llm_selected)
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  3.37it/s]
+2026-05-02 18:50:34,227 - c_knowledge_base_mapping.resolvers.property_resolver - INFO - 获取实体 'IfcSlab' 的属性集和属性，版本: ['IFC4']
+2026-05-02 18:50:39,232 - c_knowledge_base_mapping.resolvers.property_resolver - WARNING - API请求超时: http://36.103.199.7:5000/api/property/entity-psets
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  3.76it/s]
+2026-05-02 18:50:39,523 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped property: 'Status（状态：NEW/EXISTING/DEMOLISH等）' -> 'OccupancyType' (confidence: 0.522, source: static_kb)
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  3.13it/s]
+2026-05-02 18:50:39,859 - c_knowledge_base_mapping.resolvers.property_resolver - INFO - 获取实体 'IfcSlab' 的属性集和属性，版本: ['IFC4']
+2026-05-02 18:50:44,864 - c_knowledge_base_mapping.resolvers.property_resolver - WARNING - API请求超时: http://36.103.199.7:5000/api/property/entity-psets
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  4.20it/s]
+2026-05-02 18:50:45,122 - c_knowledge_base_mapping.knowledge_mapping_strategy - WARNING - Failed to map property: 'IsExternal（是否外部构件）'
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  5.16it/s]
+2026-05-02 18:50:45,333 - c_knowledge_base_mapping.resolvers.property_resolver - INFO - 获取实体 'IfcSlab' 的属性集和属性，版本: ['IFC4']
+2026-05-02 18:50:50,339 - c_knowledge_base_mapping.resolvers.property_resolver - WARNING - API请求超时: http://36.103.199.7:5000/api/property/entity-psets
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  3.71it/s]
+2026-05-02 18:50:50,624 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped property: 'LoadBearing（是否承重）' -> 'LoadBearing' (confidence: 0.646, source: static_kb)
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  5.44it/s]
+2026-05-02 18:50:50,821 - c_knowledge_base_mapping.resolvers.property_resolver - INFO - 获取实体 'IfcSlab' 的属性集和属性，版本: ['IFC4']
+2026-05-02 18:50:55,832 - c_knowledge_base_mapping.resolvers.property_resolver - WARNING - API请求超时: http://36.103.199.7:5000/api/property/entity-psets
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  2.85it/s]
+2026-05-02 18:50:56,204 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped property: 'NetVolume（净体积）' -> 'Volume' (confidence: 0.547, source: static_kb)
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  2.91it/s]
+2026-05-02 18:50:56,566 - c_knowledge_base_mapping.resolvers.property_resolver - INFO - 获取实体 'IfcSlab' 的属性集和属性，版本: ['IFC4']
+2026-05-02 18:51:01,580 - c_knowledge_base_mapping.resolvers.property_resolver - WARNING - API请求超时: http://36.103.199.7:5000/api/property/entity-psets
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  4.53it/s]
+2026-05-02 18:51:01,830 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped property: 'Depth（厚度）' -> 'Volume' (confidence: 0.550, source: static_kb)
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  2.93it/s]
+2026-05-02 18:51:02,189 - c_knowledge_base_mapping.resolvers.property_resolver - INFO - 获取实体 'IfcSlab' 的属性集和属性，版本: ['IFC4']
+2026-05-02 18:51:07,203 - c_knowledge_base_mapping.resolvers.property_resolver - WARNING - API请求超时: http://36.103.199.7:5000/api/property/entity-psets
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  3.61it/s]
+2026-05-02 18:51:07,508 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped property: 'NetArea（净面积）' -> 'Area' (confidence: 0.520, source: static_kb)
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  3.16it/s]
+2026-05-02 18:51:07,840 - c_knowledge_base_mapping.resolvers.property_resolver - INFO - 获取实体 'IfcSlab' 的属性集和属性，版本: ['IFC4']
+2026-05-02 18:51:12,863 - c_knowledge_base_mapping.resolvers.property_resolver - WARNING - API请求超时: http://36.103.199.7:5000/api/property/entity-psets
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 10.10it/s]
+2026-05-02 18:51:12,973 - c_knowledge_base_mapping.knowledge_mapping_strategy - WARNING - Failed to map property: 'PitchAngle（坡度角）属性'
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 10.48it/s]
+2026-05-02 18:51:13,076 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped material: 'concrete_reinforced_in-situ' -> 'Reinforced Concrete' (confidence: 0.623, source: static_kb)
+2026-05-02 18:51:13,076 - c_knowledge_base_mapping.resolvers.partof_resolver - INFO - PartOf match: '楼板必须包含Pset_SlabCommon属性集' -> 'IfcSlab' (IFCRELAGGREGATES)
+2026-05-02 18:51:13,076 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped partof: '楼板必须包含Pset_SlabCommon属性集' -> 'IfcSlab' (confidence: 1.000, source: rule_engine)
+2026-05-02 18:51:13,077 - c_knowledge_base_mapping.resolvers.partof_resolver - INFO - PartOf match: '楼板必须包含Qto_SlabBaseQuantities数量集' -> 'IfcSlab' (IFCRELAGGREGATES)
+2026-05-02 18:51:13,077 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Mapped partof: '楼板必须包含Qto_SlabBaseQuantities数量集' -> 'IfcSlab' (confidence: 1.000, source: rule_engine)
+2026-05-02 18:51:13,077 - c_knowledge_base_mapping.knowledge_mapping_strategy - INFO - Clean mapping completed: 11 facets mapped
+2026-05-02 18:51:13,077 - ids_pipeline - INFO -    Generated 11 facets.
+2026-05-02 18:51:13,077 - ids_pipeline - INFO - [Step D] Running Constraint Extraction...
+
+Extracting constraints from: "IfcSlab"
+No constraints extracted from this text.
+
+Extracting constraints from: "slab"
+No constraints extracted from this text.
+
+Extracting constraints from: "roof_slab"
+No constraints extracted from this text.
+
+Extracting constraints from: "Status（状态：NEW/EXISTING/DEMOLISH等）"
+No constraints extracted from this text.
+
+Extracting constraints from: "LoadBearing（是否承重）"
+No constraints extracted from this text.
+
+Extracting constraints from: "NetVolume（净体积）"
+No constraints extracted from this text.
+
+Extracting constraints from: "Depth（厚度）"
+No constraints extracted from this text.
+
+Extracting constraints from: "NetArea（净面积）"
+No constraints extracted from this text.
+
+Extracting constraints from: "concrete_reinforced_in-situ"
+No constraints extracted from this text.
+
+Extracting constraints from: "楼板必须包含Pset_SlabCommon属性集"
+No constraints extracted from this text.
+
+Extracting constraints from: "楼板必须包含Qto_SlabBaseQuantities数量集"
+No constraints extracted from this text.
+2026-05-02 18:51:13,079 - ids_pipeline - INFO -    Extracted 0 constraints.
+2026-05-02 18:51:13,080 - ids_pipeline - INFO - [Step E-1] Merging Constraints into Facets...
+2026-05-02 18:51:13,080 - ids_pipeline - INFO -    Merged 0 constraints.
+2026-05-02 18:51:13,080 - ids_pipeline - INFO - [Step E-2] Building Final IDS JSON...
+2026-05-02 18:51:13,732 - openrouter.client - INFO - Initialize Anthropic client, model: claude-sonnet-4-6
+2026-05-02 18:51:13,732 - e_ids_builder.ids_builder - INFO - Building IDS specifications for 11 mapped facets
+2026-05-02 18:51:13,732 - e_ids_builder.ids_builder - INFO - Stage E LLM Prompt length: 6915 characters (~1728 tokens)
+2026-05-02 18:51:37,370 - httpx - INFO - HTTP Request: POST https://cc-vibe.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-02 18:51:37,382 - e_ids_builder.ids_builder - INFO - Stage E LLM Response length: 6335 characters
+2026-05-02 18:51:37,382 - e_ids_builder.ids_builder - INFO - Stage E LLM Response FULL CONTENT:
+================================================================================
+```
+SPECIFICATION_START
+name: IfcSlab Material Definition Requirements
+description: Validates that all slab entities have defined materials, specifically reinforced in-situ concrete
+
+target_ifc_version: []
+
+# Primary entity that defines the scope
+applicability_entity_facet_id: facet_0
+
+# Descriptive filters that help identify target elements
+applicability_property_facet_ids: []
+applicability_material_facet_ids: []
+applicability_classification_facet_ids: []
+applicability_attribute_facet_ids: []
+applicability_partof_facet_ids: []
+
+# Validation constraints that elements must satisfy
+requirements_property_facet_ids: []
+requirements_material_facet_ids: [facet_8]
+requirements_classification_facet_ids: []
+requirements_attribute_facet_ids: []
+requirements_partof_facet_ids: []
+
+# Self-validation reasoning
+reasoning: 
+1) Semantic grouping: This specification focuses on material requirements for all slabs
+2) Applicability logic: facet_0 (IfcSlab) identifies all slab elements without additional filters - we want to check ALL slabs
+3) Requirements logic: facet_8 (concrete_reinforced_in-situ) is a validation constraint - slabs MUST have this material defined
+4) Self-check: ✓ Entity in applicability, ✓ Material requirement validates compliance, ✓ Single clear purpose (material validation), ✓ Matches user intent "所有IfcSlab实体必须定义材料"
+SPECIFICATION_END
+
+SPECIFICATION_START
+name: IfcSlab Common Property Set Requirements
+description: Validates that all slabs contain the Pset_SlabCommon property set with required properties (Status, IsExternal, LoadBearing)
+
+target_ifc_version: []
+
+# Primary entity that defines the scope
+applicability_entity_facet_id: facet_1
+
+# Descriptive filters that help identify target elements
+applicability_property_facet_ids: []
+applicability_material_facet_ids: []
+applicability_classification_facet_ids: []
+applicability_attribute_facet_ids: []
+applicability_partof_facet_ids: []
+
+# Validation constraints that elements must satisfy
+requirements_property_facet_ids: [facet_3, facet_4]
+requirements_material_facet_ids: []
+requirements_classification_facet_ids: []
+requirements_attribute_facet_ids: []
+requirements_partof_facet_ids: [facet_9]
+
+# Self-validation reasoning
+reasoning:
+1) Semantic grouping: This specification validates Pset_SlabCommon property set requirements for slabs
+2) Applicability logic: facet_1 (slab/IfcSlab) identifies all slab elements to check
+3) Requirements logic: facet_9 (partof Pset_SlabCommon) validates the property set exists; facet_3 (Status/OccupancyType) and facet_4 (LoadBearing) are mandatory properties that must be present - these are validation constraints, not descriptive filters
+4) Self-check: ✓ Entity in applicability, ✓ Properties are validation requirements (must exist), ✓ PartOf correctly validates property set inclusion, ✓ Matches user intent "楼板必须包含Pset_SlabCommon属性集"
+Note: facet_3 mapping to OccupancyType appears incorrect (should be Status), but using as provided
+SPECIFICATION_END
+
+SPECIFICATION_START
+name: IfcSlab Base Quantities Requirements
+description: Validates that all slabs contain the Qto_SlabBaseQuantities quantity set with required quantities (NetVolume, Depth, NetArea)
+
+target_ifc_version: []
+
+# Primary entity that defines the scope
+applicability_entity_facet_id: facet_1
+
+# Descriptive filters that help identify target elements
+applicability_property_facet_ids: []
+applicability_material_facet_ids: []
+applicability_classification_facet_ids: []
+applicability_attribute_facet_ids: []
+applicability_partof_facet_ids: []
+
+# Validation constraints that elements must satisfy
+requirements_property_facet_ids: [facet_5, facet_6, facet_7]
+requirements_material_facet_ids: []
+requirements_classification_facet_ids: []
+requirements_attribute_facet_ids: []
+requirements_partof_facet_ids: [facet_10]
+
+# Self-validation reasoning
+reasoning:
+1) Semantic grouping: This specification validates Qto_SlabBaseQuantities quantity set requirements for slabs
+2) Applicability logic: facet_1 (slab/IfcSlab) identifies all slab elements to check
+3) Requirements logic: facet_10 (partof Qto_SlabBaseQuantities) validates the quantity set exists; facet_5 (NetVolume), facet_6 (Depth), facet_7 (NetArea) are mandatory quantities that must be present - these are validation constraints
+4) Self-check: ✓ Entity in applicability, ✓ Quantities are validation requirements (must exist), ✓ PartOf correctly validates quantity set inclusion, ✓ Matches user intent "楼板必须包含Qto_SlabBaseQuantities数量集"
+Note: Facet mappings to Volume/Area appear generic but using as provided
+SPECIFICATION_END
+
+SPECIFICATION_START
+name: IfcRoof Pitch Angle Requirements
+description: Validates that roof slabs have the required PitchAngle property defined
+
+target_ifc_version: []
+
+# Primary entity that defines the scope
+applicability_entity_facet_id: facet_2
+
+# Descriptive filters that help identify target elements
+applicability_property_facet_ids: []
+applicability_material_facet_ids: []
+applicability_classification_facet_ids: []
+applicability_attribute_facet_ids: []
+applicability_partof_facet_ids: []
+
+# Validation constraints that elements must satisfy
+requirements_property_facet_ids: []
+requirements_material_facet_ids: []
+requirements_classification_facet_ids: []
+requirements_attribute_facet_ids: []
+requirements_partof_facet_ids: []
+
+# Self-validation reasoning
+reasoning:
+1) Semantic grouping: This specification targets roof slabs specifically (different from general slabs)
+2) Applicability logic: facet_2 (roof_slab/IfcRoof) identifies roof elements to check
+3) Requirements logic: The user requirement mentions "PitchAngle（坡度角）属性" but no facet was pre-mapped for this property - this appears to be a gap in the facet mapping
+4) Self-check: ✓ Entity correctly identifies roof slabs, ✗ Missing PitchAngle property facet, ✓ Semantically separate from general slab requirements, ✓ Matches user intent "屋顶楼板还需要PitchAngle（坡度角）属性"
+Note: This specification is incomplete due to missing PitchAngle facet in pre-mapped data. The requirement exists but cannot be fully expressed without the corresponding property facet.
+SPECIFICATION_END
+```
+
+**CRITICAL OBSERVATION:**
+The user requirement mentions "PitchAngle（坡度角）" for roof slabs, but this property was not included in the pre-mapped facets. This represents a gap in the facet extraction phase that should be addressed.
+================================================================================
+2026-05-02 18:51:37,384 - e_ids_builder.ids_builder - INFO - Successfully parsed 4 specification slots
+2026-05-02 18:51:37,384 - e_ids_builder.ids_builder - WARNING - Slot validation errors for 'IfcSlab Base Quantities Requirements': ['Facet facet_1 already used']
+2026-05-02 18:51:37,385 - e_ids_builder.ids_builder - INFO - Validated 3 out of 4 slots
+2026-05-02 18:51:37,385 - e_ids_builder.ids_builder - INFO - Successfully built 3 IDS specifications from 3 slots
+2026-05-02 18:51:37,386 - ids_pipeline - INFO - [OK] Pipeline completed successfully.
+2026-05-02 18:51:37,386 - ids_server - INFO - 🔄 Converting JSON to IDS XML...
+2026-05-02 18:51:37,387 - ids_server - ERROR - ❌ IDS Conversion Error: Failed to convert JSON to IDS XML: 'str' object has no attribute 'get'

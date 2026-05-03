@@ -1,0 +1,47 @@
+[
+  {
+    "facet_type": "entity",
+    "original_text": "main girder",
+    "mapped_name": "IfcDoor",
+    "confidence": 0.40989547967910767,
+    "ifc_item": {
+      "name": "IfcDoor",
+      "definition": "The door is a building element that is predominately used to provide controlled access for people and goods. It includes constructions with hinged, pivoted, sliding, and additionally revolving and folding operations. A door consists of a lining and one or several panels.",
+      "ifc_version": "IFC4",
+      "item_type": "entity",
+      "predefined_types": []
+    },
+    "property_set": null,
+    "entity_name": null,
+    "constraints": [],
+    "additional_data": null
+  },
+  {
+    "facet_type": "material",
+    "original_text": "混凝土",
+    "mapped_name": "Concrete",
+    "confidence": 0.5687172412872314,
+    "ifc_item": {
+      "name": "Concrete",
+      "definition": "A composite material composed of cement, aggregates, and water.",
+      "ifc_version": "IFC4",
+      "item_type": "material",
+      "category": "Structural",
+      "properties": {
+        "density": "2400 kg/m³",
+        "compressive_strength": "25-50 MPa",
+        "thermal_conductivity": "1.7 W/mK"
+      },
+      "applicable_entities": [
+        "IfcWall",
+        "IfcSlab",
+        "IfcColumn",
+        "IfcBeam"
+      ]
+    },
+    "property_set": null,
+    "entity_name": null,
+    "constraints": [],
+    "additional_data": null
+  }
+]

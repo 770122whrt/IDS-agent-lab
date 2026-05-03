@@ -1,0 +1,80 @@
+{
+  "specifications": [
+    {
+      "name": "GIRDER型IfcElementAssembly必须位于桥梁上部结构中且具有名称和材料定义",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "验证所有PredefinedType为GIRDER的IfcElementAssembly构件必须包含在类型为SUPERSTRUCTURE的IfcBridgePart中，必须具有Name属性，且必须定义材料",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcElementAssembly",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": [
+          {
+            "name": "PredefinedType",
+            "value": {
+              "simpleValue": "GIRDER",
+              "restriction": {
+                "base": "string",
+                "enumeration": [
+                  "GIRDER"
+                ]
+              }
+            },
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": [
+          {
+            "entity": {
+              "name": "IfcBridgePart",
+              "predefinedType": null
+            },
+            "relation": "IFCRELCONTAINEDINSPATIALSTRUCTURE",
+            "cardinality": "required",
+            "instructions": "PartOf relationship: IfcBridgePart"
+          }
+        ],
+        "classification": null,
+        "attribute": [
+          {
+            "name": "Name",
+            "value": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "property": null,
+        "material": [
+          {
+            "value": null,
+            "uri": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ]
+      }
+    }
+  ],
+  "metadata": {
+    "total_extracted": 1,
+    "total_normalized": 5,
+    "ifc_version": "IFC4",
+    "slot_count": 1
+  },
+  "error": null
+}

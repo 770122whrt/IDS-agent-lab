@@ -1,0 +1,22 @@
+{
+  "entity_candidates": [
+    {
+      "source_text": "IfcBridge",
+      "facet_type": "entity",
+      "confidence": 0.95,
+      "reasoning": "Concrete building element type extracted from details.object_type"
+    }
+  ],
+  "property_candidates": [],
+  "attribute_candidates": [
+    {
+      "source_text": "Name",
+      "facet_type": "attribute",
+      "confidence": 0.9,
+      "reasoning": "Name is a descriptive attribute property, not a quantifiable numerical property"
+    }
+  ],
+  "material_candidates": [],
+  "classification_candidates": [],
+  "partof_candidates": []
+}

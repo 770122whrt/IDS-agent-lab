@@ -1,0 +1,29 @@
+{
+  "entity_candidates": [
+    {
+      "source_text": "IfcBridge",
+      "facet_type": "entity",
+      "confidence": 0.95,
+      "reasoning": "Concrete building element type from input component with object_type IfcBridge"
+    }
+  ],
+  "property_candidates": [],
+  "attribute_candidates": [
+    {
+      "source_text": "必须有Name属性",
+      "facet_type": "attribute",
+      "confidence": 0.9,
+      "reasoning": "Name is a descriptive attribute property, not a quantifiable numerical property"
+    }
+  ],
+  "material_candidates": [],
+  "classification_candidates": [],
+  "partof_candidates": [
+    {
+      "source_text": "必须包含在项目或场地中",
+      "facet_type": "partof",
+      "confidence": 0.85,
+      "reasoning": "Spatial containment relationship indicating IfcBridge must be contained within project or site"
+    }
+  ]
+}

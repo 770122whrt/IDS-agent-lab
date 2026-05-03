@@ -1,0 +1,138 @@
+[
+  {
+    "facet_type": "entity",
+    "original_text": "IfcElementAssembly",
+    "mapped_name": "IfcElementAssembly",
+    "confidence": 1.0,
+    "ifc_item": {
+      "name": "IfcElementAssembly",
+      "definition": "A container class that represents complex element assemblies aggregated from several elements, such as discrete elements, building elements, or other elements.",
+      "ifc_version": "IFC2X3",
+      "item_type": "entity",
+      "predefined_types": []
+    },
+    "property_set": null,
+    "entity_name": null,
+    "constraints": [],
+    "additional_data": null
+  },
+  {
+    "facet_type": "entity",
+    "original_text": "IfcBridgePart",
+    "mapped_name": "IfcBridgePart",
+    "confidence": 1.0,
+    "ifc_item": {
+      "name": "IfcBridgePart",
+      "definition": "A bridge part is a major functional part of a bridge which can be used to provide a specific kind of bridge construction information. IfcBridgePart is used to represent the major parts of a bridge, such as abutment, deck, foundation, pier, pylon, substructure, and superstructure.",
+      "ifc_version": "IFC4X3",
+      "item_type": "entity",
+      "predefined_types": [
+        "ABUTMENT",
+        "DECK",
+        "DECK_SEGMENT",
+        "FOUNDATION",
+        "PIER",
+        "PIER_SEGMENT",
+        "PYLON",
+        "SUBSTRUCTURE",
+        "SUPERSTRUCTURE",
+        "SURFACESTRUCTURE",
+        "USERDEFINED",
+        "NOTDEFINED"
+      ]
+    },
+    "property_set": null,
+    "entity_name": null,
+    "constraints": [],
+    "additional_data": null
+  },
+  {
+    "facet_type": "material",
+    "original_text": "必须定义材料",
+    "mapped_name": null,
+    "confidence": 1.0,
+    "ifc_item": null,
+    "property_set": null,
+    "entity_name": null,
+    "constraints": [],
+    "additional_data": null
+  },
+  {
+    "facet_type": "attribute",
+    "original_text": "PredefinedType为GIRDER",
+    "mapped_name": "PredefinedType",
+    "confidence": 0.8,
+    "ifc_item": {
+      "name": "PredefinedType",
+      "type": "IFC_ATTRIBUTE"
+    },
+    "property_set": null,
+    "entity_name": null,
+    "constraints": [
+      {
+        "restriction_type": {
+          "_value_": "enumeration",
+          "_name_": "ENUMERATION",
+          "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x000001A34AE114E0>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFD869F8310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x000001A34AE113A0>}",
+          "_sort_order_": 1
+        },
+        "restriction": {
+          "values": [
+            "GIRDER"
+          ]
+        },
+        "confidence": 0.8,
+        "original_text": "PredefinedType为GIRDER"
+      }
+    ],
+    "additional_data": null
+  },
+  {
+    "facet_type": "attribute",
+    "original_text": "必须有Name属性",
+    "mapped_name": "Name",
+    "confidence": 0.8,
+    "ifc_item": {
+      "name": "Name",
+      "type": "IFC_ATTRIBUTE"
+    },
+    "property_set": null,
+    "entity_name": null,
+    "constraints": [],
+    "additional_data": null
+  },
+  {
+    "facet_type": "partof",
+    "original_text": "必须包含在IfcBridgePart（类型为SUPERSTRUCTURE）的上层结构中",
+    "mapped_name": "IfcBridgePart",
+    "confidence": 1.0,
+    "ifc_item": {
+      "name": "IfcBridgePart",
+      "type": "IFC_SPATIAL",
+      "relation_type": "IFCRELCONTAINEDINSPATIALSTRUCTURE"
+    },
+    "property_set": null,
+    "entity_name": null,
+    "constraints": [
+      {
+        "restriction_type": {
+          "_value_": "enumeration",
+          "_name_": "ENUMERATION",
+          "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x000001A34AE114E0>)>, '__module__': 'd_constrains.data_structures', '__doc__': 'Types of value restrictions supported by IDS\\n    IDS支持的值限制类型\\n    ', '_new_member_': <built-in method __new__ of type object at 0x00007FFD869F8310>, '_use_args_': False, '_member_names_': ['BOUNDS', 'ENUMERATION', 'PATTERN', 'LENGTH'], '_member_map_': {'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>}, '_value2member_map_': {'bounds': <RestrictionType.BOUNDS: 'bounds'>, 'enumeration': <RestrictionType.ENUMERATION: 'enumeration'>, 'pattern': <RestrictionType.PATTERN: 'pattern'>, 'length': <RestrictionType.LENGTH: 'length'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'BOUNDS': <RestrictionType.BOUNDS: 'bounds'>, 'ENUMERATION': <RestrictionType.ENUMERATION: 'enumeration'>, 'PATTERN': <RestrictionType.PATTERN: 'pattern'>, 'LENGTH': <RestrictionType.LENGTH: 'length'>, '__new__': <function Enum.__new__ at 0x000001A34AE113A0>}",
+          "_sort_order_": 1
+        },
+        "restriction": {
+          "values": [
+            "SUPERSTRUCTURE"
+          ]
+        },
+        "confidence": 0.8,
+        "original_text": "类型为SUPERSTRUCTURE"
+      }
+    ],
+    "additional_data": {
+      "relation": "IFCRELCONTAINEDINSPATIALSTRUCTURE",
+      "predefined_type": "SUPERSTRUCTURE"
+    }
+  }
+]

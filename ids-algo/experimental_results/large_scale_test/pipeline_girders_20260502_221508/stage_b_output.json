@@ -1,0 +1,54 @@
+{
+  "entity_candidates": [
+    {
+      "source_text": "IfcElementAssembly",
+      "facet_type": "entity",
+      "confidence": 0.95,
+      "reasoning": "Concrete building element type representing assembly components"
+    },
+    {
+      "source_text": "IfcBridgePart",
+      "facet_type": "entity",
+      "confidence": 0.95,
+      "reasoning": "Concrete building element type representing bridge structural parts"
+    }
+  ],
+  "property_candidates": [],
+  "attribute_candidates": [
+    {
+      "source_text": "PredefinedType为GIRDER",
+      "facet_type": "attribute",
+      "confidence": 0.9,
+      "reasoning": "PredefinedType is a descriptive enumeration attribute specifying the element subtype"
+    },
+    {
+      "source_text": "类型为SUPERSTRUCTURE",
+      "facet_type": "attribute",
+      "confidence": 0.9,
+      "reasoning": "Type/PredefinedType is a descriptive attribute defining the bridge part category"
+    },
+    {
+      "source_text": "必须有Name属性",
+      "facet_type": "attribute",
+      "confidence": 0.9,
+      "reasoning": "Name is a descriptive identifier attribute, not a quantifiable property"
+    }
+  ],
+  "material_candidates": [
+    {
+      "source_text": "必须定义材料",
+      "facet_type": "material",
+      "confidence": 0.85,
+      "reasoning": "Explicit material requirement constraint, though specific material type is not specified"
+    }
+  ],
+  "classification_candidates": [],
+  "partof_candidates": [
+    {
+      "source_text": "必须包含在IfcBridgePart（类型为SUPERSTRUCTURE）的上层结构中",
+      "facet_type": "partof",
+      "confidence": 0.9,
+      "reasoning": "Spatial containment relationship expressing that IfcElementAssembly must be contained within the IfcBridgePart superstructure"
+    }
+  ]
+}

@@ -322,7 +322,10 @@ interface SpecificationCardProps {
 }
 
 function SpecificationCard({ spec, specIndex, expandedReqs, onToggleRequirement, t }: SpecificationCardProps) {
-  const passPercent = typeof spec.percent_checks_pass === "number" ? spec.percent_checks_pass : 0;
+  // 当 percent_checks_pass 是 "N/A" 时，如果 status 为 true（全部通过），显示 100%，否则显示 0%
+  const passPercent = typeof spec.percent_checks_pass === "number"
+    ? spec.percent_checks_pass
+    : spec.status ? 100 : 0;
   const hasFailures = spec.total_checks_fail > 0;
 
   return (

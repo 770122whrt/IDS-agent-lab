@@ -45,8 +45,14 @@ class EntityResolver:
                     original_text = pipeline_memory.user_input
 
                 # 向量搜索TopK - 默认搜索所有IFC版本
+                logger.info(f"[EntityResolver] 开始解析: query_text='{query_text}', ifc_version={ifc_version}")
                 ifc_versions_filter = [ifc_version] if ifc_version else None
                 results = db.search(query_text, top_k=5, ifc_versions=ifc_versions_filter)
+
+                logger.info(f"[EntityResolver] 向量搜索返回 {len(results)} 个候选")
+                for i, (item, score) in enumerate(results[:3]):
+                    logger.info(f"  候选{i+1}: {item.name} (score={score:.4f}, version={item.ifc_version})")
+
                 if not results:
                     return None
 

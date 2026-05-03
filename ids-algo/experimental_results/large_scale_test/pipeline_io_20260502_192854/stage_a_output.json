@@ -1,0 +1,24 @@
+{
+  "building_objects": [
+    {
+      "raw_text": "所有桥梁主梁（main girder）",
+      "object_type": "main girder",
+      "modifiers": [
+        "所有",
+        "桥梁"
+      ],
+      "confidence": 0.95
+    }
+  ],
+  "property_descriptions": [],
+  "material_requirements": [
+    {
+      "raw_text": "必须使用混凝土材料",
+      "material_name": "混凝土",
+      "specifications": "必须使用",
+      "confidence": 0.95
+    }
+  ],
+  "spatial_relationships": [],
+  "unmatched_fragments": []
+}

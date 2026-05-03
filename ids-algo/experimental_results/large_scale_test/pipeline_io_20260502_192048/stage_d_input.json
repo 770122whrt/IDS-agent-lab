@@ -1,0 +1,47 @@
+[
+  {
+    "facet_type": "entity",
+    "original_text": "main girder",
+    "mapped_name": "IfcExtrudedAreaSolidTapered",
+    "confidence": 0.401380717754364,
+    "ifc_item": {
+      "name": "IfcExtrudedAreaSolidTapered",
+      "definition": "IfcExtrudedAreaSolidTaperedis defined by sweeping a cross section along a linear spine. The cross section may change along the sweep from the shape of the start cross section into the shape of the end cross section. The resulting solid is bounded by three or more faces\\: A start face, an end face (each defined by start and end planes and sections), and one or more lateral faces. Each lateral face is a ruled surface defined by a pair of corresponding edges of the start and end section.",
+      "ifc_version": "IFC4",
+      "item_type": "entity",
+      "predefined_types": []
+    },
+    "property_set": null,
+    "entity_name": null,
+    "constraints": [],
+    "additional_data": null
+  },
+  {
+    "facet_type": "material",
+    "original_text": "混凝土",
+    "mapped_name": "Concrete",
+    "confidence": 0.5687172412872314,
+    "ifc_item": {
+      "name": "Concrete",
+      "definition": "A composite material composed of cement, aggregates, and water.",
+      "ifc_version": "IFC4",
+      "item_type": "material",
+      "category": "Structural",
+      "properties": {
+        "density": "2400 kg/m³",
+        "compressive_strength": "25-50 MPa",
+        "thermal_conductivity": "1.7 W/mK"
+      },
+      "applicable_entities": [
+        "IfcWall",
+        "IfcSlab",
+        "IfcColumn",
+        "IfcBeam"
+      ]
+    },
+    "property_set": null,
+    "entity_name": null,
+    "constraints": [],
+    "additional_data": null
+  }
+]

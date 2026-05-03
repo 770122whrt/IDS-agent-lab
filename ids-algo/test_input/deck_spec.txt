@@ -1,0 +1,1 @@
+所有类型为DECK的IfcBridgePart构件，必须通过IFCRELAGGREGATES关系聚合在IfcBridge下，且必须有Name属性。

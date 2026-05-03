@@ -1,0 +1,48 @@
+{
+  "specifications": [
+    {
+      "name": "Bridge Structure Entity and Containment Requirements",
+      "ifcVersion": [
+        "IFC4"
+      ],
+      "description": "Validates that all bridge structures are represented using IfcBridge entity, are properly contained within a project or site hierarchy, and have a mandatory Name attribute assigned",
+      "instructions": null,
+      "applicability": {
+        "minOccurs": "1",
+        "maxOccurs": "unbounded",
+        "entity": {
+          "name": "IfcBridge",
+          "predefinedType": null
+        },
+        "partOf": null,
+        "classification": null,
+        "attribute": null,
+        "property": null,
+        "material": null
+      },
+      "requirements": {
+        "description": null,
+        "entity": null,
+        "partOf": null,
+        "classification": null,
+        "attribute": [
+          {
+            "name": "Name",
+            "value": null,
+            "cardinality": "required",
+            "instructions": null
+          }
+        ],
+        "property": null,
+        "material": null
+      }
+    }
+  ],
+  "metadata": {
+    "total_extracted": 1,
+    "total_normalized": 2,
+    "ifc_version": "IFC4",
+    "slot_count": 1
+  },
+  "error": null
+}
