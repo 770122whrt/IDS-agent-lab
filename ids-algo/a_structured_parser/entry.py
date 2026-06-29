@@ -14,5 +14,3 @@ async def runStructuredParser(text: str) -> StructuredParseResult:
     except Exception as e:
         logging.error(f"Error in entry_step1: {e}")
         raise e
-
-    

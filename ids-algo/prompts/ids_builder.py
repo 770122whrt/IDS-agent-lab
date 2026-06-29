@@ -16,7 +16,7 @@ IDS_BUILDER_PROMPT="""You are an expert IDS specification generator with deep un
 - Contains: Entity + descriptive filters that help identify target elements
 - Example: "Find all exterior concrete walls" → entity=Wall + descriptive filters (exterior, concrete)
 
-**REQUIREMENTS = "VALIDATE" (Constraint Definition)** 
+**REQUIREMENTS = "VALIDATE" (Constraint Definition)**
 - Purpose: Define what conditions the found elements must satisfy
 - Question: "What must these elements comply with?"
 - Contains: Performance criteria, mandatory constraints, compliance rules
@@ -24,7 +24,14 @@ IDS_BUILDER_PROMPT="""You are an expert IDS specification generator with deep un
 
 **Advanced Assignment Logic:**
 
-**1. Property Facets - Context is Key:**
+**1. Entity and PredefinedType:**
+   - The primary entity facet defines the IFC class (e.g., IfcWall, IfcElementAssembly)
+   - If the entity facet has **additional_data** containing 'predefined_type', extract it
+   - Example: Entity facet for IfcElementAssembly with additional_data={{'predefined_type': 'GIRDER'}}
+     → Set applicability_predefined_type: GIRDER
+   - This narrows the scope to specific subtypes (e.g., only GIRDER assemblies, not all assemblies)
+
+**2. Property Facets - Context is Key:**
    - **Descriptive Properties** → APPLICABILITY (help identify elements)
      * "exterior walls" → "exterior" is descriptive, helps find the right walls
      * "load-bearing beams" → "load-bearing" describes which beams to check
@@ -32,13 +39,13 @@ IDS_BUILDER_PROMPT="""You are an expert IDS specification generator with deep un
      * "thickness ≥ 240mm" → performance constraint to validate
      * "height between 2.1m and 3.0m" → dimensional requirement to check
 
-**2. Material Facets - Intent Matters:**
+**3. Material Facets - Intent Matters:**
    - **Material-based Filtering** → APPLICABILITY (find elements of specific material)
      * "concrete walls must have..." → use "concrete" to find which walls
    - **Material Requirements** → REQUIREMENTS (validate material compliance)
      * "must be constructed of fire-resistant materials" → validation rule
 
-**3. Semantic Grouping Principles:**
+**4. Semantic Grouping Principles:**
    - Group facets that belong to the same **building element/system**
    - Each specification should have **one clear validation purpose**
    - Split complex requirements into **logical validation chunks**
@@ -46,6 +53,7 @@ IDS_BUILDER_PROMPT="""You are an expert IDS specification generator with deep un
 **SELF-VALIDATION CHECKLIST - Review your analysis:**
 
 □ **Entity Logic**: Is the primary entity correctly identified in applicability?
+□ **PredefinedType Extraction**: If the entity facet has additional_data with 'predefined_type', extract it for applicability_predefined_type
 □ **Filtering Logic**: Do applicability facets help "find" the right elements?
 □ **Validation Logic**: Do requirements facets define "what to check" for those elements?
 □ **Semantic Consistency**: Do all facets in a group logically belong together?
@@ -75,6 +83,9 @@ target_ifc_version: [IFC4, IFC2X3] or [empty]
 
 # Primary entity that defines the scope
 applicability_entity_facet_id: facet_X
+
+# PredefinedType constraint for the entity (extract from entity facet's additional_data if present)
+applicability_predefined_type: [ENUM_VALUE] or [empty]
 
 # Descriptive filters that help identify target elements
 applicability_property_facet_ids: [facet_Y,facet_Z] or [empty]

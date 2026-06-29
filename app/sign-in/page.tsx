@@ -19,7 +19,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner"; 
+import { toast } from "sonner";
 
 export default function SignIn() {
   const router = useRouter();
@@ -53,7 +53,7 @@ export default function SignIn() {
         <CardContent className="space-y-4">
           {error && (
             <div className="text-red-600 text-sm font-medium mb-2 text-center">
-              {error === "Invalid password" ? "密码输入错误，请重试!" : error}
+              {error === "Invalid password" ? "Invalid password, please try again" : error}
             </div>
           )}
           {/* Email */}
@@ -73,7 +73,7 @@ export default function SignIn() {
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label htmlFor="password">Password</Label>
-              <Link href="#" className="text-sm text-blue-600 hover:underline">
+              <Link href="/reset-password" className="text-sm text-blue-600 hover:underline">
                 Forgot password?
               </Link>
             </div>
@@ -89,7 +89,7 @@ export default function SignIn() {
 
           {/* Remember Me */}
           <div className="flex items-center gap-2">
-            <Checkbox id="remember" checked={rememberMe} onCheckedChange={setRememberMe} />
+            <Checkbox id="remember" checked={rememberMe} onCheckedChange={(checked) => setRememberMe(checked === true)} />
             <Label htmlFor="remember" className="text-sm">
               Remember me
             </Label>
@@ -100,7 +100,7 @@ export default function SignIn() {
             className="w-full mt-2"
             disabled={loading}
             onClick={async () => {
-              setError(""); // 每次点击先清空错误 
+              setError(""); // 每次点击先清空错误
               if (!email || !password) {
                 toast.error("Please enter email and password");
                 setError("Please enter email and password");
@@ -117,9 +117,10 @@ export default function SignIn() {
                   onRequest: () => setLoading(true),
                   onResponse: () => setLoading(false),
                   onError: (ctx) => {
-                    console.error("❌ Login failed:", ctx.error.message);
-                    toast.error(ctx.error.message || "Login failed");
-                    setError(ctx.error.message || "Login failed");
+                    console.error("❌ Login failed:", ctx.error);
+                    const msg = ctx.error.message || ctx.error.statusText || "Login failed";
+                    toast.error(msg);
+                    setError(msg);
                   },
                   onSuccess: (ctx) => {
                     console.log(" Logged in as:", ctx.data?.user?.email);
@@ -145,7 +146,9 @@ export default function SignIn() {
                   {
                     onRequest: () => setLoading(true),
                     onResponse: () => setLoading(false),
-                    onError: (ctx) => toast.error(ctx.error.message),
+                    onError: (ctx) => {
+                      toast.error(ctx.error.message);
+                    },
                   }
                 );
               }}
@@ -164,7 +167,9 @@ export default function SignIn() {
                   {
                     onRequest: () => setLoading(true),
                     onResponse: () => setLoading(false),
-                    onError: (ctx) => toast.error(ctx.error.message),
+                    onError: (ctx) => {
+                      toast.error(ctx.error.message);
+                    },
                   }
                 );
               }}

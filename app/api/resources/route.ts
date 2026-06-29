@@ -1,32 +1,50 @@
 // app/api/resources/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import { dbConnect } from "../../../backend/mongodb"; // 引入刚才修正过的数据库连接
-import { Resource } from "../../../backend/resource"; // 引入刚才写的模型
+import { dbConnect } from "../../../backend/mongodb";
+import { Resource } from "../../../backend/resource";
 
-import mongoose from "mongoose"; // 需要直接使用 mongoose 对象
-import { Readable } from "stream"; // Node.js 原生流模块
+import mongoose from "mongoose";
+import { Readable } from "stream";
+import { auth } from "../../lib/auth";
+import { rateLimit } from "../../lib/ratelimit";
 
 // ---------------------------------------------------------
-// 1. POST 方法：获取用户的文件列表
+// 1. POST 方法：上传文件
 // ---------------------------------------------------------
 export async function POST(request: NextRequest) {
+  // 速率限制检查
+  const isAllowed = await rateLimit(request, "resource");
+  if (!isAllowed) {
+    return NextResponse.json({ error: "Rate limit exceeded, please try again later" }, { status: 429 });
+  }
+
   try {
-    // 1. 确保数据库连接
+    // 1. 从 session 获取当前登录用户，而不是信任客户端参数
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
+
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "Not logged in, please login first" }, { status: 401 });
+    }
+
+    const userId = session.user.id; // ✅ 使用服务端 session 中的用户 ID
+
+    // 2. 确保数据库连接
     await dbConnect();
-    
+
     // 2. 获取底层 MongoDB 数据库对象
     // 为什么要这么做？GridFS 是 MongoDB 原生驱动的功能，Mongoose 只是封装。
     // 我们需要拿到 raw db object 来创建 GridFSBucket。
     const db = mongoose.connection.db;
     if (!db) throw new Error("数据库连接异常");
 
-    // 3. 解析 FormData
+    // 3. 解析 FormData（只获取文件，不获取 userId）
     const formData = await request.formData();
     const file = formData.get("file") as File | null;
-    const userId = formData.get("userId") as string | null;
 
-    if (!file || !userId) {
-      return NextResponse.json({ error: "缺少参数" }, { status: 400 });
+    if (!file) {
+      return NextResponse.json({ error: "Missing file parameter" }, { status: 400 });
     }
 
     // 4. 将文件转换为 Buffer
@@ -39,29 +57,37 @@ export async function POST(request: NextRequest) {
     // 5. 创建 GridFS 桶 (Bucket)
     // bucketName: 'uploads' 意味着文件会存到 uploads.files 和 uploads.chunks 两个集合里
     const bucket = new mongoose.mongo.GridFSBucket(db, {
-      bucketName: 'uploads' 
+      bucketName: 'uploads'
     });
 
     // 6. 创建上传流并写入 GridFS
     // 这是一个 Promise 包装器，确保文件完全写完后再继续\
-    // promise 会存在一个<mongoose.Types.ObjectId>的结果  resolve：“成功流完了，给你ID”  reject：等于说“管子爆了，报错”
-    // 这是一个保险措施+获取ID的措施 重点在里面 
+    // promise 会存在一个<mongoose.Types.ObjectId>的结果  resolve：”成功流完了，给你ID”  reject：等于说”管子爆了，报错”
+    // 这是一个保险措施+获取ID的措施 重点在里面
+    let uploadStream: mongoose.mongo.GridFSBucketWriteStream | null = null;
+    let readStream: Readable | null = null;
+
     const fileId = await new Promise<mongoose.Types.ObjectId>((resolve, reject) => {
       // 创建一个写入流，文件名设为原始文件名 metadata为标签 为ID和类型
-      const uploadStream = bucket.openUploadStream(file.name, {
+      uploadStream = bucket.openUploadStream(file.name, {
         metadata: { userId, contentType: file.type } // 把元数据也顺便存进 GridFS
       });
 
-      // 将 Buffer 转为可读流，然后“管道”输送到 GridFS 的写入流
-      const readStream = Readable.from(buffer);
-      
+      // 将 Buffer 转为可读流，然后”管道”输送到 GridFS 的写入流
+      readStream = Readable.from(buffer);
+
       readStream
         .pipe(uploadStream) // 把输入数据流接在进水口上
-        .on('error', (error) => reject(error)) //如果错误了 那么就触发reject
+        .on('error', (error: Error) => {
+          // 确保出错时关闭流
+          readStream?.destroy();
+          uploadStream?.destroy();
+          reject(error);
+        })
         .on('finish', () => {
           // 写入完成，GridFS 会生成一个唯一的 _id
           // 我们需要把这个 ID 拿出来，存到我们要修改的 Resource 表里 回调给前面的promise -fileID
-          resolve(uploadStream.id as mongoose.Types.ObjectId);
+          resolve(uploadStream!.id as mongoose.Types.ObjectId);
         });
     });
 
@@ -72,36 +98,47 @@ export async function POST(request: NextRequest) {
       originalname: file.name,
       mimetype: file.type,
       fileId: fileId, // 👈 关键关联
+      input_type: "ifc_file",
+      status: "pending",
     });
 
     return NextResponse.json(
-      { message: "大文件上传成功", resourceId: newResource._id },
+      { message: "File uploaded successfully", resourceId: newResource._id },
       { status: 201 }
     );
 
   } catch (error) {
-    console.error("GridFS 上传失败:", error);
+    console.error("GridFS upload failed:", error);
     return NextResponse.json(
-      { error: "服务器内部错误" },
+      { error: "Internal server error" },
       { status: 500 }
     );
   }
 }
 
 // ---------------------------------------------------------
-// 2. GET 方法：获取用户的文件列表
+// 2. GET 方法：获取当前用户的文件列表
 // ---------------------------------------------------------
 export async function GET(request: NextRequest) {
+  // 速率限制检查
+  const isAllowed = await rateLimit(request, "resource");
+  if (!isAllowed) {
+    return NextResponse.json({ error: "Rate limit exceeded, please try again later" }, { status: 429 });
+  }
+
   try {
-    await dbConnect();
+    // 1. 从 session 获取当前登录用户，而不是信任客户端参数
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
 
-    // 1. 获取 URL 中的查询参数 ?userId=...
-    const { searchParams } = new URL(request.url);
-    const userId = searchParams.get("userId");
-
-    if (!userId) {
-      return NextResponse.json({ error: "未提供用户ID" }, { status: 400 });
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "Not logged in, please login first" }, { status: 401 });
     }
+
+    const userId = session.user.id; // ✅ 使用服务端 session 中的用户 ID
+
+    await dbConnect();
 
     // 2. 查询数据库
     // .find({ userId }) -> 找到该用户的所有文件
@@ -113,7 +150,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ resources });
 
   } catch (error) {
-    console.error("查询失败:", error);
-    return NextResponse.json({ error: "获取列表失败" }, { status: 500 });
+    console.error("Query failed:", error);
+    return NextResponse.json({ error: "Failed to get list" }, { status: 500 });
   }
 }

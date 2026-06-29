@@ -4,6 +4,8 @@ import { dbConnect } from "../../../../../backend/mongodb";
 import { Resource } from "../../../../../backend/resource";
 import mongoose from "mongoose";
 import { Readable } from "stream";
+import { auth } from "../../../../lib/auth";
+import { rateLimit } from "../../../../lib/ratelimit";
 
 
 // 👇 修复问题1的潜在原因：强制动态渲染，告诉 Next.js 绝对不要缓存这个 GET 请求！
@@ -16,17 +18,34 @@ export const dynamic = 'force-dynamic';
 
 // 👇 修复问题2：Next.js 15 要求 params 必须是一个 Promise 类型
 type ContextType = {
-  params: Promise<{ id: string }>; 
+  params: Promise<{ id: string }>;
 };
 
 export async function GET(request: NextRequest, context: ContextType) {
+  // 速率限制检查
+  const isAllowed = await rateLimit(request, "resource");
+  if (!isAllowed) {
+    return NextResponse.json({ error: "Rate limit exceeded, please try again later" }, { status: 429 });
+  }
+
   try {
+    // 从 session 获取当前登录用户
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
+
+    if (!session?.user?.id) {
+      return new NextResponse("请先登录", { status: 401 });
+    }
+
+    const currentUserId = session.user.id;
+
     // 0.连接database
     await dbConnect();
-    const { params } = await context; 
+    const { params } = await context;
 
 // 👇 修复问题2：必须使用 await 来解析 params
-    const resolvedParams = await context.params; 
+    const resolvedParams = await context.params;
     const resourceId = resolvedParams.id;
     if (!resourceId) {
       return new NextResponse("Resource ID is required", { status: 400 });
@@ -43,11 +62,16 @@ export async function GET(request: NextRequest, context: ContextType) {
       return new NextResponse("Resource not found", { status: 404 });
     }
 
+    // 验证当前用户是否有权限下载该文件
+    if (resource.userId !== currentUserId) {
+      return new NextResponse("无权下载此文件", { status: 403 });
+    }
+
 
   // 👇 修改点 2：动态判断要下载的目标文件ID、文件名和 MIME 类型
     let targetFileId: mongoose.Types.ObjectId;
     let filename: string;
-    let mimeType: string; 
+    let mimeType: string;
 
     if (type === "result") {
       // 当请求要求下载“结果”时
@@ -55,7 +79,7 @@ export async function GET(request: NextRequest, context: ContextType) {
         return new NextResponse("Analysis result not ready yet", { status: 404 });
       }
       targetFileId = resource.resultFileId; // 使用 Python 处理后存入的 resultFileId
-      
+
       // 构造结果文件名，例如："原文件名(去后缀)_ids_result.json"
       const baseName = resource.originalname.replace(/\.[^/.]+$/, "");
       filename = `${baseName}_ids_result.json`;
@@ -69,11 +93,12 @@ export async function GET(request: NextRequest, context: ContextType) {
 
 
 
-    // 3. 准备 GridFS Bucket
+    // 3. Prepare GridFS Bucket
     const db = mongoose.connection.db;
-    // 必须使用相同的 bucketName，否则找不到文件
-    const bucket = new mongoose.mongo.GridFSBucket(db!, {
-      bucketName: "uploads", 
+    if (!db) throw new Error("Database connection not available");
+    // Must use the same bucketName, otherwise the file cannot be found
+    const bucket = new mongoose.mongo.GridFSBucket(db, {
+      bucketName: "uploads",
     });
 
     // 4. 创建 GridFS 下载流
@@ -106,10 +131,15 @@ export async function GET(request: NextRequest, context: ContextType) {
     // 为什么要用 NextResponse(body, ...)？
     // 这样做能够以流的方式发送数据。文件下载是边读边传，不会等整个文件加载到内存中再发送，
     // 极大地降低了服务器的内存占用，对于大文件至关重要。
-    return new NextResponse(webStream as any, { headers });
+    try {
+      return new NextResponse(webStream as any, { headers });
+    } finally {
+      // 显式关闭 GridFS 流，防止资源泄漏
+      downloadStream.destroy();
+    }
 
   } catch (error) {
-    console.error("文件下载失败:", error);
+    console.error("File download failed:", error);
     return new NextResponse("File download failed", { status: 500 });
   }
 }

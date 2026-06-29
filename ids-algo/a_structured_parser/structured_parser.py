@@ -15,13 +15,13 @@ logger = logging.getLogger(__name__)
 
 
 async def structuredParser(text: str,
-                        settings: Settings, 
+                        settings: Settings,
                         llm_client: LLMClient) -> StructuredParseResult:
     try:
         logger.info(f"Starting structured parsing for text: {text[:100]}...")
 
         # Get parser prompt and format with input text from propmpt manager v1
-        prompt = select_prompt("structured_parser") 
+        prompt = select_prompt("structured_parser")
         # use text to embedding in the prompt
         formatted_prompt = prompt.format(text=text)
         response_content, llm_analysis = await call_llm_and_response("parser",settings, llm_client,formatted_prompt)

@@ -6,7 +6,7 @@
 import logging
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
-from b_facet_classifier import  FacetClassification,FacetCandidate  
+from b_facet_classifier import  FacetClassification,FacetCandidate
 from .data_structures import MappedFacet,KnowledgeBaseMappingStrategy
 
 from .resolvers.resolver_factory import ResolverFactory

@@ -3,8 +3,10 @@
 import { useSession } from "@/app/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useRouter, useParams } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
+import { Loader2, ArrowLeft, Download, Upload, CheckCircle } from "lucide-react";
 
 interface TaskDetail {
   _id: string;
@@ -12,7 +14,7 @@ interface TaskDetail {
   originalname: string;
   input_type: "text" | "ifc_file";
   inputText?: string;
-  status: "pending" | "processing" | "pending_conversion" | "completed" | "failed";
+  status: "pending" | "processing" | "pending_conversion" | "completed" | "checking" | "checked" | "check_failed" | "failed";
   uploadTime: string;
   resultJson?: object;
   idsFilePath?: string;
@@ -75,6 +77,12 @@ export default function TaskDetailPage() {
         return <Badge variant="processing">处理中</Badge>;
       case "pending_conversion":
         return <Badge variant="warning">待转换</Badge>;
+      case "checking":
+        return <Badge variant="processing">审查中</Badge>;
+      case "checked":
+        return <Badge variant="success">已审查</Badge>;
+      case "check_failed":
+        return <Badge variant="destructive">审查失败</Badge>;
       case "failed":
         return <Badge variant="destructive">失败</Badge>;
       default:
@@ -192,77 +200,48 @@ export default function TaskDetailPage() {
     }
   };
 
-  if (sessionLoading || !session?.user) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p className="text-lg">加载中...</p>
-      </div>
-    );
-  }
-
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <svg
-            className="animate-spin h-8 w-8 text-blue-600 mb-4 mx-auto"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              className="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              strokeWidth="4"
-            ></circle>
-            <path
-              className="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-            ></path>
-          </svg>
-          <p className="text-lg text-gray-700">加载任务详情...</p>
-        </div>
+      <div className="flex items-center justify-center py-20">
+        <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
       </div>
     );
   }
 
   if (!task) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-black">
-        <div className="max-w-4xl mx-auto px-4 py-8">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-10 text-center">
+      <div className="max-w-4xl mx-auto">
+        <Card>
+          <CardContent className="py-12 text-center">
             <p className="text-gray-500 text-lg mb-4">任务不存在</p>
             <Button onClick={() => router.push("/tasks")}>返回任务列表</Button>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-black">
-      <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="max-w-4xl mx-auto space-y-6">
         {/* Header */}
-        <div className="flex justify-between items-start mb-8">
+        <div className="flex justify-between items-start">
           <div>
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-2">
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
               任务详情
             </h1>
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-gray-500 dark:text-gray-400 mt-1">
               {task.originalname}
             </p>
           </div>
           <Button variant="outline" onClick={() => router.push("/tasks")}>
+            <ArrowLeft className="w-4 h-4 mr-1" />
             返回列表
           </Button>
         </div>
 
         {/* Task Info */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 mb-6">
+        <Card className="border-0 shadow-sm bg-white dark:bg-gray-900">
+          <CardContent className="p-6">
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
               <p className="text-sm text-gray-500 mb-1">任务状态</p>
@@ -287,7 +266,7 @@ export default function TaskDetailPage() {
           </div>
 
           {/* Error Message */}
-          {task.status === "failed" && task.errorMessage && (
+          {(task.status === "failed" || task.status === "check_failed") && task.errorMessage && (
             <div className="mt-4 p-4 bg-red-50 dark:bg-red-900/20 rounded border border-red-200 dark:border-red-800">
               <p className="text-sm font-semibold text-red-700 dark:text-red-300 mb-2">
                 错误信息:
@@ -297,232 +276,134 @@ export default function TaskDetailPage() {
               </p>
             </div>
           )}
-        </div>
+        </CardContent>
+      </Card>
 
         {/* Input Text */}
         {task.input_type === "text" && task.inputText && (
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 mb-6">
-            <h2 className="text-xl font-bold mb-4 text-gray-800 dark:text-gray-100">
-              输入文本
-            </h2>
-            <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded border border-gray-200 dark:border-gray-600">
-              <pre className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
-                {task.inputText}
-              </pre>
-            </div>
-          </div>
+          <Card className="border-0 shadow-sm bg-white dark:bg-gray-900">
+            <CardHeader>
+              <CardTitle>输入文本</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+                <pre className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
+                  {task.inputText}
+                </pre>
+              </div>
+            </CardContent>
+          </Card>
         )}
 
         {/* Result JSON */}
         {task.resultJson && (
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">
-                生成的 JSON 结果
-              </h2>
-              <Button onClick={downloadJson} variant="outline">
-                下载 JSON
-              </Button>
-            </div>
-            <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded border border-gray-200 dark:border-gray-600 max-h-[400px] overflow-auto">
-              <pre className="text-xs text-gray-700 dark:text-gray-300">
-                {JSON.stringify(task.resultJson, null, 2)}
-              </pre>
-            </div>
-          </div>
+          <Card className="border-0 shadow-sm bg-white dark:bg-gray-900">
+            <CardHeader>
+              <div className="flex justify-between items-center">
+                <CardTitle>生成的 JSON 结果</CardTitle>
+                <Button onClick={downloadJson} variant="outline" size="sm">
+                  <Download className="w-4 h-4 mr-1" />
+                  下载 JSON
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 max-h-[400px] overflow-auto">
+                <pre className="text-xs text-gray-700 dark:text-gray-300">
+                  {JSON.stringify(task.resultJson, null, 2)}
+                </pre>
+              </div>
+            </CardContent>
+          </Card>
         )}
 
         {/* Completed Task Actions - IDS Download & IFC Review */}
         {task.status === "completed" && task.idsFilePath && (
-          <div className="bg-green-50 dark:bg-green-900/20 rounded-lg shadow p-6 mt-6">
-            <h2 className="text-xl font-bold text-green-800 dark:text-green-300 mb-4">
-              🎉 IDS 文件已生成
-            </h2>
-            <div className="flex flex-col sm:flex-row gap-4">
-              {/* 下载 IDS 文件按钮 */}
-              <Button
-                onClick={downloadIdsFile}
-                disabled={downloadingIds}
-                className="flex items-center gap-2"
-              >
-                {downloadingIds ? (
-                  <>
-                    <svg
-                      className="animate-spin h-4 w-4"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      ></circle>
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                      ></path>
-                    </svg>
-                    下载中...
-                  </>
-                ) : (
-                  <>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                      />
-                    </svg>
-                    下载 .ids 文件
-                  </>
-                )}
-              </Button>
-
-              {/* IFC 上传审查区域 */}
-              <div className="flex flex-col sm:flex-row gap-2">
-                <input
-                  type="file"
-                  ref={ifcInputRef}
-                  accept=".ifc"
-                  onChange={handleIfcFileChange}
-                  className="hidden"
-                />
+          <Card className="border-0 shadow-sm bg-green-50 dark:bg-green-900/20">
+            <CardContent className="p-6">
+              <h2 className="text-xl font-bold text-green-800 dark:text-green-300 mb-4">
+                IDS 文件已生成
+              </h2>
+              <div className="flex flex-col sm:flex-row gap-3">
                 <Button
-                  variant="outline"
-                  onClick={() => ifcInputRef.current?.click()}
+                  onClick={downloadIdsFile}
+                  disabled={downloadingIds}
                   className="flex items-center gap-2"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
-                    />
-                  </svg>
-                  {ifcFile ? ifcFile.name : "选择 IFC 模型"}
+                  {downloadingIds ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Download className="w-4 h-4" />
+                  )}
+                  {downloadingIds ? "下载中..." : "下载 .ids 文件"}
                 </Button>
-                {ifcFile && (
+
+                <div className="flex items-center gap-2">
+                  <input
+                    type="file"
+                    ref={ifcInputRef}
+                    accept=".ifc"
+                    onChange={handleIfcFileChange}
+                    className="hidden"
+                  />
                   <Button
-                    variant="default"
-                    onClick={handleIfcUploadAndReview}
-                    disabled={uploadingIfc}
+                    variant="outline"
+                    onClick={() => ifcInputRef.current?.click()}
                     className="flex items-center gap-2"
                   >
-                    {uploadingIfc ? (
-                      <>
-                        <svg
-                          className="animate-spin h-4 w-4"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <circle
-                            className="opacity-25"
-                            cx="12"
-                            cy="12"
-                            r="10"
-                            stroke="currentColor"
-                            strokeWidth="4"
-                          ></circle>
-                          <path
-                            className="opacity-75"
-                            fill="currentColor"
-                            d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                          ></path>
-                        </svg>
-                        审查中...
-                      </>
-                    ) : (
-                      <>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-4 w-4"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                          />
-                        </svg>
-                        开始审查
-                      </>
-                    )}
+                    <Upload className="w-4 h-4" />
+                    {ifcFile ? ifcFile.name : "选择 IFC 模型"}
                   </Button>
-                )}
+                  {ifcFile && (
+                    <Button
+                      onClick={handleIfcUploadAndReview}
+                      disabled={uploadingIfc}
+                      className="flex items-center gap-2"
+                    >
+                      {uploadingIfc ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <CheckCircle className="w-4 h-4" />
+                      )}
+                      {uploadingIfc ? "审查中..." : "开始审查"}
+                    </Button>
+                  )}
+                </div>
               </div>
-            </div>
 
-            {ifcFile && (
-              <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/30 rounded border border-blue-200 dark:border-blue-700">
-                <p className="text-sm text-blue-700 dark:text-blue-300">
-                  📁 已选择: <strong>{ifcFile.name}</strong> ({(ifcFile.size / 1024).toFixed(2)} KB)
-                </p>
-              </div>
-            )}
-          </div>
+              {ifcFile && (
+                <div className="mt-3 p-3 bg-blue-50 dark:bg-blue-900/30 rounded-lg border border-blue-200 dark:border-blue-700">
+                  <p className="text-sm text-blue-700 dark:text-blue-300">
+                    已选择: <strong>{ifcFile.name}</strong> ({(ifcFile.size / 1024).toFixed(2)} KB)
+                  </p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
         )}
 
         {/* Processing Indicator */}
-        {task.status === "processing" && (
-          <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg shadow p-6 text-center">
-            <svg
-              className="animate-spin h-8 w-8 text-blue-600 mb-4 mx-auto"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              ></circle>
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-              ></path>
-            </svg>
-            <p className="text-blue-700 dark:text-blue-300 font-medium">
-              正在处理中，请稍候...
-            </p>
-          </div>
+        {(task.status === "processing" || task.status === "checking") && (
+          <Card className="border-0 shadow-sm bg-blue-50 dark:bg-blue-900/20">
+            <CardContent className="p-6 text-center">
+              <Loader2 className="w-8 h-8 animate-spin text-blue-600 mx-auto mb-3" />
+              <p className="text-blue-700 dark:text-blue-300 font-medium">
+                {task.status === "checking" ? "正在审查中，请稍候..." : "正在处理中，请稍候..."}
+              </p>
+            </CardContent>
+          </Card>
         )}
 
-        {/* Pending Conversion - 转换已集成到后端，此状态不应出现 */}
+        {/* Pending Conversion */}
         {task.status === "pending_conversion" && (
-          <div className="bg-yellow-50 dark:bg-yellow-900/20 rounded-lg shadow p-6 text-center mt-6">
-            <p className="text-yellow-700 dark:text-yellow-300 font-medium mb-4">
-              任务正在转换中，请稍候...
-            </p>
-          </div>
+          <Card className="border-0 shadow-sm bg-yellow-50 dark:bg-yellow-900/20">
+            <CardContent className="p-6 text-center">
+              <p className="text-yellow-700 dark:text-yellow-300 font-medium">
+                任务正在转换中，请稍候...
+              </p>
+            </CardContent>
+          </Card>
         )}
-      </div>
     </div>
   );
 }

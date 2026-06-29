@@ -31,7 +31,7 @@
       "name": "Reinforced Concrete",
       "definition": "Concrete composite material reinforced with steel bars or mesh.",
       "ifc_version": "IFC4",
-      "item_type": "material", 
+      "item_type": "material",
       "category": "Structural",
       "properties": {
         "density": "2500 kg/m³",
@@ -95,7 +95,7 @@
     {
       "name": "Aluminum",
       "definition": "A lightweight, corrosion-resistant metal.",
-      "ifc_version": "IFC4", 
+      "ifc_version": "IFC4",
       "item_type": "material",
       "category": "Metal",
       "properties": {

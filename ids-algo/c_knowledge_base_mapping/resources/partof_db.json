@@ -2,7 +2,7 @@
   "metadata": {
     "name": "IFC PartOf Relationship Knowledge Base",
     "description": "IFC空间关系知识库，用于存储和检索IFC实体间的包含关系",
-    "version": "1.0.0", 
+    "version": "1.0.0",
     "ifc_versions": ["IFC2X3", "IFC4", "IFC4X3"],
     "item_types": ["partOf"],
     "vector_dim": 768,
@@ -20,7 +20,7 @@
       "ifc_version": "IFC4",
       "item_type": "partOf",
       "parent_entity": "IfcBuilding",
-      "child_entity": "IfcBuildingStorey", 
+      "child_entity": "IfcBuildingStorey",
       "relationship_type": "IfcRelAggregates"
     },
     {
@@ -60,7 +60,7 @@
       "relationship_type": "IfcRelContainedInSpatialStructure"
     },
     {
-      "name": "Storey contains Element", 
+      "name": "Storey contains Element",
       "definition": "A building storey can contain building elements within its boundaries.",
       "ifc_version": "IFC4",
       "item_type": "partOf",

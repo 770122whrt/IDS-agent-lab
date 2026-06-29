@@ -9,8 +9,13 @@
 /.idea/*
 !/.idea/runConfigurations
 /.claude
+/.planning
 # testing
 /coverage
+
+# Python
+__pycache__/
+*.py[cod]
 
 # next.js
 /.next/
@@ -39,6 +44,8 @@ yarn-error.log*
 next-env.d.ts
 
 .env
+
+/ids-algo/.env-pipeline
 
 /media
 /output

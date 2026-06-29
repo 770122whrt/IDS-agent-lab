@@ -24,4 +24,3 @@ activate:
 deactivate:
 	@echo "To deactivate, run:"
 	@echo "  deactivate"
-

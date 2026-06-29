@@ -1,21 +1,40 @@
 import { NextRequest, NextResponse } from "next/server";
 import { dbConnect } from "../../../backend/mongodb";
 import { Resource } from "../../../backend/resource";
+import { auth } from "../../lib/auth";
+import { rateLimit } from "../../lib/ratelimit";
 
 export async function POST(request: NextRequest) {
+  // Rate limit check
+  const isAllowed = await rateLimit(request);
+  if (!isAllowed) {
+    return NextResponse.json({ error: "Rate limit exceeded, please try again later" }, { status: 429 });
+  }
+
   try {
+    // Get current logged in user from session
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
+
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "Not logged in, please login first" }, { status: 401 });
+    }
+
+    const userId = session.user.id;
+
     await dbConnect();
 
-    const { userId, text } = await request.json();
+    const { text } = await request.json();
 
-    if (!userId || !text) {
+    if (!text) {
       return NextResponse.json(
-        { error: "缺少必要参数: userId 或 text" },
+        { error: "Missing required parameter: text" },
         { status: 400 }
       );
     }
 
-    // 1. 创建资源记录
+    // 1. Create resource record
     const newResource = await Resource.create({
       userId,
       originalname: `text_input_${Date.now()}`,
@@ -25,8 +44,8 @@ export async function POST(request: NextRequest) {
       status: "pending",
     });
 
-    // 2. 调用 Python 后端进行分析
-    const PYTHON_API_URL = process.env.PYTHON_API_URL || "http://localhost:8000";
+    // 2. Call Python backend for analysis
+    const PYTHON_API_URL = process.env.PYTHON_BACKEND_URL || process.env.PYTHON_API_URL || "http://localhost:8000";
 
     try {
       const response = await fetch(`${PYTHON_API_URL}/analyze-text`, {
@@ -42,40 +61,40 @@ export async function POST(request: NextRequest) {
         const errorText = await response.text();
         console.error("Python service error:", errorText);
 
-        // 更新状态为失败
+        // Update status to failed
         await Resource.findByIdAndUpdate(newResource._id, {
           status: "failed",
-          errorMessage: "Python服务调用失败: " + errorText,
+          errorMessage: "Python service call failed: " + errorText,
         });
 
         return NextResponse.json(
-          { error: "分析服务调用失败" },
+          { error: "Analysis service call failed" },
           { status: 500 }
         );
       }
 
       return NextResponse.json({
-        message: "文本分析任务已提交",
+        message: "Text analysis task submitted",
         resourceId: newResource._id.toString(),
       });
     } catch (fetchError) {
       console.error("Failed to connect to Python service:", fetchError);
 
-      // 更新状态为失败
+      // Update status to failed
       await Resource.findByIdAndUpdate(newResource._id, {
         status: "failed",
-        errorMessage: "无法连接到Python分析服务",
+        errorMessage: "Cannot connect to Python analysis service",
       });
 
       return NextResponse.json(
-        { error: "无法连接到分析服务，请确保Python后端正在运行" },
+        { error: "Cannot connect to analysis service, ensure Python backend is running" },
         { status: 503 }
       );
     }
   } catch (error) {
     console.error("Analyze text route error:", error);
     return NextResponse.json(
-      { error: "服务器内部错误" },
+      { error: "Internal server error" },
       { status: 500 }
     );
   }

@@ -11,15 +11,15 @@ def createMdInOutput(content:str, filename: str):
     # Create output directory if it doesn't exist
     output_dir = Path(__file__).parent.parent / "output"
     output_dir.mkdir(exist_ok=True)
-    
+
     # Generate filename: test_name - timestamp
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     finalfilename = f"{filename}-{timestamp}.md"
     output_path = output_dir / finalfilename
-    
+
     # Save markdown file
     output_path.write_text(content, encoding="utf-8")
-    
+
     print(f"✅ Markdown documentation saved to: {output_path}")
     print(f"📄 File: {finalfilename}")
 
@@ -55,13 +55,13 @@ def createJsonTempFile(obj:object, filename: str):
     # Create output directory if it doesn't exist
     output_dir = Path(__file__).parent.parent / "temp"
     output_dir.mkdir(exist_ok=True)
-    
+
     finalfilename = f"{filename}.json"
     output_path = output_dir / finalfilename
-    
+
     # Save file
     output_path.write_text(content, encoding="utf-8")
-    
+
     print(f"✅ Json temp file saved to: {output_path}")
     print(f"📄 File: {finalfilename}")
 

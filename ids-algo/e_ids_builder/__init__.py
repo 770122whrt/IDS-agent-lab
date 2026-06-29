@@ -3,7 +3,7 @@ from .data_structures import SpecificationSlot, ApplicabilitySlot, RequirementsS
 
 __all__ = [
     "runIDSBuilder",
-    "SpecificationSlot", 
-    "ApplicabilitySlot", 
+    "SpecificationSlot",
+    "ApplicabilitySlot",
     "RequirementsSlot"
 ]

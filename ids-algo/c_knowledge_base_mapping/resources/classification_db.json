@@ -26,7 +26,7 @@
     {
       "name": "Uniclass 2015 Door",
       "definition": "Uniclass 2015 classification for door elements.",
-      "ifc_version": "IFC4", 
+      "ifc_version": "IFC4",
       "item_type": "classification",
       "classification_system": "Uniclass 2015",
       "classification_code": "EF_30_10",
@@ -37,7 +37,7 @@
       "definition": "Uniclass 2015 classification for window elements.",
       "ifc_version": "IFC4",
       "item_type": "classification",
-      "classification_system": "Uniclass 2015", 
+      "classification_system": "Uniclass 2015",
       "classification_code": "EF_30_20",
       "applicable_entities": ["IfcWindow"]
     },
@@ -47,7 +47,7 @@
       "ifc_version": "IFC4",
       "item_type": "classification",
       "classification_system": "Uniclass 2015",
-      "classification_code": "EF_20_10", 
+      "classification_code": "EF_20_10",
       "applicable_entities": ["IfcSlab"]
     },
     {
@@ -99,7 +99,7 @@
       "name": "MasterFormat Metals",
       "definition": "MasterFormat classification for structural metal work.",
       "ifc_version": "IFC4",
-      "item_type": "classification", 
+      "item_type": "classification",
       "classification_system": "MasterFormat",
       "classification_code": "05 12 00",
       "applicable_entities": ["IfcBeam", "IfcColumn", "IfcMember"]

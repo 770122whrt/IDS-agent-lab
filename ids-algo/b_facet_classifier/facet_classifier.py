@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 
 async def facetClassifier(
                         parse_result: StructuredParseResult,
-                        settings: Settings, 
+                        settings: Settings,
                         llm_client: LLMClient) -> FacetClassification:
         """
         Classify structured components into IDS facet types

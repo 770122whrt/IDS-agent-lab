@@ -9,7 +9,7 @@ Defines clear interfaces between pipeline stages
 
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
-    
+
 @dataclass
 class MappedFacet:
     """A facet that has been mapped to IFC terminology
@@ -74,4 +74,3 @@ class KnowledgeBaseMappingStrategy:
     # PartOf映射策略
     partof_kb_type: str = "partof"
     partof_search_threshold: float = 0.1
-

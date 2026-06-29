@@ -1,8 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { dbConnect } from "../../../../backend/mongodb";
 import { Resource } from "../../../../backend/resource";
+import { rateLimit } from "../../../lib/ratelimit";
 
 export async function POST(request: NextRequest) {
+  // 速率限制检查
+  const isAllowed = await rateLimit(request);
+  if (!isAllowed) {
+    return NextResponse.json({ error: "Rate limit exceeded, please try again later" }, { status: 429 });
+  }
+
   try {
     // 1. 解析请求
     const { resourceId } = await request.json();
@@ -20,8 +27,8 @@ export async function POST(request: NextRequest) {
     // 3. 呼叫 Python 服务
     // 如果你的 Python 和 Next.js 都在本地，用 localhost
     // 如果是用 Docker 部署，这里要改成容器名
-    const PYTHON_API_URL = process.env.PYTHON_API_URL || "http://localhost:8000";
-    
+    const PYTHON_API_URL = process.env.PYTHON_BACKEND_URL || process.env.PYTHON_API_URL || "http://localhost:8000";
+
     const response = await fetch(`${PYTHON_API_URL}/analyze`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

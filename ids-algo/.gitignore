@@ -5,6 +5,7 @@ env/
 
 # direnv
 .envrc.local
+.env-pipeline
 
 # Python
 __pycache__/
@@ -25,3 +26,7 @@ Thumbs.db
 
 # output
 output
+cache/
+temp/
+test_output/
+experimental_results/

@@ -65,5 +65,3 @@ class FacetClassification:
                 for candidate in data.get("partof_candidates", [])
             ],
         )
-
-

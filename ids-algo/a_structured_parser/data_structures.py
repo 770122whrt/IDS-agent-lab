@@ -91,5 +91,3 @@ class StructuredParseResult:
             ],
             unmatched_fragments=data.get("unmatched_fragments", []),
         )
-
-
