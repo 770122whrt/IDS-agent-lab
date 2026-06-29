@@ -205,7 +205,7 @@ class IFCVectorKnowledgeBase:
         self,
         query: str,
         top_k: Optional[int] = None,
-        ifc_versions: Optional[List[str]] = ["IFC4"],
+        ifc_versions: Optional[List[str]] = None,
         item_types: Optional[List[str]] = None,
     ) -> List[Tuple[IFCItem, float]]:
         """搜索与查询最相似的IFC项目
@@ -224,6 +224,24 @@ class IFCVectorKnowledgeBase:
             return []
 
         k = top_k or self.top_k
+
+        # 第一层：精确匹配（在版本过滤之前，大小写不敏感）
+        query_lower = query.lower().strip()
+
+        # 先在所有项目中查找精确匹配
+        for item in self.items:
+            if item.name.lower() == query_lower:
+                # 如果指定了版本过滤，检查是否匹配
+                if ifc_versions:
+                    # 如果精确匹配的项目版本不在过滤列表中，记录警告但仍返回
+                    if item.ifc_version not in ifc_versions:
+                        logger.warning(f"精确匹配命中 {item.name}，但版本 {item.ifc_version} 不在请求的版本列表 {ifc_versions} 中，仍然返回此匹配")
+                else:
+                    logger.info(f"精确匹配命中: {item.name} (query: {query})")
+                return [(item, 1.0)]
+
+        # 第二层：向量搜索（处理模糊查询）
+        logger.info(f"精确匹配未命中，使用向量搜索: {query}")
 
         # 根据元数据过滤项目
         filtered_items = self._filter_items_by_metadata(

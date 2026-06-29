@@ -28,23 +28,23 @@ class PropertyResolver:
     ) -> List[Optional[Dict[str, Any]]]:
         """
         批次解析Properties
-        
+
         Args:
             queries: 查询列表，每个元素为 (query_text, context) 元组
-            
+
         Returns:
             解析结果列表，与输入queries顺序对应
         """
         if not queries:
             return []
-            
+
         try:
             # 分离查询文本和上下文
             query_texts = [q[0] for q in queries]
-            
+
             # 批量计算embedding
             query_embeddings = self._batch_encode(query_texts)
-            
+
             # 并行处理每个查询
             tasks = []
             for i, (query_text, context) in enumerate(queries):
@@ -52,9 +52,9 @@ class PropertyResolver:
                     query_text, context, query_embeddings[i]
                 )
                 tasks.append(task)
-                
+
             results = await asyncio.gather(*tasks, return_exceptions=True)
-            
+
             # 处理异常情况
             processed_results = []
             for result in results:
@@ -63,9 +63,9 @@ class PropertyResolver:
                     processed_results.append(None)
                 else:
                     processed_results.append(result)
-                    
+
             return processed_results
-            
+
         except Exception as e:
             logger.error(f"Batch property resolution failed: {str(e)}")
             return [None] * len(queries)
@@ -87,19 +87,19 @@ class PropertyResolver:
         return results[0] if results else None
 
     async def _resolve_single_with_embedding(
-        self, 
-        query_text: str, 
-        context: Optional[Dict[str, Any]], 
+        self,
+        query_text: str,
+        context: Optional[Dict[str, Any]],
         query_embedding: np.ndarray
     ) -> Optional[Dict[str, Any]]:
         """
         使用预计算的embedding解析单个Property
-        
+
         Args:
             query_text: 查询文本
             context: 上下文
             query_embedding: 预计算的查询embedding
-            
+
         Returns:
             解析结果
         """
@@ -128,10 +128,9 @@ class PropertyResolver:
                     query_text, top_k=5, ifc_versions=None, item_types=None
                 )
                 if results and len(results) > 0:
-                     # results是tuple列表: (ifc_item, distance)
-                    ifc_item, distance = results[0]
-                    # 将距离转换为相似度
-                    similarity = 1.0 / (1.0 + distance)
+                     # results是tuple列表: (ifc_item, similarity)
+                    ifc_item, similarity = results[0]
+                    # similarity已经是点积相似度，不需要转换
                     if similarity > 0.5:
                         return {
                             "mapped_name": ifc_item.name,
@@ -154,13 +153,13 @@ class PropertyResolver:
     ) -> Dict[str, List[Dict[str, Any]]]:
         """从外部API获取实体的属性集定义"""
         params = {
-            "entityName": entity_name, 
+            "entityName": entity_name,
             "schemaVersions": ifc_versions or ["IFC4"]
         }
         logger.info(f"获取实体 '{entity_name}' 的属性集和属性，版本: {ifc_versions or ['IFC4']}")
         # 使用配置中的URL
         url = settings.ifc_entity_pset_api_url
-        
+
         try:
             # 设置较短的超时，避免阻塞主流程
             response = requests.post(url, json=params, timeout=5)
@@ -190,28 +189,28 @@ class PropertyResolver:
         try:
             if not texts:
                 return []
-            
+
             # 使用模型进行编码
             embeddings = self.model.encode(texts)
-            
+
             if isinstance(embeddings, np.ndarray) and len(embeddings.shape) == 2:
                 return [embeddings[i] for i in range(embeddings.shape[0])]
             else:
                 return [embeddings] if len(texts) == 1 else []
-                
+
         except Exception as e:
             logger.warning(f"Batch encoding failed: {str(e)}")
             return [np.zeros(384) for _ in texts] # Fallback
 
     def _find_best_property_match_batch(
-        self, 
-        query_embedding: np.ndarray, 
+        self,
+        query_embedding: np.ndarray,
         property_sets: Dict[str, Any]
     ) -> Optional[Dict[str, Any]]:
         """批次查找最佳Property匹配"""
         try:
             property_candidates = []
-            
+
             # 展平结构：提取所有可能的属性
             for version, psets_data in property_sets.items():
                 if isinstance(psets_data, list):
@@ -225,30 +224,30 @@ class PropertyResolver:
                                         "name": prop.get("name", ""),
                                         "definition": prop.get("definition", "")
                                     })
-            
+
             if not property_candidates:
                 return None
-                
+
             # 准备待编码文本
             all_texts = []
             for candidate in property_candidates:
                 all_texts.extend([candidate["name"], candidate["definition"]])
-                
+
             all_embeddings = self._batch_encode(all_texts)
-            
+
             best_match = None
             best_score = 0.0
-            
+
             for i, candidate in enumerate(property_candidates):
                 name_emb = all_embeddings[i * 2] if i * 2 < len(all_embeddings) else None
                 def_emb = all_embeddings[i * 2 + 1] if i * 2 + 1 < len(all_embeddings) else None
-                
+
                 name_score = self._calculate_cosine_similarity(query_embedding, name_emb)
                 definition_score = self._calculate_cosine_similarity(query_embedding, def_emb)
-                
+
                 # 组合分数
                 combined_score = definition_score * 0.7 + name_score * 0.3
-                
+
                 if combined_score > best_score and combined_score > 0.5:
                     best_score = combined_score
                     best_match = {
@@ -258,9 +257,9 @@ class PropertyResolver:
                         "property_set": candidate["pset"].get("propertySetName", "Unknown"),
                         "source": "ifc_api",
                     }
-            
+
             return best_match
-            
+
         except Exception as e:
             logger.error(f"Batch property matching failed: {str(e)}")
             return None

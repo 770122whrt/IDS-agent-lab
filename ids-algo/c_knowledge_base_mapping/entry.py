@@ -28,7 +28,7 @@ async def runKnowledgeBaseMapping(classification_result: FacetClassification) ->
             settings=settings,
             strategy=KnowledgeBaseMappingStrategy()
         )
-        
+
         # 获取映射结果列表
         mapped_facets: list[MappedFacet] = await kb_mapping_orchestrator.map_facets_clean(
             classification=classification_result,
@@ -37,7 +37,7 @@ async def runKnowledgeBaseMapping(classification_result: FacetClassification) ->
 
         # 返回整个列表，如果为空也返回空列表
         return mapped_facets
-            
+
     except Exception as e:
         logging.error(f"Error in knowledge base mapping: {e}")
         # 返回包含错误信息的 MappedFacet 放在列表中

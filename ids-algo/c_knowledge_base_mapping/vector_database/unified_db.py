@@ -10,7 +10,7 @@ from typing import List, Optional, Union
 
 from .core.base import IFCVectorKnowledgeBase
 from .core.models import (
-    IFCItem, IFCItemType, IFCEntity, IFCPropertySet, 
+    IFCItem, IFCItemType, IFCEntity, IFCPropertySet,
     IFCProperty, IFCAttribute, IFCPartOf, IFCClassification, IFCMaterial
 )
 from openrouter.settings import settings
@@ -51,7 +51,7 @@ class IFCUnifiedVectorDB(IFCVectorKnowledgeBase):
                     f"Skipping {item.name}"
                 )
                 return
-        
+
         # 调用基类真正的入库逻辑
         super().add_item(item)
 
@@ -125,11 +125,11 @@ def create_ifc_unified_db(db_path: Optional[str] = None) -> IFCUnifiedVectorDB:
     return db
 
 def create_ifc_db_by_type(
-    item_type: Union[IFCItemType, str], 
+    item_type: Union[IFCItemType, str],
     db_path: Optional[str] = None
 ) -> IFCUnifiedVectorDB:
     """根据类型创建特定的子数据库 (替代 attribute_db.py 等)"""
-    
+
     # 统一转为枚举
     if isinstance(item_type, str):
         try:
@@ -146,5 +146,5 @@ def create_ifc_db_by_type(
 
     if db_path and os.path.exists(db_path):
         db.load(db_path)
-    
+
     return db

@@ -9,7 +9,7 @@ Defines clear interfaces between pipeline stages
 
 from dataclasses import dataclass, field
 from typing import List
-    
+
 @dataclass
 class ApplicabilitySlot:
     """Applicability槽 - 定义检查范围"""

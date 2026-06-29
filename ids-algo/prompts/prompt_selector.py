@@ -5,9 +5,9 @@ from .ids_builder import IDS_BUILDER_PROMPT
 from .entity_resolver_prompts import ENTITY_RESOLVER_PROMPT
 
 PromptType = Literal[
-    "facet_classifier", 
-    "structured_parser", 
-    "ids_builder", 
+    "facet_classifier",
+    "structured_parser",
+    "ids_builder",
     "entity_resolver"
 ]
 

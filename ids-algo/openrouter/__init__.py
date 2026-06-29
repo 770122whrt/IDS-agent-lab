@@ -7,11 +7,11 @@ from .call_llm import call_llm_and_response
 from .llm_response_handler import parse_llm_json_response
 
 __all__ = [
-  "OpenRouterClient", 
+  "OpenRouterClient",
   "LLMClient",
-  "LLMResponseHandler", 
-  "Settings", 
-  "settings", 
+  "LLMResponseHandler",
+  "Settings",
+  "settings",
   "call_llm_and_response",
   "parse_llm_json_response"
 ]

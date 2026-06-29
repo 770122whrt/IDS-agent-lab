@@ -92,7 +92,7 @@ def load_original_texts() -> dict:
             input_data = json.load(f)
             # 确保是列表
             if isinstance(input_data, dict): input_data = [input_data]
-            
+
             for item in input_data:
                 # 转换为字符串ID以匹配
                 entry_id = str(item.get("id", "")).strip()
@@ -102,7 +102,7 @@ def load_original_texts() -> dict:
         print(f"Loaded original texts for IDs: {list(text_map.keys())}")
     except Exception as e:
         print(f"Error loading input.json: {e}")
-    
+
     return text_map
 
 # -----------------------------------------------------------------------------
@@ -110,7 +110,7 @@ def load_original_texts() -> dict:
 # -----------------------------------------------------------------------------
 async def process_entry(entry_id: str, original_text_map: dict):
     print(f"\n▶️ Processing Entry ID: {entry_id}")
-    
+
     file_c = TEMP_DIR / f"c{entry_id}.json"
     file_d = TEMP_DIR / f"d{entry_id}.json"
     file_e = TEMP_DIR / f"e{entry_id}.json"
@@ -150,7 +150,7 @@ async def process_entry(entry_id: str, original_text_map: dict):
     for facet in facets:
         if facet.constraints is None:
             facet.constraints = []
-        
+
         facet_text = (facet.original_text or "").strip().lower()
 
         for constr in constraints:
@@ -167,7 +167,7 @@ async def process_entry(entry_id: str, original_text_map: dict):
         # 调用 e_ids_builder/entry.py 中的 runIDSBuilder
         # 注意：这里需要传入 await，并且传入 original_text
         result_data = await runIDSBuilder(
-            facets, 
+            facets,
             text=original_text_content,
             include_metadata= False,
         )
@@ -176,7 +176,7 @@ async def process_entry(entry_id: str, original_text_map: dict):
         specifications = result_data.get("specifications", [])
 
         print(f"   ✅ Generated {len(specifications)} IDS specifications.")
-        
+
         # --- Step E: 保存结果 ---
         with open(file_e, "w", encoding="utf-8") as f:
             json.dump(result_data, f, indent=2, ensure_ascii=False)
@@ -194,7 +194,7 @@ async def main():
     # 加载所有的原始文本
     text_map = load_original_texts()
 
-    test_ids = ["1","2"] 
+    test_ids = ["1","2"]
     for eid in test_ids:
         await process_entry(eid, text_map)
 

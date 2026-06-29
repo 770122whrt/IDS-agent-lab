@@ -1,166 +1,143 @@
 "use client";
 
-import { useSession, signOut } from "@/app/lib/auth-client";
+import { useSession } from "@/app/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { toast } from "sonner";
+import { Loader2, Sparkles, FileText, Lightbulb } from "lucide-react";
 
 export default function Dashboard() {
-  const { data: session, isPending } = useSession();
+  const { data: session } = useSession();
   const router = useRouter();
 
   const [inputText, setInputText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useEffect(() => {
-    if (!isPending && !session?.user) {
-      router.push("/sign-in");
-    }
-  }, [isPending, session?.user, router]);
-
-  if (isPending) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-black">
-        <svg className="animate-spin h-8 w-8 text-blue-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-        </svg>
-        <p className="text-lg text-gray-700 dark:text-gray-200 font-medium">Loading...</p>
-      </div>
-    );
-  }
-
-  if (!session?.user) {
-    return null;
-  }
-
-  const handleSignOut = async () => {
-    await signOut();
-    router.push("/sign-in");
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!inputText.trim()) {
-      alert("请输入IDS需求文本");
+      toast.error("请输入 IDS 需求文本");
       return;
     }
 
     setIsSubmitting(true);
 
     try {
-      const userId = session.user.id || session.user.email || "";
+      const userId = session?.user?.id || session?.user?.email || "";
 
       const response = await fetch("/api/analyze-text", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId,
-          text: inputText,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId, text: inputText }),
       });
 
       if (response.ok) {
-        const data = await response.json();
+        toast.success("提交成功，正在生成 IDS 文件");
         setInputText("");
         router.push("/tasks");
       } else {
         const error = await response.json();
-        alert(`提交失败: ${error.error || "未知错误"}`);
+        toast.error(`提交失败: ${error.error || "未知错误"}`);
       }
     } catch (error) {
       console.error("Submit error:", error);
-      alert("提交失败，请检查网络连接");
+      toast.error("提交失败，请检查网络连接");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-black">
-      <div className="max-w-3xl mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">
-              IDS Generator
-            </h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-1">
-              从自然语言生成 IDS 规范文件
-            </p>
-          </div>
-          <div className="flex gap-2">
-            <Button variant="outline" onClick={() => router.push("/tasks")}>
-              任务列表
-            </Button>
-            <Button variant="ghost" onClick={handleSignOut}>
-              退出
-            </Button>
-          </div>
-        </div>
-
-        {/* Main Form */}
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Text Input */}
-            <div className="space-y-2">
-              <Label htmlFor="ids-text" className="text-base font-semibold">
-                输入 IDS 需求描述
-              </Label>
-              <Textarea
-                id="ids-text"
-                placeholder="请用自然语言描述您的 IDS 规范要求，例如：&#10;&#10;• 所有 IfcWall 的防火等级必须为 A 级&#10;• 门的宽度必须大于 900mm&#10;• 楼板的承重必须大于 500kg/m²&#10;• 所有空间必须包含面积属性"
-                value={inputText}
-                onChange={(e) => setInputText(e.target.value)}
-                className="min-h-[280px] text-base leading-relaxed"
-                disabled={isSubmitting}
-              />
-              <p className="text-sm text-gray-500">
-                支持中英文输入，系统将自动解析并生成符合 IDS 标准的 XML 文件
-              </p>
-            </div>
-
-            {/* Submit Button */}
-            <div className="flex justify-end gap-3">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => setInputText("")}
-                disabled={isSubmitting}
-              >
-                清空
-              </Button>
-              <Button
-                type="submit"
-                disabled={isSubmitting || !inputText.trim()}
-                className="min-w-[140px]"
-              >
-                {isSubmitting ? (
-                  <span className="flex items-center gap-2">
-                    <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-                    </svg>
-                    生成中...
-                  </span>
-                ) : (
-                  "生成 IDS 文件"
-                )}
-              </Button>
-            </div>
-          </form>
-        </div>
-
-        {/* Footer hint */}
-        <p className="text-center text-sm text-gray-400 dark:text-gray-500 mt-6">
-          登录用户: {session.user.name || session.user.email}
+    <div className="max-w-5xl mx-auto space-y-8 pt-12">
+      {/* Welcome Section */}
+      <div className="text-center pr-12">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          你好，{session?.user?.name || "用户"}
+        </h1>
+        <p className="text-gray-500 dark:text-gray-400 mt-1">
+          用自然语言描述你的 IDS 规范需求，AI 帮你生成标准文件
         </p>
       </div>
+
+      {/* Main Input Card */}
+      <Card className="border-0 shadow-lg bg-white dark:bg-gray-900 -mx-4">
+        <CardHeader>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
+              <Sparkles className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <CardTitle className="text-lg">生成 IDS 文件</CardTitle>
+              <CardDescription>输入 BIM/IFC 规范需求描述</CardDescription>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <Textarea
+              placeholder={"请用自然语言描述您的 IDS 规范要求，例如：\n\n• 所有 IfcWall 的防火等级必须为 A 级\n• 门的宽度必须大于 900mm\n• 楼板的承重必须大于 500kg/m²\n• 所有空间必须包含面积属性"}
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
+              className="min-h-[200px] text-base leading-relaxed resize-none border-gray-200 dark:border-gray-700 focus-visible:ring-blue-500"
+              disabled={isSubmitting}
+            />
+
+            <div className="flex items-center justify-between">
+              <p className="text-sm text-gray-400">
+                支持中英文，自动生成符合 IDS 标准的 XML
+              </p>
+              <div className="flex gap-3">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setInputText("")}
+                  disabled={isSubmitting}
+                >
+                  清空
+                </Button>
+                <Button
+                  type="submit"
+                  disabled={isSubmitting || !inputText.trim()}
+                  className="min-w-[140px] bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+                >
+                  {isSubmitting ? (
+                    <span className="flex items-center gap-2">
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      生成中...
+                    </span>
+                  ) : (
+                    <span className="flex items-center gap-2">
+                      <FileText className="w-4 h-4" />
+                      生成 IDS 文件
+                    </span>
+                  )}
+                </Button>
+              </div>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
+
+      {/* Tips Card */}
+      <Card className="border border-blue-100 dark:border-blue-900/30 bg-blue-50/50 dark:bg-blue-950/20 max-w-2xl mx-auto">
+        <CardContent className="py-4">
+          <div className="flex gap-3">
+            <Lightbulb className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
+            <div className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+              <p className="font-medium text-gray-800 dark:text-gray-200">使用提示</p>
+              <ul className="space-y-1 list-disc list-inside">
+                <li>描述尽量具体，包含实体类型、属性名称和约束条件</li>
+                <li>生成后可在「任务列表」中下载 IDS 文件或上传 IFC 文件进行合规检查</li>
+                <li>支持批量描述多条规则，系统会自动解析并生成对应的 specification</li>
+              </ul>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

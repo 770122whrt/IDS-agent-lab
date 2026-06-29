@@ -10,7 +10,7 @@ from enum import Enum
 from dataclasses import dataclass
 from typing import Any, Dict, List,Union,Optional
 
-    
+
 @dataclass
 class MappedFacet:
     """A facet that has been mapped to IFC terminology

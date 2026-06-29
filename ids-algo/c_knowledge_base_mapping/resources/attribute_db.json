@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "name": "IFC Attribute Knowledge Base", 
+    "name": "IFC Attribute Knowledge Base",
     "description": "IFC属性知识库，用于存储和检索IFC实体属性定义",
     "version": "1.0.0",
     "ifc_versions": ["IFC2X3", "IFC4", "IFC4X3"],
@@ -26,7 +26,7 @@
       "name": "Description",
       "definition": "Optional description for the object, provided by the user.",
       "ifc_version": "IFC4",
-      "item_type": "attribute", 
+      "item_type": "attribute",
       "entity": "IfcRoot",
       "data_type": "IfcText"
     },
@@ -75,7 +75,7 @@
       "definition": "Overall measure of the width along the x axis of the local coordinate system of the door.",
       "ifc_version": "IFC4",
       "item_type": "attribute",
-      "entity": "IfcDoor", 
+      "entity": "IfcDoor",
       "data_type": "IfcPositiveLengthMeasure"
     },
     {

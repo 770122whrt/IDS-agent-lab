@@ -1,11 +1,11 @@
-from .settings import Settings 
-from .client import LLMClient 
+from .settings import Settings
+from .client import LLMClient
 
 
 async def call_llm_and_response(
     typename: str,
-    settings: Settings, 
-    llm_client: LLMClient, 
+    settings: Settings,
+    llm_client: LLMClient,
     format_prompt: str
 ):
     """Call LLM and parse response."""
@@ -14,7 +14,7 @@ async def call_llm_and_response(
         llm_config = settings.get_parser_llm_config()
     if typename == "classifier":
         llm_config = settings.get_classifier_llm_config()
-        
+
     # Call LLM
     messages = [{"role": "user", "content": format_prompt}]
     response = await llm_client.generate(

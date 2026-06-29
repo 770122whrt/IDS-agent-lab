@@ -10,15 +10,7 @@ async def runFacetClassifier(structured_parser_result: StructuredParseResult) ->
         settings = Settings()
         llm_client = OpenRouterClient()
         # Step 2: Facet 分类
-        return await facetClassifier(structured_parser_result,settings, llm_client)  
+        return await facetClassifier(structured_parser_result,settings, llm_client)
     except Exception as e:
         logging.error(f"Error in entry_step2: {e}")
         raise e
-
-
-
-
-    
-
-
-

@@ -43,8 +43,8 @@ class ClassificationResolver:
                 ifc_version = context.get("ifc_version", "IFC4") if context else "IFC4"
                 results = db.search(query_text, top_k=5, ifc_versions=[ifc_version])
                 if results and len(results) > 0:
-                    ifc_item, distance = results[0]
-                    similarity = 1.0 / (1.0 + distance)
+                    ifc_item, similarity = results[0]
+                    # similarity已经是点积相似度，不需要转换
                     if similarity > 0.5:
                         return {
                             "mapped_name": ifc_item.name,

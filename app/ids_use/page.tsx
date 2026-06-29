@@ -17,7 +17,6 @@ interface Resource {
 
 export default function IdsUse() {
   const { data: session } = useSession();
-  const userId = session?.user?.id || session?.user?.email || "";
 
   const [file, setFile] = useState<File | null>(null);
   const [resources, setResources] = useState<Resource[]>([]);
@@ -26,24 +25,24 @@ export default function IdsUse() {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // 1. 上传逻辑 (保持不变)
+  // 1. 上传逻辑
   const handleUpload = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!userId || !file) return;
-    
+    if (!session?.user?.id || !file) return; // 检查登录状态
+
     setLoading(true);
     const formData = new FormData();
-    formData.append("userId", userId);
-    formData.append("file", file);
+    formData.append("file", file); // 不再传递 userId，后端从 session 获取
 
     try {
       await fetch("/api/resources", {
         method: "POST",
         body: formData,
+        credentials: "include", // 确保发送 cookie
       });
       setFile(null);
       if (fileInputRef.current) fileInputRef.current.value = "";
-      await fetchResources(); 
+      await fetchResources();
     } catch (error) {
       console.error("Upload failed", error);
     } finally {
@@ -53,9 +52,11 @@ export default function IdsUse() {
 
   // 2. 查询逻辑
   const fetchResources = async () => {
-    if (!userId) return;
+    if (!session?.user?.id) return; // 检查登录状态
     try {
-      const res = await fetch(`/api/resources?userId=${userId}`);
+      const res = await fetch("/api/resources", {  // 不再传递 userId
+        credentials: "include", // 确保发送 cookie
+      });
       const data = await res.json();
       setResources(data.resources || []);
     } catch (error) {
@@ -63,23 +64,21 @@ export default function IdsUse() {
     }
   };
 
-  // 👇 新增：自动轮询 (每5秒刷新一次列表，检查分析状态)
+  // 👇 自动轮询 (每5秒刷新一次列表，检查分析状态)
   useEffect(() => {
-    if (!userId) return;
-    
+    if (!session?.user?.id) return;
+
     // 初始加载
     fetchResources();
 
     // 设置定时器
     const intervalId = setInterval(() => {
-      // 只有当列表中有处于 "processing" 状态的任务时，才需要频繁刷新
-      // 这里为了简单，我们一直刷新，或者你可以加判断逻辑
       fetchResources();
     }, 5000);
 
     // 组件卸载时清理定时器
     return () => clearInterval(intervalId);
-  }, [userId]);
+  }, [session?.user?.id]);
 
 
   // 3. 下载原文件
@@ -141,12 +140,12 @@ export default function IdsUse() {
             onChange={e => { setFile(e.target.files?.[0] ?? null); }}
             className="flex-1"
           />
-          <Button type="submit" disabled={loading || !userId || !file}>
+          <Button type="submit" disabled={loading || !session?.user?.id || !file}>
             {loading ? "上传中..." : "上传资源"}
           </Button>
         </div>
         <div className="flex justify-end">
-           <Button type="button" variant="outline" onClick={fetchResources} disabled={!userId}>
+           <Button type="button" variant="outline" onClick={fetchResources} disabled={!session?.user?.id}>
             手动刷新列表
           </Button>
         </div>
@@ -177,8 +176,8 @@ export default function IdsUse() {
                 <div className="flex gap-2 mt-4 justify-end border-t pt-3">
                   {/* 1. 分析按钮：只有 pending 或 failed 状态才显示 */}
                   {(r.status === 'pending' || r.status === 'failed' || !r.status) && (
-                    <Button 
-                      size="sm" 
+                    <Button
+                      size="sm"
                       onClick={() => handleAnalyze(r._id)}
                       disabled={analyzingId === r._id}
                     >

@@ -21,7 +21,7 @@ Output JSON format:
     ],
     "property_descriptions": [
         {{
-            "raw_text": "original text fragment", 
+            "raw_text": "original text fragment",
             "property_name": "property name",
             "constraint_text": "constraint expression",
             "confidence": 0.9
@@ -30,7 +30,7 @@ Output JSON format:
     "material_requirements": [
         {{
             "raw_text": "original text fragment",
-            "material_name": "material name", 
+            "material_name": "material name",
             "specifications": "specification requirements",
             "confidence": 0.9
         }}

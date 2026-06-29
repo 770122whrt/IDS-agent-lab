@@ -1,7 +1,7 @@
 """
 LLM-Driven IDS Builder for converting classified facets into standard IDS format
 
-Uses LLM's semantic understanding to intelligently group facets and assign them to 
+Uses LLM's semantic understanding to intelligently group facets and assign them to
 appropriate IDS specification slots, then mechanically converts to standard format.
 """
 
@@ -14,11 +14,11 @@ from d_constrains.data_structures import MappedFacet
 from d_constrains import (
     ValueRestriction,
     RestrictionType,
-    ConstraintExtractor,   
+    ConstraintExtractor,
 )
 from .data_structures import (
-    SpecificationSlot, 
-    ApplicabilitySlot, 
+    SpecificationSlot,
+    ApplicabilitySlot,
     RequirementsSlot,
 )
 
@@ -56,10 +56,10 @@ class IdsBuilder:
         if restriction and isinstance(restriction, dict) and len(restriction) > 0:
             # 排除仅包含 base 的情况(视具体逻辑而定，通常有内容的字典即为约束)
             return restriction
-        
+
         # 返回原始值，如果原始值也是 None，最终在 JSON 中表现为 null (或被后续清理)
         return simple_value
-    
+
 
     async def build_ids_specifications(
         self,
@@ -93,7 +93,6 @@ class IdsBuilder:
                 slots = await self._llm_slot_assignment(context)
             else:
                 logger.warning("No LLM client available, using fallback logic")
-                logger.exception(e)
                 slots = self._fallback_slot_assignment(mapped_facets)
 
             # 3. Mechanical conversion to IDS format
@@ -125,10 +124,12 @@ class IdsBuilder:
 
         except Exception as e:
             logger.error(f"IDS specification building failed: {str(e)}")
+            import traceback
+            logger.error(f"Full traceback:\n{traceback.format_exc()}")
             fallback_result = self._generate_basic_fallback(mapped_facets, ifc_version)
             # Simple fallback
             return fallback_result
-        
+
     def _prepare_llm_context(
         self,
         mapped_facets: List[MappedFacet],
@@ -191,6 +192,10 @@ class IdsBuilder:
         """使用LLM进行槽分配"""
         prompt = self._build_self_validating_prompt(context)
 
+        # 调试：记录prompt长度和前500字符
+        logger.info(f"Stage E LLM Prompt length: {len(prompt)} characters (~{len(prompt)//4} tokens)")
+        logger.debug(f"Stage E LLM Prompt preview (first 500 chars):\n{prompt[:500]}...")
+
         messages = [{"role": "user", "content": prompt}]
         response = await self.llm_client.generate(messages)
 
@@ -198,6 +203,10 @@ class IdsBuilder:
         response_content = (
             response.get("content", "") if isinstance(response, dict) else str(response)
         )
+
+        # 调试：记录响应长度和完整内容
+        logger.info(f"Stage E LLM Response length: {len(response_content)} characters")
+        logger.info(f"Stage E LLM Response FULL CONTENT:\n{'='*80}\n{response_content}\n{'='*80}")
 
         # 解析槽
         slots = self._parse_llm_slots(response_content)
@@ -211,7 +220,7 @@ class IdsBuilder:
         """构造详尽的 prompt 给 LLM，包含：说明、APPLICABILITY vs REQUIREMENTS 的区别、分配规则、输出模板与自检项。"""
         facets_description = self._format_facets_for_prompt(context["mapped_facets"])
         prompt_template = select_prompt("ids_builder")
-        
+
         return prompt_template.format(
             original_text=context['original_text'],
             facets_description=facets_description
@@ -237,6 +246,9 @@ class IdsBuilder:
 
             if facet_data.get("constraints"):
                 description += f"\nConstraints: {facet_data['constraints']}"
+
+            if facet_data.get("additional_data"):
+                description += f"\nAdditional Data: {facet_data['additional_data']}"
 
             facet_descriptions.append(description)
 
@@ -303,7 +315,7 @@ class IdsBuilder:
                         cleaned = re.sub(r'[\[\]"\']', "", value)
                         if cleaned.lower() not in ["empty", "none"]:
                              slot_data["ifc_version"] = [v.strip() for v in re.split(r'[, ]+', cleaned) if v.strip()]
-                    
+
                     # 键名包含 facet_ids，调用 _parse_facet_list
                     elif "facet_ids" in key:
                         value = self._parse_facet_list(value)
@@ -659,7 +671,7 @@ class IdsBuilder:
                 requirements=requirements,
                 reasoning="Default fallback grouping",
             ))
-           
+
 
         return slots
 
@@ -707,7 +719,7 @@ class IdsBuilder:
                 "maxOccurs": "unbounded",
                 "entity": {
                 ##------------新增解包逻辑------------##
-                    "name": self._build_ids_value("Building Element", None), 
+                    "name": self._build_ids_value("Building Element", None),
                     "predefinedType": None,
                 },
                 "partOf": None,
@@ -792,9 +804,12 @@ class IdsBuilder:
         self, facet: MappedFacet
     ) -> Optional[Dict[str, Any]]:
         """Build a material requirement from a mapped facet"""
+        # 如果mapped_name为None，表示要求任意材料（不指定具体材料名称）
+        value = None if facet.mapped_name is None else self._build_ids_value(facet.mapped_name, None)
+
         mat_req = {
             #用解包代替原来的强格式化结构
-            "value": self._build_ids_value(facet.mapped_name, None),
+            "value": value,
             "uri": None,
             "cardinality": "required",
             "instructions": None,
@@ -805,10 +820,19 @@ class IdsBuilder:
         self, facet: MappedFacet
     ) -> Optional[Dict[str, Any]]:
         """Build an attribute requirement from a mapped facet"""
+
+        # 构建value - 只有在有约束时才设置具体值
+        value_obj = self._build_value_with_constraints(facet)
+
+        # 如果没有约束（只是存在性要求），value应该为None
+        # 检查是否只有simpleValue且等于原文（表示没有实际约束）
+        if (value_obj.get("restriction") is None and
+            value_obj.get("simpleValue") == facet.original_text):
+            value_obj = None
+
         attr_req = {
-            #用解包代替原来的强格式化结构
             "name": self._build_ids_value(facet.mapped_name, None),
-            "value": self._build_value_with_constraints(facet),
+            "value": value_obj,
             "cardinality": "required",
             "instructions": None,
         }
@@ -852,11 +876,17 @@ class IdsBuilder:
         """Build a partOf requirement from a mapped facet"""
         # 从resolver获取relation信息，默认为IFCRELCONTAINEDINSPATIALSTRUCTURE
         relation_type = "IFCRELCONTAINEDINSPATIALSTRUCTURE"
+        predefined_type = None
+
         if hasattr(facet, "additional_data") and facet.additional_data:
             relation_type = facet.additional_data.get("relation", relation_type)
+            predefined_type = facet.additional_data.get("predefined_type", None)
 
         partof_req = {
-            "entity": self._build_ids_value(facet.mapped_name, None),
+            "entity": {
+                "name": self._build_ids_value(facet.mapped_name, None),
+                "predefinedType": predefined_type,
+            },
             "relation": relation_type,
             "cardinality": "required",
             "instructions": f"PartOf relationship: {facet.original_text}",
@@ -881,7 +911,7 @@ class IdsBuilder:
                 # 这样可以安全地把 "A|B|C" 变成 ["A", "B", "C"]
                 if "|" in pat and not re.search(r"[\[\]\{\}\(\)\*\+\?\\]", pat):
                     options = [opt.strip() for opt in pat.split("|") if opt.strip()]
-                    
+
                     # 将 restriction 从 pattern 格式重写为 enumeration 格式
                     restriction = {
                         "base": "string",
@@ -929,4 +959,3 @@ class IdsBuilder:
 
         # 回退到原始文本
         return constraint.original_text
-
