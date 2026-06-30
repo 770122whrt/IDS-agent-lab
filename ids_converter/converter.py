@@ -63,6 +63,99 @@ NSMAP = {
     'xsi': NAMESPACES['xsi'],
 }
 
+_XML_SCHEMA_IMPORT = b'''<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+  <xs:attributeGroup name="occurs">
+    <xs:attribute name="minOccurs" type="xs:nonNegativeInteger" use="optional"/>
+    <xs:attribute name="maxOccurs" use="optional">
+      <xs:simpleType>
+        <xs:union memberTypes="xs:nonNegativeInteger">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="unbounded"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:union>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:complexType name="facetType">
+    <xs:attribute name="value" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:element name="enumeration" type="xs:facetType"/>
+  <xs:element name="pattern" type="xs:facetType"/>
+  <xs:element name="minInclusive" type="xs:facetType"/>
+  <xs:element name="maxInclusive" type="xs:facetType"/>
+  <xs:element name="minExclusive" type="xs:facetType"/>
+  <xs:element name="maxExclusive" type="xs:facetType"/>
+  <xs:element name="minLength" type="xs:facetType"/>
+  <xs:element name="maxLength" type="xs:facetType"/>
+  <xs:element name="length" type="xs:facetType"/>
+  <xs:element name="totalDigits" type="xs:facetType"/>
+  <xs:element name="fractionDigits" type="xs:facetType"/>
+  <xs:element name="whiteSpace" type="xs:facetType"/>
+  <xs:complexType name="restrictionType">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="xs:enumeration"/>
+      <xs:element ref="xs:pattern"/>
+      <xs:element ref="xs:minInclusive"/>
+      <xs:element ref="xs:maxInclusive"/>
+      <xs:element ref="xs:minExclusive"/>
+      <xs:element ref="xs:maxExclusive"/>
+      <xs:element ref="xs:minLength"/>
+      <xs:element ref="xs:maxLength"/>
+      <xs:element ref="xs:length"/>
+      <xs:element ref="xs:totalDigits"/>
+      <xs:element ref="xs:fractionDigits"/>
+      <xs:element ref="xs:whiteSpace"/>
+    </xs:choice>
+    <xs:attribute name="base" type="xs:QName" use="required"/>
+  </xs:complexType>
+  <xs:element name="restriction" type="xs:restrictionType"/>
+</xs:schema>'''
+
+_XML_NAMESPACE_IMPORT = b'''<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.w3.org/XML/1998/namespace"
+           attributeFormDefault="unqualified">
+</xs:schema>'''
+
+_XSI_NAMESPACE_IMPORT = b'''<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.w3.org/2001/XMLSchema-instance"
+           attributeFormDefault="unqualified">
+</xs:schema>'''
+
+
+class _IDSXSDResolver(etree.Resolver):
+    """Resolve external schema imports needed by the official IDS XSD offline."""
+
+    def resolve(self, url, pubid, context):
+        if url in {
+            "http://www.w3.org/2001/XMLSchema.xsd",
+            "http://www.w3.org/2001/XMLSchema",
+            "XMLSchema.xsd",
+        }:
+            return self.resolve_string(_XML_SCHEMA_IMPORT, context)
+
+        if url in {
+            "http://www.w3.org/2001/xml.xsd",
+            "http://www.w3.org/XML/1998/namespace",
+            "xml.xsd",
+        }:
+            return self.resolve_string(_XML_NAMESPACE_IMPORT, context)
+
+        if url in {
+            "http://www.w3.org/2001/XMLSchema-instance",
+            "XMLSchema-instance",
+        }:
+            return self.resolve_string(_XSI_NAMESPACE_IMPORT, context)
+
+        return None
+
 
 # =============================================================================
 # 核心转换类
@@ -94,8 +187,9 @@ class IDSToXMLConverter:
             if not self.xsd_path.exists():
                 raise FileNotFoundError(f"XSD Schema file not found: {self.xsd_path}")
 
-            with open(self.xsd_path, 'rb') as f:
-                schema_doc = etree.parse(f)
+            parser = etree.XMLParser(no_network=True)
+            parser.resolvers.add(_IDSXSDResolver())
+            schema_doc = etree.parse(str(self.xsd_path), parser)
 
             self._schema = etree.XMLSchema(schema_doc)
 
