@@ -1,4 +1,223 @@
 {
+  "common": {
+    "appName": "IDS Agent",
+    "loading": "Loading...",
+    "unknown": "Unknown",
+    "actions": {
+      "refresh": "Refresh",
+      "delete": "Delete",
+      "retry": "Retry",
+      "download": "Download",
+      "back": "Back",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "clear": "Clear",
+      "submit": "Submit",
+      "viewDetails": "View details"
+    },
+    "language": {
+      "zh": "中文",
+      "en": "English",
+      "switchTo": "Switch to {language}"
+    }
+  },
+  "metadata": {
+    "title": "IDS Agent",
+    "description": "Generate and review IDS files"
+  },
+  "home": {
+    "loading": "Loading...",
+    "titlePrefix": "Welcome to",
+    "description": "Generate IDS files from natural language and review IFC models for compliance.",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "learnMore": "Learn more"
+  },
+  "auth": {
+    "securedBy": "Secured by",
+    "builtWith": "Built with",
+    "signIn": {
+      "title": "Sign In",
+      "description": "Enter your credentials to access IDS Agent",
+      "email": "Email",
+      "password": "Password",
+      "forgotPassword": "Forgot password?",
+      "rememberMe": "Remember me",
+      "submit": "Login",
+      "github": "Sign in with GitHub",
+      "google": "Sign in with Google",
+      "errors": {
+        "missingCredentials": "Please enter email and password",
+        "invalidPassword": "Invalid password, please try again",
+        "failed": "Login failed"
+      },
+      "success": "Welcome back!"
+    },
+    "signUp": {
+      "title": "Create an Account",
+      "description": "Enter your details to get started with IDS Agent",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "profileImage": "Profile image (optional)",
+      "profilePreview": "Profile preview",
+      "submit": "Create account",
+      "passwordMismatch": "Passwords do not match",
+      "success": "Account created successfully!"
+    },
+    "reset": {
+      "requestTitle": "Reset Password",
+      "requestDescription": "Enter your email address and we will send you a reset link",
+      "sendLink": "Send Reset Link",
+      "backToSignIn": "Back to Sign In",
+      "newPasswordTitle": "Set New Password",
+      "newPasswordDescription": "Enter your new password below",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm Password",
+      "submit": "Reset Password",
+      "invalidLink": "Invalid reset link",
+      "missingEmail": "Please enter your email address",
+      "missingFields": "Please fill in all fields",
+      "passwordMismatch": "Passwords do not match",
+      "passwordTooShort": "Password must be at least 8 characters",
+      "sendSuccess": "Password reset link sent! Check your email.",
+      "sendFailed": "Failed to send reset email",
+      "success": "Password reset successfully!",
+      "failed": "Failed to reset password"
+    }
+  },
+  "nav": {
+    "generateIds": "Generate IDS",
+    "tasks": "Tasks",
+    "reports": "Review reports",
+    "viewAll": "View all",
+    "noReports": "No review reports",
+    "userFallback": "User",
+    "signOut": "Sign out"
+  },
+  "dashboard": {
+    "greeting": "Hello, {name}",
+    "userFallback": "User",
+    "subtitle": "Describe your IDS specification requirements in natural language and let AI generate the standard file",
+    "cardTitle": "Generate IDS File",
+    "cardDescription": "Enter BIM/IFC specification requirements",
+    "placeholder": "Describe your IDS specification requirements in natural language, for example:\n\n- All IfcWall fire ratings must be grade A\n- Door width must be greater than 900mm\n- Floor load capacity must be greater than 500kg/m²\n- All spaces must include an area property",
+    "supportText": "Supports Chinese and English input, and automatically generates IDS-compliant XML",
+    "clear": "Clear",
+    "submit": "Generate IDS File",
+    "submitting": "Generating...",
+    "tips": {
+      "title": "Tips",
+      "specific": "Be specific and include entity types, property names, and constraints",
+      "downloadAndCheck": "After generation, download the IDS file from Tasks or upload an IFC file for compliance checking",
+      "batchRules": "Batch descriptions with multiple rules are supported; the system will parse them into specifications"
+    },
+    "validation": {
+      "emptyInput": "Please enter IDS requirement text"
+    },
+    "toast": {
+      "submitSuccess": "Submitted successfully. Generating IDS file",
+      "submitFailed": "Submission failed: {message}",
+      "networkFailed": "Submission failed. Please check your network connection",
+      "unknownError": "Unknown error"
+    }
+  },
+  "tasks": {
+    "title": "Tasks",
+    "description": "Manage your IDS generation and review tasks",
+    "newTask": "New task",
+    "refresh": "Refresh",
+    "loading": "Loading tasks...",
+    "empty": {
+      "title": "No tasks",
+      "createFirst": "Create first task"
+    },
+    "type": {
+      "text": "Text input",
+      "ifcFile": "IFC file"
+    },
+    "reportSummary": {
+      "title": "Review result",
+      "totalSpecs": "Total specs",
+      "passed": "Passed",
+      "failed": "Failed",
+      "failedEntities": "{count} entities"
+    },
+    "errorPrefix": "Error",
+    "xsd": {
+      "showJson": "View generated JSON (for debugging)",
+      "hideJson": "Hide JSON data"
+    },
+    "actions": {
+      "downloadJson": "Download JSON",
+      "downloadIds": "Download .ids",
+      "selectIfc": "Select IFC",
+      "selectedIfc": "Selected {name}",
+      "review": "Review",
+      "reviewing": "Reviewing...",
+      "viewTask": "View task details",
+      "viewReport": "View review report",
+      "retry": "Retry",
+      "delete": "Delete",
+      "deleting": "Deleting...",
+      "downloading": "Downloading..."
+    },
+    "confirm": {
+      "retry": "Retry task \"{name}\"?",
+      "resetCheck": "Reset task \"{name}\"?\n\nAfter reset, the task returns to completed status and you can upload an IFC file for review again.",
+      "delete": "Delete task \"{name}\"? This cannot be undone."
+    },
+    "alert": {
+      "jsonMissing": "JSON result does not exist",
+      "jsonFetchFailed": "Failed to fetch JSON",
+      "downloadFailed": "Download failed. Please try again",
+      "retrySubmitted": "Task resubmitted. Please wait...",
+      "checkReset": "Task reset to completed status. Please upload an IFC file again for review.",
+      "deleteSuccess": "Task deleted",
+      "selectIfc": "Please select an IFC file first",
+      "invalidIfc": "Please select a .ifc file",
+      "checkFailed": "Review failed: {message}",
+      "checkPassed": "Review passed!\n\nAll {total} specs meet the requirements.",
+      "checkCompleted": "Review completed!\n\nTotal specs: {total}\nPassed: {passed}\nFailed: {failed}\nFailed entities: {entities}",
+      "networkFailed": "Operation failed. Please check your network connection",
+      "unknownError": "Unknown error"
+    },
+    "checkingStatus": "Reviewing IFC model..."
+  },
+  "taskDetail": {
+    "title": "Task Details",
+    "backToList": "Back to list",
+    "notFound": "Task not found",
+    "status": "Task status",
+    "inputType": "Input type",
+    "createdAt": "Created at",
+    "taskId": "Task ID",
+    "errorMessage": "Error message",
+    "inputText": "Input text",
+    "generatedJson": "Generated JSON result",
+    "downloadJson": "Download JSON",
+    "idsGenerated": "IDS file generated",
+    "downloadIds": "Download .ids file",
+    "selectIfc": "Select IFC model",
+    "selectedIfc": "Selected: {name} ({size} KB)",
+    "startReview": "Start review",
+    "reviewing": "Reviewing...",
+    "processing": "Processing. Please wait...",
+    "checking": "Checking. Please wait...",
+    "pendingConversion": "Task is converting. Please wait...",
+    "type": {
+      "text": "Text input",
+      "ifcFile": "IFC file"
+    },
+    "alert": {
+      "downloadFailed": "Download failed. Please try again",
+      "invalidIfc": "Please select a .ifc file",
+      "selectIfc": "Please select an IFC file first",
+      "mockReview": "IFC file \"{name}\" has been selected.\n\nThis page keeps a review entry point placeholder. Run the real review from the task list."
+    }
+  },
   "report": {
     "loading": "Loading report...",
     "fetchError": "Failed to get task",
@@ -36,5 +255,68 @@
     "name": "Name",
     "errorReason": "Error reason",
     "omitted": "omitted"
+  },
+  "idsUse": {
+    "title": "Resource Upload and Analysis",
+    "uploadResource": "Upload resource",
+    "uploading": "Uploading...",
+    "manualRefresh": "Refresh list",
+    "resourcesTitle": "My resources",
+    "empty": "No resources. Please upload a file first",
+    "uploadTime": "Upload time",
+    "status": {
+      "completed": "Completed",
+      "processing": "Processing...",
+      "failed": "Failed",
+      "pending": "Pending"
+    },
+    "actions": {
+      "analyze": "Start analysis",
+      "requesting": "Requesting...",
+      "originalFile": "Original file",
+      "downloadJsonResult": "Download JSON result"
+    },
+    "alert": {
+      "analyzeFailed": "Analysis request failed. Please check the backend service."
+    }
+  },
+  "status": {
+    "pending": "Pending",
+    "processing": "Processing",
+    "pending_conversion": "Converting",
+    "completed": "Completed",
+    "checking": "Checking",
+    "checked": "Checked",
+    "check_failed": "Check failed",
+    "failed": "Failed"
+  },
+  "errors": {
+    "unknown": "Unknown error"
+  },
+  "validation": {
+    "required": "Required"
+  },
+  "demo": {
+    "title": "Product Display",
+    "description": "Click on the image below to view product details",
+    "image": "Image {id}",
+    "viewDetails": "View details",
+    "detailTitle": "Product Details - image {id}",
+    "previous": "Previous",
+    "next": "Next",
+    "quickJump": "Quick Jump",
+    "metadataTitle": "Product image {id} - My store",
+    "metadataDescription": "Detailed display for product image {id}",
+    "items": {
+      "sofaTitle": "Modern sofa",
+      "sofaDescription": "High quality modern style sofa",
+      "officeTitle": "Office desks and chairs",
+      "officeDescription": "Comfortable office furniture set",
+      "bedroomTitle": "Bedroom furniture",
+      "bedroomDescription": "Warm bedroom furniture combination",
+      "caption1": "Figure: photo1 - Beautiful furniture design",
+      "caption2": "Figure: photo2 - Modern furniture collection",
+      "caption3": "Figure: photo3 - Luxury furniture items"
+    }
   }
 }

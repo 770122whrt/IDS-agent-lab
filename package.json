@@ -7,6 +7,8 @@
     "build": "cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" next build",
     "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
     "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
+    "i18n:check": "node scripts/check-i18n-messages.mjs",
+    "i18n:routing-check": "tsx scripts/check-i18n-routing.ts",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,md,mdx}\""
   },

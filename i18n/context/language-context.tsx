@@ -1,21 +1,20 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  type ReactNode,
+} from "react";
+import type { Locale } from "@/i18n/config";
 
-// Import translations
-import zhMessages from '../messages/zh.json';
-import enMessages from '../messages/en.json';
-
-type Language = 'zh' | 'en';
-
-const messages: Record<Language, Record<string, unknown>> = {
-  zh: zhMessages,
-  en: enMessages,
-};
+type Messages = Record<string, unknown>;
 
 interface LanguageContextType {
-  language: Language;
-  setLanguage: (lang: Language) => void;
+  locale: Locale;
+  language: Locale;
+  messages: Messages;
   t: (key: string, params?: Record<string, string | number>) => string;
 }
 
@@ -23,55 +22,53 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 interface LanguageProviderProps {
   children: ReactNode;
+  locale: Locale;
+  messages: Messages;
 }
 
-export function LanguageProvider({ children }: LanguageProviderProps) {
-  const [language, setLanguage] = useState<Language>('zh');
-
-  // Initialize from localStorage on mount
-  useEffect(() => {
-    const savedLang = localStorage.getItem('language');
-    if (savedLang === 'zh' || savedLang === 'en') {
-      setLanguage(savedLang);
+function getMessage(messages: Messages, key: string): unknown {
+  return key.split(".").reduce<unknown>((value, part) => {
+    if (value && typeof value === "object" && part in value) {
+      return (value as Record<string, unknown>)[part];
     }
-  }, []);
+    return undefined;
+  }, messages);
+}
 
-  const handleSetLanguage = useCallback((lang: Language) => {
-    setLanguage(lang);
-    localStorage.setItem('language', lang);
-  }, []);
+export function LanguageProvider({
+  children,
+  locale,
+  messages,
+}: LanguageProviderProps) {
+  const t = useCallback(
+    (key: string, params?: Record<string, string | number>): string => {
+      const value = getMessage(messages, key);
 
-  const t = useCallback((key: string, params?: Record<string, string | number>): string => {
-    const keys = key.split('.');
-    let value: unknown = messages[language];
-
-    for (const k of keys) {
-      if (value && typeof value === 'object' && k in value) {
-        value = (value as Record<string, unknown>)[k];
-      } else {
-        // Fallback to key if translation not found
+      if (typeof value !== "string") {
+        if (process.env.NODE_ENV !== "production") {
+          console.warn(`Missing translation key: ${key}`);
+        }
         return key;
       }
-    }
 
-    if (typeof value !== 'string') {
-      return key;
-    }
+      if (!params) {
+        return value;
+      }
 
-    // Replace parameters like {count} with actual values
-    if (params) {
-      return value.replace(/\{(?<paramKey>\w+)\}/g, (match, ...args) => {
-        const groups = args[args.length - 1] as { paramKey: string };
-        const key = groups.paramKey;
-        return key in params ? String(params[key]) : match;
+      return value.replace(/\{(\w+)\}/g, (match, paramKey: string) => {
+        return paramKey in params ? String(params[paramKey]) : match;
       });
-    }
+    },
+    [messages],
+  );
 
-    return value;
-  }, [language]);
+  const contextValue = useMemo(
+    () => ({ locale, language: locale, messages, t }),
+    [locale, messages, t],
+  );
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage: handleSetLanguage, t }}>
+    <LanguageContext.Provider value={contextValue}>
       {children}
     </LanguageContext.Provider>
   );
@@ -80,7 +77,7 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
 export function useLanguage(): LanguageContextType {
   const context = useContext(LanguageContext);
   if (!context) {
-    throw new Error('useLanguage must be used within a LanguageProvider');
+    throw new Error("useLanguage must be used within a LanguageProvider");
   }
   return context;
 }

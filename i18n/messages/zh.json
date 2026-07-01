@@ -1,4 +1,223 @@
 {
+  "common": {
+    "appName": "IDS Agent",
+    "loading": "加载中...",
+    "unknown": "未知",
+    "actions": {
+      "refresh": "刷新",
+      "delete": "删除",
+      "retry": "重试",
+      "download": "下载",
+      "back": "返回",
+      "cancel": "取消",
+      "confirm": "确认",
+      "clear": "清空",
+      "submit": "提交",
+      "viewDetails": "查看详情"
+    },
+    "language": {
+      "zh": "中文",
+      "en": "English",
+      "switchTo": "切换到 {language}"
+    }
+  },
+  "metadata": {
+    "title": "IDS Agent",
+    "description": "生成和审查 IDS 文件"
+  },
+  "home": {
+    "loading": "加载中...",
+    "titlePrefix": "欢迎使用",
+    "description": "用自然语言生成 IDS 文件，并上传 IFC 模型进行合规审查。",
+    "signIn": "登录",
+    "signUp": "注册",
+    "learnMore": "了解更多"
+  },
+  "auth": {
+    "securedBy": "由",
+    "builtWith": "构建于",
+    "signIn": {
+      "title": "登录",
+      "description": "输入账号信息以访问 IDS Agent",
+      "email": "邮箱",
+      "password": "密码",
+      "forgotPassword": "忘记密码？",
+      "rememberMe": "记住我",
+      "submit": "登录",
+      "github": "使用 GitHub 登录",
+      "google": "使用 Google 登录",
+      "errors": {
+        "missingCredentials": "请输入邮箱和密码",
+        "invalidPassword": "密码错误，请重试",
+        "failed": "登录失败"
+      },
+      "success": "欢迎回来！"
+    },
+    "signUp": {
+      "title": "创建账号",
+      "description": "填写信息开始使用 IDS Agent",
+      "firstName": "名",
+      "lastName": "姓",
+      "email": "邮箱",
+      "password": "密码",
+      "confirmPassword": "确认密码",
+      "profileImage": "头像（可选）",
+      "profilePreview": "头像预览",
+      "submit": "创建账号",
+      "passwordMismatch": "两次输入的密码不一致",
+      "success": "账号创建成功！"
+    },
+    "reset": {
+      "requestTitle": "重置密码",
+      "requestDescription": "输入邮箱地址，我们会发送密码重置链接",
+      "sendLink": "发送重置链接",
+      "backToSignIn": "返回登录",
+      "newPasswordTitle": "设置新密码",
+      "newPasswordDescription": "请在下方输入新密码",
+      "newPassword": "新密码",
+      "confirmPassword": "确认密码",
+      "submit": "重置密码",
+      "invalidLink": "重置链接无效",
+      "missingEmail": "请输入邮箱地址",
+      "missingFields": "请填写所有字段",
+      "passwordMismatch": "两次输入的密码不一致",
+      "passwordTooShort": "密码至少需要 8 个字符",
+      "sendSuccess": "密码重置链接已发送，请检查邮箱。",
+      "sendFailed": "发送重置邮件失败",
+      "success": "密码重置成功！",
+      "failed": "重置密码失败"
+    }
+  },
+  "nav": {
+    "generateIds": "生成 IDS",
+    "tasks": "任务列表",
+    "reports": "审查报告",
+    "viewAll": "查看全部",
+    "noReports": "暂无审查报告",
+    "userFallback": "用户",
+    "signOut": "退出登录"
+  },
+  "dashboard": {
+    "greeting": "你好，{name}",
+    "userFallback": "用户",
+    "subtitle": "用自然语言描述 IDS 规范需求，AI 帮你生成标准文件",
+    "cardTitle": "生成 IDS 文件",
+    "cardDescription": "输入 BIM/IFC 规范需求描述",
+    "placeholder": "请用自然语言描述您的 IDS 规范要求，例如：\n\n- 所有 IfcWall 的防火等级必须为 A 级\n- 门的宽度必须大于 900mm\n- 楼板的承重必须大于 500kg/m²\n- 所有空间必须包含面积属性",
+    "supportText": "支持中英文输入，自动生成符合 IDS 标准的 XML",
+    "clear": "清空",
+    "submit": "生成 IDS 文件",
+    "submitting": "生成中...",
+    "tips": {
+      "title": "使用提示",
+      "specific": "描述尽量具体，包含实体类型、属性名称和约束条件",
+      "downloadAndCheck": "生成后可在任务列表中下载 IDS 文件，或上传 IFC 文件进行合规检查",
+      "batchRules": "支持批量描述多条规则，系统会自动解析并生成对应的 specification"
+    },
+    "validation": {
+      "emptyInput": "请输入 IDS 需求文本"
+    },
+    "toast": {
+      "submitSuccess": "提交成功，正在生成 IDS 文件",
+      "submitFailed": "提交失败：{message}",
+      "networkFailed": "提交失败，请检查网络连接",
+      "unknownError": "未知错误"
+    }
+  },
+  "tasks": {
+    "title": "任务列表",
+    "description": "管理您的 IDS 生成和审查任务",
+    "newTask": "新建任务",
+    "refresh": "刷新",
+    "loading": "加载任务列表中...",
+    "empty": {
+      "title": "暂无任务",
+      "createFirst": "创建第一个任务"
+    },
+    "type": {
+      "text": "文本输入",
+      "ifcFile": "IFC 文件"
+    },
+    "reportSummary": {
+      "title": "审查结果",
+      "totalSpecs": "总规格",
+      "passed": "通过",
+      "failed": "失败",
+      "failedEntities": "{count} 个构件"
+    },
+    "errorPrefix": "错误",
+    "xsd": {
+      "showJson": "查看生成的 JSON（用于调试）",
+      "hideJson": "隐藏 JSON 数据"
+    },
+    "actions": {
+      "downloadJson": "下载 JSON",
+      "downloadIds": "下载 .ids",
+      "selectIfc": "选择 IFC",
+      "selectedIfc": "已选 {name}",
+      "review": "审查",
+      "reviewing": "审查中...",
+      "viewTask": "查看任务详情",
+      "viewReport": "查看审查报告",
+      "retry": "重试",
+      "delete": "删除",
+      "deleting": "删除中...",
+      "downloading": "下载中..."
+    },
+    "confirm": {
+      "retry": "确定要重试任务 \"{name}\" 吗？",
+      "resetCheck": "确定要重置任务 \"{name}\" 吗？\n\n重置后任务将回到已完成状态，您可以重新上传 IFC 文件进行审查。",
+      "delete": "确定要删除任务 \"{name}\" 吗？此操作不可撤销。"
+    },
+    "alert": {
+      "jsonMissing": "JSON 结果不存在",
+      "jsonFetchFailed": "获取 JSON 失败",
+      "downloadFailed": "下载失败，请重试",
+      "retrySubmitted": "任务已重新提交，请稍候...",
+      "checkReset": "任务已重置为完成状态，请重新上传 IFC 文件进行审查。",
+      "deleteSuccess": "任务已删除",
+      "selectIfc": "请先选择 IFC 文件",
+      "invalidIfc": "请选择 .ifc 格式的文件",
+      "checkFailed": "审查失败：{message}",
+      "checkPassed": "审查通过！\n\n所有 {total} 个规格均符合要求。",
+      "checkCompleted": "审查完成！\n\n总规格：{total}\n通过：{passed}\n失败：{failed}\n错误构件：{entities}",
+      "networkFailed": "操作失败，请检查网络连接",
+      "unknownError": "未知错误"
+    },
+    "checkingStatus": "正在审查 IFC 模型..."
+  },
+  "taskDetail": {
+    "title": "任务详情",
+    "backToList": "返回列表",
+    "notFound": "任务不存在",
+    "status": "任务状态",
+    "inputType": "输入类型",
+    "createdAt": "创建时间",
+    "taskId": "任务 ID",
+    "errorMessage": "错误信息",
+    "inputText": "输入文本",
+    "generatedJson": "生成的 JSON 结果",
+    "downloadJson": "下载 JSON",
+    "idsGenerated": "IDS 文件已生成",
+    "downloadIds": "下载 .ids 文件",
+    "selectIfc": "选择 IFC 模型",
+    "selectedIfc": "已选择：{name} ({size} KB)",
+    "startReview": "开始审查",
+    "reviewing": "审查中...",
+    "processing": "正在处理中，请稍候...",
+    "checking": "正在审查中，请稍候...",
+    "pendingConversion": "任务正在转换中，请稍候...",
+    "type": {
+      "text": "文本输入",
+      "ifcFile": "IFC 文件"
+    },
+    "alert": {
+      "downloadFailed": "下载失败，请重试",
+      "invalidIfc": "请选择 .ifc 格式的文件",
+      "selectIfc": "请先选择 IFC 文件",
+      "mockReview": "IFC 文件 \"{name}\" 已选择。\n\n当前为审查入口占位，实际审查请在任务列表中执行。"
+    }
+  },
   "report": {
     "loading": "加载报告中...",
     "fetchError": "获取任务失败",
@@ -26,7 +245,7 @@
     "noRequirements": "无要求",
     "error": "错误",
     "specNotApplicable": "此规格不适用于当前 IFC 版本",
-    "moreEntitiesWithError": "+ 还有 {count} 个构件出现相同错误 (已省略)",
+    "moreEntitiesWithError": "+ 还有 {count} 个构件出现相同错误（已省略）",
     "allChecksPassed": "此要求已通过所有检查",
     "noApplicableEntities": "无适用构件 (N/A)",
     "checks": "检查",
@@ -36,5 +255,68 @@
     "name": "名称",
     "errorReason": "错误原因",
     "omitted": "已省略"
+  },
+  "idsUse": {
+    "title": "资源上传与分析",
+    "uploadResource": "上传资源",
+    "uploading": "上传中...",
+    "manualRefresh": "手动刷新列表",
+    "resourcesTitle": "我的资源列表",
+    "empty": "暂无资源，请先上传文件",
+    "uploadTime": "上传时间",
+    "status": {
+      "completed": "已完成",
+      "processing": "处理中...",
+      "failed": "失败",
+      "pending": "待处理"
+    },
+    "actions": {
+      "analyze": "开始分析",
+      "requesting": "请求中...",
+      "originalFile": "原文件",
+      "downloadJsonResult": "下载 JSON 结果"
+    },
+    "alert": {
+      "analyzeFailed": "分析请求失败，请检查后端服务。"
+    }
+  },
+  "status": {
+    "pending": "待处理",
+    "processing": "处理中",
+    "pending_conversion": "转换中",
+    "completed": "已完成",
+    "checking": "审查中",
+    "checked": "已审查",
+    "check_failed": "审查失败",
+    "failed": "失败"
+  },
+  "errors": {
+    "unknown": "未知错误"
+  },
+  "validation": {
+    "required": "必填"
+  },
+  "demo": {
+    "title": "产品展示",
+    "description": "点击下方图片查看产品详情",
+    "image": "图片 {id}",
+    "viewDetails": "查看详情",
+    "detailTitle": "产品详情 - 图片 {id}",
+    "previous": "上一张",
+    "next": "下一张",
+    "quickJump": "快速跳转",
+    "metadataTitle": "产品图片 {id} - 我的商店",
+    "metadataDescription": "产品图片 {id} 的详情展示",
+    "items": {
+      "sofaTitle": "现代沙发",
+      "sofaDescription": "高品质现代风格沙发",
+      "officeTitle": "办公桌椅",
+      "officeDescription": "舒适的办公家具套装",
+      "bedroomTitle": "卧室家具",
+      "bedroomDescription": "温馨的卧室家具组合",
+      "caption1": "图：照片 1 - 精美家具设计",
+      "caption2": "图：照片 2 - 现代家具系列",
+      "caption3": "图：照片 3 - 高端家具单品"
+    }
   }
 }

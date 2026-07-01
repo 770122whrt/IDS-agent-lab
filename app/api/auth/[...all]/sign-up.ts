@@ -1,5 +1,6 @@
 //import { email } from "better-auth";
 import { authClient } from "../../../lib/auth-client";
+import { defaultLocale } from "@/i18n/config";
 
 // User details for sign-up
 const email = "user@example.com";
@@ -14,7 +15,7 @@ try {
       password,     // at least 8 characters
       name,         // 
       image,        // 
-      callbackURL: "/dashboard", // redirect after sign-up
+      callbackURL: `/${defaultLocale}/dashboard`, // redirect after sign-up
     },
     {
       onRequest: () => {

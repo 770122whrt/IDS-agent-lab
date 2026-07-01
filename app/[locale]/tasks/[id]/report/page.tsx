@@ -106,7 +106,7 @@ export default function ReportPage() {
   const router = useRouter();
   const params = useParams();
   const taskId = params?.id as string;
-  const { t, language } = useLanguage();
+  const { t, locale } = useLanguage();
 
   const [task, setTask] = useState<Task | null>(null);
   const [loading, setLoading] = useState(true);
@@ -115,9 +115,9 @@ export default function ReportPage() {
 
   useEffect(() => {
     if (!sessionLoading && !session?.user) {
-      router.push("/sign-in");
+      router.push(`/${locale}/sign-in`);
     }
-  }, [sessionLoading, session?.user, router]);
+  }, [sessionLoading, session?.user, router, locale]);
 
   useEffect(() => {
     if (!taskId) return;
@@ -179,7 +179,7 @@ export default function ReportPage() {
             </div>
             <p className="text-red-600 dark:text-red-400 font-medium mb-4">{error || t("report.notFound")}</p>
             <button
-              onClick={() => router.push("/tasks")}
+              onClick={() => router.push(`/${locale}/tasks`)}
               className="px-4 py-2 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 rounded-lg hover:bg-slate-800 dark:hover:bg-slate-200 transition-colors"
             >
               {t("report.backToList")}
@@ -191,7 +191,7 @@ export default function ReportPage() {
   }
 
   const reportData = task.reportData;
-  const checkedAt = task.checkedAt ? new Date(task.checkedAt).toLocaleString(language === 'zh' ? 'zh-CN' : 'en-US') : t("report.unknown");
+  const checkedAt = task.checkedAt ? new Date(task.checkedAt).toLocaleString(locale === "zh" ? "zh-CN" : "en-US") : t("report.unknown");
 
   // 如果没有报告数据
   if (!reportData || !reportData.specifications) {
@@ -201,7 +201,7 @@ export default function ReportPage() {
           <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 text-center">
             <p className="text-slate-600 dark:text-slate-400 mb-4">{t("report.noData")}</p>
             <button
-              onClick={() => router.push("/tasks")}
+              onClick={() => router.push(`/${locale}/tasks`)}
               className="px-4 py-2 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 rounded-lg"
             >
               {t("report.backToList")}
@@ -231,7 +231,7 @@ export default function ReportPage() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4">
           <div className="flex items-center justify-between mb-3">
             <button
-              onClick={() => router.push("/tasks")}
+              onClick={() => router.push(`/${locale}/tasks`)}
               className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 transition-colors"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

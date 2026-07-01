@@ -1,4 +1,5 @@
 import { authClient } from "../../../lib/auth-client";
+import { defaultLocale } from "@/i18n/config";
 
 const email = "m@example.com";
 const password = "123456";
@@ -15,7 +16,7 @@ const { data, error } = await authClient.signIn.email({
         /**
          * A URL to redirect to after the user verifies their email (optional)
          */
-        callbackURL: "/dashboard",
+        callbackURL: `/${defaultLocale}/dashboard`,
         /**
          * remember the user session after the browser is closed. 
          * @default true

@@ -2,6 +2,7 @@ import { betterAuth, BetterAuthAdvancedOptions, BetterAuthClientOptions } from "
 import { MongoClient } from "mongodb";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { Resend } from "resend";
+import { defaultLocale } from "@/i18n/config";
 
 const {
   MONGODB_URI,
@@ -32,7 +33,7 @@ export const auth = betterAuth({
 
     async sendResetPassword(data, request) {
       const email = data.user.email;
-      const resetUrl = `${NEXT_PUBLIC_APP_URL}/reset-password?token=${data.token}&email=${encodeURIComponent(email)}`;
+      const resetUrl = `${NEXT_PUBLIC_APP_URL}/${defaultLocale}/reset-password?token=${data.token}&email=${encodeURIComponent(email)}`;
 
       await resend.emails.send({
         from: "noreply@yourdomain.com",

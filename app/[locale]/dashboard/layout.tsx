@@ -1,11 +1,12 @@
 "use client";
 
-import { useSession } from "@/app/lib/auth-client";
-import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { Toaster } from "sonner";
 import { Loader2 } from "lucide-react";
+import { Toaster } from "sonner";
+import { useRouter } from "next/navigation";
+import { useSession } from "@/app/lib/auth-client";
 import DashboardSidebar from "@/components/dashboard-sidebar";
+import { useLanguage } from "@/i18n/context/language-context";
 
 export default function DashboardLayout({
   children,
@@ -13,18 +14,19 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const { data: session, isPending } = useSession();
+  const { locale } = useLanguage();
   const router = useRouter();
 
   useEffect(() => {
     if (!isPending && !session?.user) {
-      router.push("/sign-in");
+      router.push(`/${locale}/sign-in`);
     }
-  }, [isPending, session?.user, router]);
+  }, [isPending, session?.user, router, locale]);
 
   if (isPending) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-950">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+      <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-950">
+        <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
       </div>
     );
   }
@@ -34,7 +36,7 @@ export default function DashboardLayout({
   }
 
   return (
-    <div className="w-full min-h-screen bg-gray-50 dark:bg-gray-950">
+    <div className="min-h-screen w-full bg-gray-50 dark:bg-gray-950">
       <DashboardSidebar
         user={{
           name: session.user.name,
