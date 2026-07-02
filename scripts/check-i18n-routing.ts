@@ -63,4 +63,16 @@ assert.equal(
   'https://app.example.com'
 )
 
+assert.equal(
+  resolveRedirectOrigin({
+    configuredAppUrl: 'http://120.27.163.126:8080',
+    currentOrigin: 'http://127.0.0.1:3000',
+    forwardedHost: '120.27.163.126',
+    forwardedProto: 'http',
+    host: '120.27.163.126',
+    nodeEnv: 'production'
+  }),
+  'http://120.27.163.126:8080'
+)
+
 console.log('i18n routing check passed')

@@ -43,6 +43,26 @@ function configuredOrigin(value: string | undefined): string | null {
   }
 }
 
+function hostnameFromHost(host: string | null): string | null {
+  if (!host) {
+    return null
+  }
+
+  try {
+    return new URL(`http://${host}`).hostname
+  } catch {
+    return host.split(':')[0] || null
+  }
+}
+
+function hasConfiguredHostname(host: string | null, origin: string): boolean {
+  try {
+    return hostnameFromHost(host) === new URL(origin).hostname
+  } catch {
+    return false
+  }
+}
+
 function protocolFromOrigin(origin: string): string {
   try {
     return new URL(origin).protocol.replace(':', '') || 'http'
@@ -62,7 +82,11 @@ export function resolveRedirectOrigin({
   const selectedHost = firstHeaderValue(forwardedHost) ?? firstHeaderValue(host)
   const appOrigin = configuredOrigin(configuredAppUrl)
 
-  if (nodeEnv === 'production' && isInternalHost(selectedHost) && appOrigin) {
+  if (
+    nodeEnv === 'production' &&
+    appOrigin &&
+    (isInternalHost(selectedHost) || hasConfiguredHostname(selectedHost, appOrigin))
+  ) {
     return appOrigin
   }
 
