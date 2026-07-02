@@ -3,8 +3,10 @@ import { dbConnect } from "../../../backend/mongodb";
 import { Resource } from "../../../backend/resource";
 import { auth } from "../../lib/auth";
 import { rateLimit } from "../../lib/ratelimit";
-
-const PYTHON_API_TIMEOUT_MS = 10_000;
+import {
+  classifyPythonSubmitError,
+  PYTHON_API_TIMEOUT_MS,
+} from "./python-submit";
 
 export async function POST(request: NextRequest) {
   // Rate limit check
@@ -83,17 +85,36 @@ export async function POST(request: NextRequest) {
         resourceId: newResource._id.toString(),
       });
     } catch (fetchError) {
-      console.error("Failed to connect to Python service:", fetchError);
+      const submitError = classifyPythonSubmitError(fetchError);
 
-      // Update status to failed
-      await Resource.findByIdAndUpdate(newResource._id, {
-        status: "failed",
-        errorMessage: "Cannot connect to Python analysis service or request timed out",
-      });
+      if (submitError.shouldMarkResourceFailed) {
+        console.error("Failed to connect to Python service:", fetchError);
+
+        await Resource.findByIdAndUpdate(newResource._id, {
+          status: "failed",
+          errorMessage: submitError.resourceErrorMessage,
+        });
+
+        return NextResponse.json(
+          {
+            error: submitError.clientMessage,
+            resourceId: newResource._id.toString(),
+          },
+          { status: submitError.httpStatus }
+        );
+      }
+
+      console.warn(
+        "Python analysis submission acknowledgement timed out; task may still be processing:",
+        fetchError
+      );
 
       return NextResponse.json(
-        { error: "Cannot connect to analysis service within 10 seconds, ensure Python backend is reachable" },
-        { status: 503 }
+        {
+          message: submitError.clientMessage,
+          resourceId: newResource._id.toString(),
+        },
+        { status: submitError.httpStatus }
       );
     } finally {
       clearTimeout(timeoutId);
