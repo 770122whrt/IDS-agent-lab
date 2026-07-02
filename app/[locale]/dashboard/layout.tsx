@@ -6,6 +6,7 @@ import { Toaster } from "sonner";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/app/lib/auth-client";
 import DashboardSidebar from "@/components/dashboard-sidebar";
+import { LanguageToggle } from "@/components/ui/language-toggle";
 import { useLanguage } from "@/i18n/context/language-context";
 
 export default function DashboardLayout({
@@ -44,6 +45,9 @@ export default function DashboardLayout({
         }}
       />
       <main className="ml-64 min-h-screen">
+        <div className="fixed right-6 top-4 z-50">
+          <LanguageToggle />
+        </div>
         <div className="px-4 py-8">{children}</div>
       </main>
       <Toaster position="top-right" richColors />

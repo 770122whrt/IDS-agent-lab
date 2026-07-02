@@ -5,6 +5,7 @@ import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/app/lib/auth-client";
 import DashboardSidebar from "@/components/dashboard-sidebar";
+import { LanguageToggle } from "@/components/ui/language-toggle";
 import { useLanguage } from "@/i18n/context/language-context";
 
 export default function TasksLayout({
@@ -43,6 +44,9 @@ export default function TasksLayout({
         }}
       />
       <main className="ml-64 min-h-screen">
+        <div className="fixed right-6 top-4 z-50">
+          <LanguageToggle />
+        </div>
         <div className="p-8">{children}</div>
       </main>
     </div>

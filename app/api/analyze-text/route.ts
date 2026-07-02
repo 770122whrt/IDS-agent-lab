@@ -4,6 +4,8 @@ import { Resource } from "../../../backend/resource";
 import { auth } from "../../lib/auth";
 import { rateLimit } from "../../lib/ratelimit";
 
+const PYTHON_API_TIMEOUT_MS = 10_000;
+
 export async function POST(request: NextRequest) {
   // Rate limit check
   const isAllowed = await rateLimit(request);
@@ -46,11 +48,14 @@ export async function POST(request: NextRequest) {
 
     // 2. Call Python backend for analysis
     const PYTHON_API_URL = process.env.PYTHON_BACKEND_URL || process.env.PYTHON_API_URL || "http://localhost:8000";
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), PYTHON_API_TIMEOUT_MS);
 
     try {
       const response = await fetch(`${PYTHON_API_URL}/analyze-text`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        signal: controller.signal,
         body: JSON.stringify({
           resourceId: newResource._id.toString(),
           text: text,
@@ -83,13 +88,15 @@ export async function POST(request: NextRequest) {
       // Update status to failed
       await Resource.findByIdAndUpdate(newResource._id, {
         status: "failed",
-        errorMessage: "Cannot connect to Python analysis service",
+        errorMessage: "Cannot connect to Python analysis service or request timed out",
       });
 
       return NextResponse.json(
-        { error: "Cannot connect to analysis service, ensure Python backend is running" },
+        { error: "Cannot connect to analysis service within 10 seconds, ensure Python backend is reachable" },
         { status: 503 }
       );
+    } finally {
+      clearTimeout(timeoutId);
     }
   } catch (error) {
     console.error("Analyze text route error:", error);

@@ -12,7 +12,6 @@ import {
   User,
 } from "lucide-react";
 import { signOut } from "@/app/lib/auth-client";
-import { LanguageToggle } from "@/components/ui/language-toggle";
 import { useLanguage } from "@/i18n/context/language-context";
 import { cn } from "@/lib/utils";
 
@@ -240,9 +239,6 @@ export default function DashboardSidebar({ user }: DashboardSidebarProps) {
             </p>
             <p className="truncate text-xs text-slate-400">{user.email}</p>
           </div>
-        </div>
-        <div className="mb-3">
-          <LanguageToggle />
         </div>
         <button
           type="button"
