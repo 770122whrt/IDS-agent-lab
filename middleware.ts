@@ -33,10 +33,15 @@ export function middleware(request: NextRequest) {
 
   const cookieLocale = request.cookies.get(localeCookieName)?.value;
   const locale = isLocale(cookieLocale) ? cookieLocale : defaultLocale;
-  const target = request.nextUrl.clone();
-  target.pathname = pathname === "/" ? `/${locale}` : `/${locale}${pathname}`;
+  const targetPathname = pathname === "/" ? `/${locale}` : `/${locale}${pathname}`;
+  const target = `${targetPathname}${request.nextUrl.search}`;
 
-  return NextResponse.redirect(target);
+  return new NextResponse(null, {
+    status: 307,
+    headers: {
+      Location: target,
+    },
+  });
 }
 
 export const config = {
